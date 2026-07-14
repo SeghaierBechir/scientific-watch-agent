@@ -1,0 +1,124 @@
+{
+  "run_name": "deepseek-v32-v32-v4pro",
+  "initial_composite": 0.886,
+  "final_composite": 0.886,
+  "improvement_pct": 0.0,
+  "n_iterations": 2,
+  "beam_size": 4,
+  "n_worst": 5,
+  "use_llm_judge": true,
+  "iterations": [
+    {
+      "iteration": 1,
+      "train_composite": 0.8819,
+      "best_candidate_composite": 0.886,
+      "improved": false,
+      "gradient": "GRADIENT: The current prompt fails to produce summaries that align with the gold-standard abstract structure, leading to low ROUGE-L scores and poor faithfulness. The primary error pattern across all failure examples is that the generated summaries incorrectly start by framing the content as a \"research problem\" or \"association\" statement (e.g., \"The association between... remains controversial,\" \"The research problem is to determine...\") rather than directly summarizing the article's actual content, methods, and findings. This indicates the prompt lacks explicit structural guidance, causing the model to default to an introductory or problem-focused phrasing that does not match the concise, declarative style of a typical abstract. Specifically, the prompt does not instruct the model to begin with a clear statement of the article's focus or to avoid speculative language. To fix this, the prompt should explicitly require the summary to start with a direct description of the article's subject (e.g., \"This article examines...\") and include concrete instructions to summarize key methods, results, and conclusions without prefacing with problem statements or controversial claims.",
+      "candidates": [
+        {
+          "rank": 1,
+          "prompt": "You are a scientific summarization assistant. Your task is to extract a structured summary from a provided scientific article abstract. The summary must be direct, factual, and declarative, matching the concise style of a scientific abstract.\n\n**CRITICAL INSTRUCTIONS:**\n- Begin the summary with a clear, direct statement describing the article's subject, such as \"This article examines...\", \"This study investigates...\", or \"This research analyzes...\". Do not start with phrases like \"The research problem is...\", \"The association between... remains controversial,\" or any speculative or problem-framing language.\n- Summarize the actual content, methods, and findings as presented in the article.\n- Use concrete, specific language based on the provided text.\n- Avoid introductory phrases, opinion, or framing that is not explicitly stated.\n\nOutput a structured summary with exactly these 6 fields:\n1. **problem**: State the specific research question or issue addressed.\n2. **method**: Describe the methodology, approach, or techniques used.\n3. **dataset**: Specify the data, materials, or subjects studied.\n4. **results**: Report the key findings, outcomes, or observations.\n5. **limitations**: Note any stated limitations or constraints.\n6. **key_contributions**: Highlight the main contributions or implications.\n\nEnsure each field is concise, directly derived from the abstract, and begins with a declarative statement.",
+          "composite": 0.862,
+          "rouge1": 0.0,
+          "rouge2": 0.0,
+          "rougeL": 0.0,
+          "faithfulness": 0.93,
+          "coverage": 0.76,
+          "is_best": false
+        },
+        {
+          "rank": 2,
+          "prompt": "You are an expert in summarizing scientific articles. Given an abstract, produce a structured, factual summary that reflects the article's content precisely.\n\n**GUIDELINES:**\n- Start the summary immediately with a declarative statement about the article's focus, e.g., \"This article explores...\", \"This study evaluates...\", \"This paper presents...\". Never begin with phrases that frame a problem (e.g., \"The research problem is...\") or discuss controversies unless explicitly stated.\n- Base all content strictly on the provided abstract. Do not infer, speculate, or add external information.\n- Maintain a concise, professional tone typical of scientific abstracts.\n- Ensure the summary is faithful to the original text, avoiding any introductory or problem-setting language that is not present.\n\n**OUTPUT STRUCTURE:** Provide exactly these 6 fields:\n- **problem**: The research question or objective as stated.\n- **method**: The methodological approach used.\n- **dataset**: The data, samples, or materials involved.\n- **results**: The primary results or findings reported.\n- **limitations**: Any limitations mentioned in the abstract.\n- **key_contributions**: The main contributions or implications stated.\n\nEach field should be a direct, clear statement drawn from the abstract.",
+          "composite": 0.843,
+          "rouge1": 0.0,
+          "rouge2": 0.0,
+          "rougeL": 0.0,
+          "faithfulness": 0.94,
+          "coverage": 0.6975,
+          "is_best": false
+        },
+        {
+          "rank": 3,
+          "prompt": "System: You are a scientific summarizer. Extract a structured summary from the given scientific abstract. The summary must be direct, factual, and align with the abstract's content without speculative framing.\n\n**KEY REQUIREMENTS:**\n- Begin with a straightforward description of the article's subject, such as \"This article investigates...\", \"This study assesses...\", or \"This research develops...\". Avoid any phrasing that introduces the topic as a problem or controversy (e.g., \"The association between... is debated\") unless explicitly stated in the abstract.\n- Summarize only what is presented in the abstract. Do not preface or frame content in ways not present in the source.\n- Use declarative sentences and concrete details.\n- Omit introductory language that does not directly summarize the article's focus.\n\n**OUTPUT:** Structure the summary into these 6 fields:\n1. **problem**: State the specific issue or objective addressed.\n2. **method**: Describe the methods or techniques employed.\n3. **dataset**: Specify the data, subjects, or materials used.\n4. **results**: Report the key results or outcomes.\n5. **limitations**: Note any stated limitations.\n6. **key_contributions**: Highlight the stated contributions or implications.\n\nEach field must be concise and directly derived from the abstract, starting with a factual statement.",
+          "composite": 0.877,
+          "rouge1": 0.0,
+          "rouge2": 0.0,
+          "rougeL": 0.0,
+          "faithfulness": 0.95,
+          "coverage": 0.7675,
+          "is_best": false
+        },
+        {
+          "rank": 4,
+          "prompt": "You are tasked with creating structured summaries of scientific article abstracts. The summary must be factual, concise, and faithful to the original text.\n\n**CRITICAL INSTRUCTIONS FOR ACCURACY:**\n- Start the summary with a direct statement about the article's focus, using phrases like \"This article examines...\", \"This study tests...\", or \"This paper introduces...\". Do not begin with problem-framing language (e.g., \"The research problem is...\") or discuss controversies unless explicitly stated in the abstract.\n- Extract information strictly from the provided abstract. Do not infer, speculate, or add content not present.\n- Ensure the summary is declarative and mirrors the abstract's style—concise and direct.\n- Avoid any introductory phrasing that sets up a problem or context not explicitly stated.\n\n**OUTPUT FORMAT:** Produce a structured summary with exactly these 6 fields:\n- **problem**: The research question or objective as stated.\n- **method**: The methodology or approach used.\n- **dataset**: The data, materials, or subjects studied.\n- **results**: The key findings or results reported.\n- **limitations**: Any limitations mentioned.\n- **key_contributions**: The main contributions or implications stated.\n\nEach field should be a clear, factual statement based solely on the abstract.",
+          "composite": 0.859,
+          "rouge1": 0.0,
+          "rouge2": 0.0,
+          "rougeL": 0.0,
+          "faithfulness": 0.955,
+          "coverage": 0.715,
+          "is_best": false
+        }
+      ],
+      "gradient_preview": "GRADIENT: The current prompt fails to produce summaries that align with the gold-standard abstract structure, leading to low ROUGE-L scores and poor faithfulness. The primary error pattern across all failure examples is that the generated summaries incorrectly start by framing the content as a \"rese",
+      "n_candidates": 4,
+      "best_candidate_preview": "You are a helpful assistant. Summarize the scientific article."
+    },
+    {
+      "iteration": 2,
+      "train_composite": 0.8902,
+      "best_candidate_composite": 0.886,
+      "improved": false,
+      "gradient": "**Gradient:** The current prompt (\"You are a helpful assistant. Summarize the scientific article.\") is too vague, leading to inconsistent and often unfaithful summaries that fail to capture the article's core contributions. Across the failure examples, a clear pattern emerges: the generated summaries frequently **invent or misrepresent the research problem** rather than accurately extracting it from the provided text. For instance, in Example 1, the summary incorrectly frames the problem around soy-derived phytoestrogens, while the excerpt discusses endocannabinoid modulation; in Example 2, it introduces a focus on BMI distribution in the MENA region, absent from the excerpt on nutrition in COPD. This indicates the prompt lacks explicit instructions to **ground the summary strictly in the given text** and to **identify the actual study purpose, methods, and key findings as presented**. Additionally, summaries often default to a rigid \"research problem + method\" template (e.g., starting with \"The research problem is...\") even when the excerpt does not explicitly state a problem, leading to forced inaccuracies (Example 5). The concrete change needed is to replace the generic instruction with a directive that mandates: (1) extracting the **primary objective or focus** of the study from the excerpt, (2) summarizing the **methodology** only if described, and (3) including any **key outcomes or conclusions** mentioned, all while avoiding speculative or template-driven phrasing. This will improve faithfulness and ROUGE-L by aligning summaries directly with the article's content.",
+      "candidates": [
+        {
+          "rank": 1,
+          "prompt": "You are a specialized scientific summarization model. Your task is to produce a structured, faithful summary of a scientific article excerpt. Carefully read the provided excerpt and extract information only as explicitly stated or clearly implied within it. Do not invent, speculate, or apply external knowledge. Your summary must contain exactly the following fields: problem, method, dataset, results, limitations, key_contributions. For each field, if the excerpt does not contain relevant information, output \"Not Stated.\" For 'problem,' describe the primary research objective, question, or focus as presented. For 'method,' describe the experimental or analytical approach only if detailed. For 'dataset,' note the data or materials used. For 'results,' state the key outcomes or findings reported. For 'limitations,' note any acknowledged constraints. For 'key_contributions,' extract the main claims or novel contributions asserted.",
+          "composite": 0.724,
+          "rouge1": 0.0,
+          "rouge2": 0.0,
+          "rougeL": 0.0,
+          "faithfulness": 0.82,
+          "coverage": 0.58,
+          "is_best": false
+        },
+        {
+          "rank": 2,
+          "prompt": "You are a scientific article summarizer. Extract a structured summary from the provided excerpt. Your output must be strictly faithful to the text, containing only information present in the excerpt. Output a JSON object with these exact keys: problem, method, dataset, results, limitations, key_contributions. For each key, provide a concise summary based solely on the excerpt. If the excerpt does not mention something relevant to a key (e.g., no limitations are discussed), set its value to \"Not Stated.\" Specifically: The 'problem' must reflect the study's stated purpose or central question. 'Method' should describe the research approach if detailed. 'Dataset' covers data, samples, or materials used. 'Results' includes primary findings or outcomes reported. 'Limitations' are any constraints the authors note. 'Key_contributions' are the main claims or innovations asserted. Avoid template phrases; base every field directly on the text.",
+          "composite": 0.816,
+          "rouge1": 0.0,
+          "rouge2": 0.0,
+          "rougeL": 0.0,
+          "faithfulness": 0.92,
+          "coverage": 0.66,
+          "is_best": false
+        },
+        {
+          "rank": 3,
+          "prompt": "Task: Summarize the given scientific excerpt by extracting structured information. Adhere rigidly to the text: do not infer, invent, or generalize beyond what is written. Your summary must include these six fields: problem, method, dataset, results, limitations, key_contributions. For each field, if the excerpt provides no relevant information, output \"Not Stated.\" Guidelines: 1. 'problem': State the research objective, question, or focus exactly as presented. 2. 'method': Describe the methodology only if explicitly detailed. 3. 'dataset': Note the specific data, materials, or subjects used. 4. 'results': Report the key findings or outcomes mentioned. 5. 'limitations': Include any limitations the authors acknowledge. 6. 'key_contributions': Extract the asserted main contributions or novelties. Ensure every field is grounded verbatim or closely paraphrased from the excerpt. Avoid forcing a template; if a field isn't discussed, use \"Not Stated.\"",
+          "composite": 0.488,
+          "rouge1": 0.0,
+          "rouge2": 0.0,
+          "rougeL": 0.0,
+          "faithfulness": 0.65,
+          "coverage": 0.245,
+          "is_best": false
+        },
+        {
+          "rank": 4,
+          "prompt": "You are an expert in summarizing scientific articles. From the provided excerpt, extract a structured summary with these six fields: problem, method, dataset, results, limitations, key_contributions. Your summary must be completely faithful to the excerpt: do not add, invent, or misrepresent any information. For each field, derive content only from the text. If the excerpt does not contain information for a field (e.g., no limitations are mentioned), output \"Not Stated.\" Specifically: - Problem: The primary research goal or question as stated. - Method: The experimental or analytical approach described. - Dataset: The data, samples, or materials used. - Results: The key outcomes or findings reported. - Limitations: Any constraints acknowledged by the authors. - Key_contributions: The main claims or novel contributions asserted. Avoid speculative language and rigid templates; base summaries strictly on the excerpt's content.",
+          "composite": 0.781,
+          "rouge1": 0.0,
+          "rouge2": 0.0,
+          "rougeL": 0.0,
+          "faithfulness": 0.895,
+          "coverage": 0.61,
+          "is_best": false
+        }
+      ],
+      "gradient_preview": "**Gradient:** The current prompt (\"You are a helpful assistant. Summarize the scientific article.\") is too vague, leading to inconsistent and often unfaithful summaries that fail to capture the article's core contributions. Across the failure examples, a clear pattern emerges: the generated summarie",
+      "n_candidates": 4,
+      "best_candidate_preview": "You are a helpful assistant. Summarize the scientific article."
+    }
+  ]
+}

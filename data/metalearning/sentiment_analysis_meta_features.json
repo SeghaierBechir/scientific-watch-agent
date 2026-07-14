@@ -1,0 +1,18 @@
+{
+  "domain_id": "sentiment_analysis",
+  "topic": "sentiment analysis deep learning",
+  "corpus_size": 320,
+  "median_year": 2018.0,
+  "pct_recent": 0.003125,
+  "year_std": 1.3752272539475068,
+  "citation_gini": 0.8122002500073966,
+  "citation_median": 98.5,
+  "pct_high_cited": 0.496875,
+  "unique_author_ratio": 0.8875,
+  "mean_h_index": 17.2327868852459,
+  "pct_high_hindex": 0.765625,
+  "pct_q1": 0.446875,
+  "topic_concept_overlap": 0.709375,
+  "gold_ratio": 0.8625,
+  "grade2_ratio": 0.03125
+}

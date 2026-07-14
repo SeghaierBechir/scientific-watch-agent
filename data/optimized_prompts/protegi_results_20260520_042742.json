@@ -1,0 +1,38 @@
+{
+  "initial_composite": 0.6767,
+  "final_composite": 0.6767,
+  "improvement_pct": 0.0,
+  "n_iterations": 3,
+  "beam_size": 4,
+  "n_worst": 5,
+  "use_llm_judge": true,
+  "iterations": [
+    {
+      "iteration": 1,
+      "train_composite": 0.6663,
+      "best_candidate_composite": 0.6767,
+      "improved": false,
+      "gradient_preview": "The current prompt is failing to produce accurate and faithful summaries, as evidenced by the failure examples where generated summaries exhibit low ROUGE-L overlap and faithfulness scores. A common pattern across these failures is the tendency to provide vague or overly generalized descriptions of ",
+      "n_candidates": 4,
+      "best_candidate_preview": "You are a scientific paper summarizer for academic researchers.\n\nGiven an article (title + abstract), extract a structured summary with:\n    - problem: the research problem addressed (1-2 sentences)\n "
+    },
+    {
+      "iteration": 2,
+      "train_composite": 0.6635,
+      "best_candidate_composite": 0.6767,
+      "improved": false,
+      "gradient_preview": "The current prompt is failing to produce accurate and faithful summaries due to several recurring issues. First, the summaries often present vague or overly broad problem statements that do not directly reflect the specific research problem outlined in the abstracts. For instance, in Example 1, the ",
+      "n_candidates": 4,
+      "best_candidate_preview": "You are a scientific paper summarizer for academic researchers.\n\nGiven an article (title + abstract), extract a structured summary with:\n    - problem: the research problem addressed (1-2 sentences)\n "
+    },
+    {
+      "iteration": 3,
+      "train_composite": 0.6657,
+      "best_candidate_composite": 0.6767,
+      "improved": false,
+      "gradient_preview": "The current prompt fails to produce accurate and faithful summaries, as evidenced by the failure examples where the generated summaries lack specificity and do not adequately reflect the content of the abstracts. A recurring pattern is the omission of critical quantitative results and specific detai",
+      "n_candidates": 4,
+      "best_candidate_preview": "You are a scientific paper summarizer for academic researchers.\n\nGiven an article (title + abstract), extract a structured summary with:\n    - problem: the research problem addressed (1-2 sentences)\n "
+    }
+  ]
+}

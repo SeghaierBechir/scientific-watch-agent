@@ -1,0 +1,11 @@
+{
+  "topic": "machine learning genomics bioinformatics",
+  "weights": {
+    "venue": 0.205165,
+    "authors": 0.270603,
+    "impact": 0.154146,
+    "velocity": 0.10803,
+    "recency": 0.219497,
+    "relevance": 0.042559
+  }
+}

@@ -1,0 +1,124 @@
+{
+  "run_name": "narrativeNoROUGE-qwen3-v32-v32",
+  "initial_composite": 0.536,
+  "final_composite": 0.94,
+  "improvement_pct": 75.37,
+  "n_iterations": 2,
+  "beam_size": 4,
+  "n_worst": 5,
+  "use_llm_judge": true,
+  "iterations": [
+    {
+      "iteration": 1,
+      "train_composite": 0.5344,
+      "best_candidate_composite": 0.912,
+      "improved": true,
+      "gradient": "The current prompt fails because it does not explicitly instruct the model to focus on the core research content and ignore extraneous text, leading to summaries that are factually incorrect or hallucinated. Across all failure examples, the generated summaries are entirely fabricated narratives that bear no relation to the provided article excerpts. The excerpts are not from the main body of the paper (e.g., they are from acknowledgments, background sections, or detailed methods), but the prompt's instruction to \"Cover the research problem, methodology, key quantitative results... and the authors' main conclusions\" forces the model to generate these elements even when they are absent from the provided text. The concrete problem is the prompt lacks a critical filtering instruction: it does not tell the model to base the summary *only* on the given text and to state when key requested information (like results or conclusions) is not present. To fix this, the prompt must be amended to explicitly instruct the model to summarize *only* the information contained in the provided excerpt and to avoid inventing any details not present in the source material. A concrete change would be to add a clause such as: \"Summarize *only* the information contained in the provided text. If the text does not contain information on a requested element (e.g., results or conclusions), do not invent it; instead, note its absence.\" This would prevent the model from generating plausible but false summaries from non-representative snippets.",
+      "candidates": [
+        {
+          "rank": 1,
+          "prompt": "You are a scientific paper summarizer. Write a concise narrative summary of the scientific article in 150-250 words, based only on the provided text excerpt. Cover the research problem, methodology, key quantitative results (include specific numbers, statistics, or percentages when present), and the authors' main conclusions, but only if this information is explicitly contained in the excerpt. If the excerpt does not contain information on a requested element, do not invent it; instead, note its absence (e.g., 'The provided text does not specify the results'). Write in past tense throughout. Use a single flowing paragraph—no bullet points, no headers, no markdown. Style your output like a scientific abstract, ensuring all content is grounded solely in the provided text without fabrication.",
+          "composite": 0.825,
+          "rouge1": 0.0,
+          "rouge2": 0.0,
+          "rougeL": 0.0,
+          "faithfulness": 0.765,
+          "coverage": 0.915,
+          "is_best": true
+        },
+        {
+          "rank": 2,
+          "prompt": "You are a scientific paper summarizer. Your task is to write a concise narrative summary of a scientific article based only on the provided text excerpt. In 150-250 words, summarize the content of the excerpt directly. If the excerpt discusses the research problem, methodology, key quantitative results (such as specific numbers, statistics, or percentages), or the authors' main conclusions, include those details. However, if any of these elements are not present in the excerpt, do not invent them; simply summarize what is actually there. Write in past tense throughout, using a single flowing paragraph with no bullet points, headers, or markdown. Ensure the summary is factual and reflects only the given text, avoiding any hallucinations or extrapolations.",
+          "composite": 0.89,
+          "rouge1": 0.0,
+          "rouge2": 0.0,
+          "rougeL": 0.0,
+          "faithfulness": 0.85,
+          "coverage": 0.95,
+          "is_best": true
+        },
+        {
+          "rank": 3,
+          "prompt": "You are a scientific paper summarizer tasked with writing a concise narrative summary of a scientific article in 150-250 words. Summarize only the information contained in the provided text excerpt. Cover elements such as the research problem, methodology, key quantitative results (including specific numbers, statistics, or percentages when available), and the authors' main conclusions, but strictly limit your summary to what is explicitly stated in the excerpt. If the excerpt lacks details on any of these elements, do not fabricate them; instead, focus on summarizing the actual content provided. Write in past tense throughout, using a single flowing paragraph without bullet points, headers, or markdown. Your output should resemble a scientific abstract that accurately represents the given text without inventing information.",
+          "composite": 0.912,
+          "rouge1": 0.0,
+          "rouge2": 0.0,
+          "rougeL": 0.0,
+          "faithfulness": 0.86,
+          "coverage": 0.99,
+          "is_best": true
+        },
+        {
+          "rank": 4,
+          "prompt": "You are a scientific paper summarizer. Write a concise narrative summary of the provided scientific article excerpt in 150-250 words. Base your summary exclusively on the text given; do not infer or invent any details beyond what is present. Cover the research problem, methodology, key quantitative results (like specific numbers, statistics, or percentages), and the authors' main conclusions only if they are explicitly mentioned in the excerpt. If any of these elements are absent, do not include them in your summary—focus solely on summarizing the available content. Write in past tense throughout, using a single flowing paragraph with no bullet points, headers, or markdown. Ensure the output is a factual, abstract-style paragraph that directly reflects the provided text without hallucinations.",
+          "composite": 0.88,
+          "rouge1": 0.0,
+          "rouge2": 0.0,
+          "rougeL": 0.0,
+          "faithfulness": 0.85,
+          "coverage": 0.925,
+          "is_best": false
+        }
+      ],
+      "gradient_preview": "The current prompt fails because it does not explicitly instruct the model to focus on the core research content and ignore extraneous text, leading to summaries that are factually incorrect or hallucinated. Across all failure examples, the generated summaries are entirely fabricated narratives that",
+      "n_candidates": 4,
+      "best_candidate_preview": "You are a scientific paper summarizer tasked with writing a concise narrative summary of a scientific article in 150-250 words. Summarize only the information contained in the provided text excerpt. C"
+    },
+    {
+      "iteration": 2,
+      "train_composite": 0.852,
+      "best_candidate_composite": 0.94,
+      "improved": true,
+      "gradient": "The current prompt fails to produce summaries that accurately reflect the provided text because it does not explicitly instruct the model to *strictly avoid inferring or adding details beyond the excerpt*, leading to hallucinated content that deviates from the source. Across the failure examples, the generated summaries consistently introduce elements not present in the excerpts, such as specific research aims (e.g., \"investigated the clinical and radiological characteristics\" in Example 1, where the excerpt only describes the study population and ethics approval), hypotheses (e.g., \"hypothesizing that aging may influence\" in Example 2, absent from the text), or broader study focuses (e.g., \"investigates the role of innate immune signaling pathways\" in Example 4, which the excerpt does not state). This pattern indicates the model is extrapolating from limited information to construct a conventional \"study\" narrative. The prompt's instruction to \"cover elements such as the research problem, methodology, key quantitative results... and the authors' main conclusions\" inadvertently encourages this, as the model attempts to fill these categories even when the excerpt lacks them. To fix this, the prompt must be revised to explicitly prioritize summarizing *only the explicit statements* in the text, perhaps by reordering instructions to begin with a strict prohibition against inference, and to state clearly that if the excerpt does not mention a particular element (like a research problem), the summary should not invent one but should instead describe only what is given.",
+      "candidates": [
+        {
+          "rank": 1,
+          "prompt": "You are a scientific paper summarizer. Your task is to write a single, flowing narrative paragraph of 150-250 words summarizing only the explicit statements from a provided text excerpt. Under no circumstances should you infer, extrapolate, or add any details not directly present in the excerpt. If the excerpt does not mention a research problem, methodology, result, or conclusion, do not invent one; your summary must be confined strictly to the content that is given. Write entirely in the past tense. Your output should be a concise prose summary that accurately and solely reflects the provided text.",
+          "composite": 0.907,
+          "rouge1": 0.0,
+          "rouge2": 0.0,
+          "rougeL": 0.0,
+          "faithfulness": 0.875,
+          "coverage": 0.955,
+          "is_best": false
+        },
+        {
+          "rank": 2,
+          "prompt": "You are a scientific paper summarizer. Write a concise narrative summary (150-250 words) of a provided text excerpt in a single paragraph, using past tense. Your summary must be derived exclusively from the explicit statements in the excerpt. Do not infer or introduce any elements—such as research aims, hypotheses, methodologies, results, or conclusions—that are not directly stated. If the excerpt lacks information on a particular aspect, omit it from your summary; never fabricate details to complete a conventional narrative structure. Strictly adhere to the given text, producing a summary that is accurate and free of hallucinated content.",
+          "composite": 0.872,
+          "rouge1": 0.0,
+          "rouge2": 0.0,
+          "rougeL": 0.0,
+          "faithfulness": 0.85,
+          "coverage": 0.905,
+          "is_best": false
+        },
+        {
+          "rank": 3,
+          "prompt": "Your role is to summarize a scientific text excerpt in a single, flowing narrative paragraph of 150-250 words, written in the past tense. The core rule is absolute fidelity to the excerpt: summarize only what is explicitly stated. Do not infer, extrapolate, or add any information. If the excerpt does not specify a research problem, methodology, quantitative result, or conclusion, you must not invent or imply one. Your summary should simply and accurately relate the content that is actually present, avoiding any narrative embellishment or completion. Produce a prose summary that strictly mirrors the provided text without deviation.",
+          "composite": 0.913,
+          "rouge1": 0.0,
+          "rouge2": 0.0,
+          "rougeL": 0.0,
+          "faithfulness": 0.895,
+          "coverage": 0.94,
+          "is_best": true
+        },
+        {
+          "rank": 4,
+          "prompt": "You are tasked with writing a narrative paragraph (150-250 words) summarizing a scientific text excerpt. Write in the past tense, in a single flowing paragraph. Crucially, your summary must contain only information explicitly present in the excerpt. Do not infer, hypothesize, or add any details. If the excerpt omits elements like the research problem, methods, results, or conclusions, your summary should correspondingly omit them; never fabricate content to fill these categories. Your goal is to produce a precise, accurate summary that reflects solely the given text, avoiding any extrapolation or hallucination.",
+          "composite": 0.94,
+          "rouge1": 0.0,
+          "rouge2": 0.0,
+          "rougeL": 0.0,
+          "faithfulness": 0.9,
+          "coverage": 1.0,
+          "is_best": true
+        }
+      ],
+      "gradient_preview": "The current prompt fails to produce summaries that accurately reflect the provided text because it does not explicitly instruct the model to *strictly avoid inferring or adding details beyond the excerpt*, leading to hallucinated content that deviates from the source. Across the failure examples, th",
+      "n_candidates": 4,
+      "best_candidate_preview": "You are tasked with writing a narrative paragraph (150-250 words) summarizing a scientific text excerpt. Write in the past tense, in a single flowing paragraph. Crucially, your summary must contain on"
+    }
+  ]
+}

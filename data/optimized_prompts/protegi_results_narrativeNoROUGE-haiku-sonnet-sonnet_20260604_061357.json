@@ -1,0 +1,30 @@
+{
+  "run_name": "narrativeNoROUGE-haiku-sonnet-sonnet",
+  "initial_composite": 0.909,
+  "final_composite": 0.927,
+  "improvement_pct": 1.98,
+  "n_iterations": 2,
+  "beam_size": 4,
+  "n_worst": 5,
+  "use_llm_judge": true,
+  "iterations": [
+    {
+      "iteration": 1,
+      "train_composite": 0.8901,
+      "best_candidate_composite": 0.927,
+      "improved": true,
+      "gradient_preview": "## Gradient\n\nThe most striking and consistent failure across all five examples is that every generated summary receives a ROUGE-L score of exactly 0.0000, meaning there is essentially zero lexical overlap with the gold PubMed abstracts. This is not a minor wording mismatch \u2014 it indicates the model i",
+      "n_candidates": 4,
+      "best_candidate_preview": "You are a scientific paper summarizer. Write a concise narrative summary of the scientific article in 150-250 words as a single flowing paragraph \u2014 no bullet points, no headers, no markdown. Your prim"
+    },
+    {
+      "iteration": 2,
+      "train_composite": 0.8986,
+      "best_candidate_composite": 0.927,
+      "improved": false,
+      "gradient_preview": "## Gradient\n\nThe dominant failure pattern across these examples is not one of faithfulness or vocabulary preservation \u2014 in fact, several examples score 1.00 on faithfulness \u2014 but rather a near-zero ROUGE-L score, indicating that the generated summaries are drawing almost exclusively from the **body/",
+      "n_candidates": 4,
+      "best_candidate_preview": "You are a scientific paper summarizer. Write a concise narrative summary of the scientific article in 150-250 words as a single flowing paragraph \u2014 no bullet points, no headers, no markdown. Your prim"
+    }
+  ]
+}

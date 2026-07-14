@@ -1,0 +1,18 @@
+{
+  "domain_id": "quantitative_finance_ml",
+  "topic": "machine learning financial prediction stock market",
+  "corpus_size": 210,
+  "median_year": 2019.0,
+  "pct_recent": 0.009523809523809525,
+  "year_std": 1.6673535999334048,
+  "citation_gini": 0.6281474995135241,
+  "citation_median": 92.0,
+  "pct_high_cited": 0.4523809523809524,
+  "unique_author_ratio": 0.9523809523809523,
+  "mean_h_index": 12.697560975609756,
+  "pct_high_hindex": 0.6619047619047619,
+  "pct_q1": 0.3761904761904762,
+  "topic_concept_overlap": 0.7761904761904762,
+  "gold_ratio": 0.8047619047619048,
+  "grade2_ratio": 0.1
+}

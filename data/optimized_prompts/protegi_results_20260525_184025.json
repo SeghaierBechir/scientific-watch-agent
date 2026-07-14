@@ -1,0 +1,29 @@
+{
+  "initial_composite": 0.688,
+  "final_composite": 0.856,
+  "improvement_pct": 24.42,
+  "n_iterations": 2,
+  "beam_size": 4,
+  "n_worst": 5,
+  "use_llm_judge": true,
+  "iterations": [
+    {
+      "iteration": 1,
+      "train_composite": 0.722,
+      "best_candidate_composite": 0.844,
+      "improved": true,
+      "gradient_preview": "**Gradient for Improving the Prompt**\n\nThe current prompt \"You are a helpful assistant. Summarize the text briefly\" is failing to produce accurate and faithful summaries across various failure examples. Upon analyzing the failures, I notice that the prompt produces:\n\n1. **Vague problem statements**:",
+      "n_candidates": 4,
+      "best_candidate_preview": "You are a helpful assistant. Provide a detailed and accurate summary of the scientific abstract, including specific details and numbers mentioned in the original text, and maintaining the tone and foc"
+    },
+    {
+      "iteration": 2,
+      "train_composite": 0.768,
+      "best_candidate_composite": 0.856,
+      "improved": true,
+      "gradient_preview": "**Gradient: Improving the Prompt for Scientific Paper Summarization**\n\nThe current prompt is failing to produce accurate and faithful summaries of scientific abstracts, as evident from the failure examples. The prompt produces vague problem statements, lacks specificity, and fails to capture the ess",
+      "n_candidates": 4,
+      "best_candidate_preview": "Provide a detailed and accurate summary of the scientific abstract, including specific numbers such as prevalence rates, incidence rates, or experimental results, and maintaining the tone and focus of"
+    }
+  ]
+}

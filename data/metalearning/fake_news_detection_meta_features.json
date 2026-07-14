@@ -1,0 +1,18 @@
+{
+  "domain_id": "fake_news_detection",
+  "topic": "fake news detection",
+  "corpus_size": 192,
+  "median_year": 2019.0,
+  "pct_recent": 0.010416666666666666,
+  "year_std": 1.2685686788879644,
+  "citation_gini": 0.8664073292726517,
+  "citation_median": 191.5,
+  "pct_high_cited": 0.6979166666666666,
+  "unique_author_ratio": 0.765625,
+  "mean_h_index": 19.58235294117647,
+  "pct_high_hindex": 0.8177083333333334,
+  "pct_q1": 0.21354166666666666,
+  "topic_concept_overlap": 0.328125,
+  "gold_ratio": 0.78125,
+  "grade2_ratio": 0.08854166666666667
+}

@@ -1,0 +1,30 @@
+{
+  "run_name": "haiku-sonnet-sonnet",
+  "initial_composite": 0.848,
+  "final_composite": 0.852,
+  "improvement_pct": 0.47,
+  "n_iterations": 2,
+  "beam_size": 4,
+  "n_worst": 5,
+  "use_llm_judge": true,
+  "iterations": [
+    {
+      "iteration": 1,
+      "train_composite": 0.8725,
+      "best_candidate_composite": 0.852,
+      "improved": true,
+      "gradient_preview": "## Gradient\n\n**Diagnosis of Failure Patterns:**\n\nAcross all five failure examples, the ROUGE-L score is exactly 0.0000, indicating that the generated summaries share virtually no lexical overlap with the gold abstracts. This is a systemic failure, not a content accuracy problem \u2014 the faithfulness sc",
+      "n_candidates": 4,
+      "best_candidate_preview": "You are an expert scientific summarizer. Extract a structured summary from the provided scientific abstract.\n\nYour output must cover exactly these six fields: problem, method, dataset, results, limita"
+    },
+    {
+      "iteration": 2,
+      "train_composite": 0.8601,
+      "best_candidate_composite": 0.852,
+      "improved": false,
+      "gradient_preview": "## Gradient\n\n### Core Diagnosis\n\nAll five failure examples share a **ROUGE-L score of exactly 0.000**, which indicates the generated summaries share virtually no n-gram overlap with the gold abstracts. This is not a minor phrasing issue \u2014 it reveals a fundamental structural mismatch: the current pro",
+      "n_candidates": 4,
+      "best_candidate_preview": "You are an expert scientific summarizer. Extract a structured summary from the provided scientific abstract.\n\nYour output must cover exactly these six fields: problem, method, dataset, results, limita"
+    }
+  ]
+}

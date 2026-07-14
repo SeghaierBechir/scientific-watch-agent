@@ -1,0 +1,18 @@
+{
+  "domain_id": "computational_biology",
+  "topic": "machine learning genomics bioinformatics",
+  "corpus_size": 212,
+  "median_year": 2020.0,
+  "pct_recent": 0.04716981132075472,
+  "year_std": 2.1680622564917753,
+  "citation_gini": 0.8292973301250173,
+  "citation_median": 182.0,
+  "pct_high_cited": 0.6273584905660378,
+  "unique_author_ratio": 0.9292452830188679,
+  "mean_h_index": 23.70673076923077,
+  "pct_high_hindex": 0.9575471698113207,
+  "pct_q1": 0.7783018867924528,
+  "topic_concept_overlap": 0.3018867924528302,
+  "gold_ratio": 0.7688679245283019,
+  "grade2_ratio": 0.04716981132075472
+}

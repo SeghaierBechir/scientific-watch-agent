@@ -1,0 +1,11 @@
+{
+  "topic": "neural architecture search",
+  "weights": {
+    "venue": 0.103882,
+    "authors": 0.381077,
+    "impact": 0.197895,
+    "velocity": 0.213243,
+    "recency": 0.040579,
+    "relevance": 0.063325
+  }
+}

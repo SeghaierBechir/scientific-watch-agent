@@ -1,0 +1,18 @@
+{
+  "domain_id": "graph_attention_networks",
+  "topic": "graph attention network",
+  "corpus_size": 300,
+  "median_year": 2019.0,
+  "pct_recent": 0.02,
+  "year_std": 1.4861247143718008,
+  "citation_gini": 0.8126597269184941,
+  "citation_median": 162.0,
+  "pct_high_cited": 0.6433333333333333,
+  "unique_author_ratio": 0.8866666666666667,
+  "mean_h_index": 21.068345323741006,
+  "pct_high_hindex": 0.9066666666666666,
+  "pct_q1": 0.17333333333333334,
+  "topic_concept_overlap": 0.8233333333333334,
+  "gold_ratio": 0.87,
+  "grade2_ratio": 0.02
+}

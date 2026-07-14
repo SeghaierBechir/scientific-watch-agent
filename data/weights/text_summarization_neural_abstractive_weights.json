@@ -1,0 +1,11 @@
+{
+  "topic": "text summarization neural abstractive",
+  "weights": {
+    "venue": 0.066594,
+    "authors": 0.223137,
+    "impact": 0.241266,
+    "velocity": 0.117635,
+    "recency": 0.036285,
+    "relevance": 0.315084
+  }
+}

@@ -1,0 +1,38 @@
+{
+  "initial_composite": 0.825,
+  "final_composite": 0.96,
+  "improvement_pct": 16.36,
+  "n_iterations": 3,
+  "beam_size": 4,
+  "n_worst": 5,
+  "use_llm_judge": true,
+  "iterations": [
+    {
+      "iteration": 1,
+      "train_composite": 0.8271,
+      "best_candidate_composite": 0.96,
+      "improved": true,
+      "gradient_preview": "The current prompt fails to produce accurate and faithful summaries, as evidenced by the low ROUGE-L scores and faithfulness ratings in the failure examples. A common pattern across these failures is the generation of vague and overly broad summaries that do not capture the specific details or findi",
+      "n_candidates": 4,
+      "best_candidate_preview": "You are a scientific summarizer. Extract a structured summary from the provided scientific abstract, ensuring to include specific details and findings. The summary should be organized into the followi"
+    },
+    {
+      "iteration": 2,
+      "train_composite": 0.9029,
+      "best_candidate_composite": 0.96,
+      "improved": false,
+      "gradient_preview": "The current prompt is failing to produce accurate and comprehensive summaries due to several key issues. First, the summaries often lack specificity and detail, resulting in vague statements that do not adequately capture the essence of the original abstracts. For instance, in Example 1, the generat",
+      "n_candidates": 4,
+      "best_candidate_preview": "You are a scientific summarizer. Extract a structured summary from the provided scientific abstract, ensuring to include specific details and findings. The summary should be organized into the followi"
+    },
+    {
+      "iteration": 3,
+      "train_composite": 0.9157,
+      "best_candidate_composite": 0.96,
+      "improved": false,
+      "gradient_preview": "The current prompt is failing to produce accurate and comprehensive summaries due to several recurring issues. Firstly, the generated summaries often lack specificity and detail, particularly in the \"results\" and \"limitations\" sections, which leads to vague and incomplete representations of the rese",
+      "n_candidates": 4,
+      "best_candidate_preview": "You are a scientific summarizer. Extract a structured summary from the provided scientific abstract, ensuring to include specific details and findings. The summary should be organized into the followi"
+    }
+  ]
+}

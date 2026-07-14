@@ -1,0 +1,11 @@
+{
+  "topic": "federated learning",
+  "weights": {
+    "venue": 0.078022,
+    "authors": 0.191671,
+    "impact": 0.110348,
+    "velocity": 0.16032,
+    "recency": 0.114347,
+    "relevance": 0.345292
+  }
+}

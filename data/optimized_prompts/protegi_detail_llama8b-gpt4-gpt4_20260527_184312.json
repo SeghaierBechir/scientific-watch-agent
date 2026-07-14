@@ -1,0 +1,124 @@
+{
+  "run_name": "llama8b-gpt4-gpt4",
+  "initial_composite": 0.54,
+  "final_composite": 0.6733,
+  "improvement_pct": 24.69,
+  "n_iterations": 2,
+  "beam_size": 4,
+  "n_worst": 5,
+  "use_llm_judge": true,
+  "iterations": [
+    {
+      "iteration": 1,
+      "train_composite": 0.5883,
+      "best_candidate_composite": 0.6467,
+      "improved": true,
+      "gradient": "The current prompt fails to produce accurate and faithful summaries because it lacks specificity and guidance on key elements to include. Across the failure examples, the generated summaries tend to provide broad and generic overviews rather than capturing specific details from the articles. For instance, in Example 1, the summary does not mention the specific context or findings related to awake craniotomy, and in Example 2, it misses details about the clinical outcomes of infective endocarditis with ECMO treatment. The prompt should explicitly instruct the model to include specific study details such as objectives, methods, results, and conclusions. Additionally, it should emphasize the importance of accurately reflecting the content and context of the original article to improve faithfulness. A concrete change would be to modify the prompt to say, \"Summarize the scientific article by including the study's objectives, methods, key findings, and conclusions, ensuring that the summary accurately reflects the article's content.\"",
+      "candidates": [
+        {
+          "rank": 1,
+          "prompt": "You are a detailed scientific summarizer. Your task is to extract a structured summary from a given scientific abstract. Focus on the specific details of the study by including the following key elements: the problem being addressed, the methodology used, the dataset involved, the results obtained, any limitations acknowledged, and the key contributions made by the research. Ensure that each part of your summary accurately reflects the content and context of the original article, providing a faithful and precise overview.",
+          "composite": 0.6467,
+          "rouge1": 0.0,
+          "rouge2": 0.0,
+          "rougeL": 0.0,
+          "faithfulness": 0.7,
+          "coverage": 0.5667,
+          "is_best": true
+        },
+        {
+          "rank": 2,
+          "prompt": "As a scientific summarizer, your role is to create a structured summary from a scientific abstract, capturing essential details. Include the study's problem statement, methods, dataset, results, limitations, and key contributions. Ensure the summary is detailed, reflecting the specific objectives, findings, and implications of the research accurately. This will help maintain the integrity and context of the original article in your summary.",
+          "composite": 0.5933,
+          "rouge1": 0.0,
+          "rouge2": 0.0,
+          "rougeL": 0.0,
+          "faithfulness": 0.6333,
+          "coverage": 0.5333,
+          "is_best": false
+        },
+        {
+          "rank": 3,
+          "prompt": "You are tasked with summarizing scientific articles by extracting structured information from their abstracts. Your summary must include the following fields: the problem addressed, methods employed, datasets used, results found, limitations noted, and key contributions made. Pay attention to accurately capturing the objectives, findings, and conclusions of the study to ensure the summary is precise and faithful to the original content.",
+          "composite": 0.6267,
+          "rouge1": 0.0,
+          "rouge2": 0.0,
+          "rougeL": 0.0,
+          "faithfulness": 0.6667,
+          "coverage": 0.5667,
+          "is_best": false
+        },
+        {
+          "rank": 4,
+          "prompt": "Your role is to generate structured summaries from scientific abstracts. Focus on capturing the study's problem, methodology, dataset, results, limitations, and key contributions. Your summaries should accurately reflect the specific objectives and findings of the research, ensuring that the content and context of the original article are preserved. This approach will provide a faithful and detailed overview of the scientific study.",
+          "composite": 0.5933,
+          "rouge1": 0.0,
+          "rouge2": 0.0,
+          "rougeL": 0.0,
+          "faithfulness": 0.6333,
+          "coverage": 0.5333,
+          "is_best": false
+        }
+      ],
+      "gradient_preview": "The current prompt fails to produce accurate and faithful summaries because it lacks specificity and guidance on key elements to include. Across the failure examples, the generated summaries tend to provide broad and generic overviews rather than capturing specific details from the articles. For ins",
+      "n_candidates": 4,
+      "best_candidate_preview": "You are a detailed scientific summarizer. Your task is to extract a structured summary from a given scientific abstract. Focus on the specific details of the study by including the following key eleme"
+    },
+    {
+      "iteration": 2,
+      "train_composite": 0.6683,
+      "best_candidate_composite": 0.6733,
+      "improved": true,
+      "gradient": "The current prompt fails to generate accurate summaries because it does not emphasize the need to closely adhere to the specific content of the provided abstracts. The generated summaries often introduce new elements or misinterpret the focus of the study, as seen in Example 1, where the summary incorrectly centers on toxicity and health risks rather than the chemical properties and usage of 1,3-dichloro-2-propanol. Similarly, in Example 2, the summary shifts focus to indigenous Australians, which is not mentioned in the excerpt. This indicates a pattern of introducing extraneous information or misrepresenting the study's scope. The prompt should explicitly instruct the summarizer to avoid adding information not present in the abstract and to maintain the original focus and context. Additionally, it should stress the importance of accurately reflecting the study's specific aims, methods, and findings without extrapolation. A concrete change would be to include a directive such as \"Ensure that your summary strictly adheres to the information presented in the abstract, avoiding any assumptions or additions beyond the given text.\"",
+      "candidates": [
+        {
+          "rank": 1,
+          "prompt": "You are a detailed scientific summarizer. Your task is to extract a structured summary from a given scientific abstract. Focus on the specific details of the study by including the following key elements: the problem being addressed, the methodology used, the dataset involved, the results obtained, any limitations acknowledged, and the key contributions made by the research. Ensure that your summary strictly adheres to the information presented in the abstract, avoiding any assumptions or additions beyond the given text. Maintain the original focus and context, accurately reflecting the study's specific aims, methods, and findings.",
+          "composite": 0.6733,
+          "rouge1": 0.0,
+          "rouge2": 0.0,
+          "rougeL": 0.0,
+          "faithfulness": 0.7667,
+          "coverage": 0.5333,
+          "is_best": true
+        },
+        {
+          "rank": 2,
+          "prompt": "You are a detailed scientific summarizer. Your task is to extract a structured summary from a given scientific abstract. The summary must include these key elements: the problem being addressed, the methodology used, the dataset involved, the results obtained, any limitations acknowledged, and the key contributions made by the research. Ensure that your summary strictly follows the content of the abstract, without introducing new information or altering the study's focus. It is crucial to maintain the original context and accurately convey the study's specific objectives, methods, and outcomes.",
+          "composite": 0.62,
+          "rouge1": 0.0,
+          "rouge2": 0.0,
+          "rougeL": 0.0,
+          "faithfulness": 0.7,
+          "coverage": 0.5,
+          "is_best": false
+        },
+        {
+          "rank": 3,
+          "prompt": "You are a detailed scientific summarizer. Your task is to extract a structured summary from a scientific abstract by focusing on its specific details. Include the following elements: the problem addressed, the methodology used, the dataset involved, the results obtained, any limitations acknowledged, and the key contributions made by the research. Strictly adhere to the information presented in the abstract, ensuring no additional assumptions or information are introduced. Reflect the original focus and context accurately, concentrating on the study's specific aims, methods, and findings.",
+          "composite": 0.6333,
+          "rouge1": 0.0,
+          "rouge2": 0.0,
+          "rougeL": 0.0,
+          "faithfulness": 0.7,
+          "coverage": 0.5333,
+          "is_best": false
+        },
+        {
+          "rank": 4,
+          "prompt": "You are a detailed scientific summarizer. Extract a structured summary from a given scientific abstract, focusing on these elements: the problem being addressed, the methodology, the dataset, the results, limitations, and key contributions. Your summary must strictly adhere to the abstract's content, avoiding any assumptions or additions beyond the provided text. Accurately reflect the study's specific aims, methods, and findings, maintaining the original focus and context.",
+          "composite": 0.5933,
+          "rouge1": 0.0,
+          "rouge2": 0.0,
+          "rougeL": 0.0,
+          "faithfulness": 0.6333,
+          "coverage": 0.5333,
+          "is_best": false
+        }
+      ],
+      "gradient_preview": "The current prompt fails to generate accurate summaries because it does not emphasize the need to closely adhere to the specific content of the provided abstracts. The generated summaries often introduce new elements or misinterpret the focus of the study, as seen in Example 1, where the summary inc",
+      "n_candidates": 4,
+      "best_candidate_preview": "You are a detailed scientific summarizer. Your task is to extract a structured summary from a given scientific abstract. Focus on the specific details of the study by including the following key eleme"
+    }
+  ]
+}

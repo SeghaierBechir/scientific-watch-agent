@@ -1,0 +1,124 @@
+{
+  "run_name": "nebius-qwen3-v32-v32",
+  "initial_composite": 0.695,
+  "final_composite": 0.72,
+  "improvement_pct": 3.6,
+  "n_iterations": 2,
+  "beam_size": 4,
+  "n_worst": 5,
+  "use_llm_judge": true,
+  "iterations": [
+    {
+      "iteration": 1,
+      "train_composite": 0.6342,
+      "best_candidate_composite": 0.72,
+      "improved": true,
+      "gradient": "The current prompt fails to produce summaries that accurately reflect the content of the provided article excerpts, as evidenced by the consistently low ROUGE-L and faithfulness scores across all failure examples. The primary error pattern is that the generated summaries introduce specific details, conclusions, or study aims that are not present in the given text. For instance, in Example 1, the summary adds context about \"Indigenous Australian populations\" and \"urinary\" analysis, which are absent from the excerpt discussing the general definition and risks of metabolic syndrome. Similarly, Example 2's summary incorrectly states the study \"investigates the role of interferon signaling pathways,\" while the excerpt only describes viral propagation methods. This indicates the assistant is generating plausible but unfounded extrapolations or conflating the excerpt with common scientific narrative templates. The core issue is that the prompt's instruction, \"Summarize the scientific article,\" is too vague and does not explicitly constrain the summary to the provided text only. It lacks a critical directive to base the summary solely on the information given, preventing hallucination. The concrete change needed is to add a strict instruction requiring the summary to be derived exclusively from the provided excerpt, such as: \"Your summary must only include information explicitly stated in the provided text. Do not infer, extrapolate, or add details not present in the excerpt.\"",
+      "candidates": [
+        {
+          "rank": 1,
+          "prompt": "You are a scientific summarization assistant. Your task is to extract a structured summary from a provided scientific article excerpt. You must produce a summary containing exactly the following six fields: 'problem', 'method', 'dataset', 'results', 'limitations', and 'key_contributions'. For each field, you must strictly base the content only on information explicitly stated in the provided excerpt. Do not infer, extrapolate, or add any details, conclusions, or context that are not directly present in the text. If the excerpt does not mention information relevant to a specific field, you must output 'Not stated in the text' for that field. Your summary must be a faithful and precise representation of the provided excerpt only.",
+          "composite": 0.667,
+          "rouge1": 0.0,
+          "rouge2": 0.0,
+          "rougeL": 0.0,
+          "faithfulness": 0.625,
+          "coverage": 0.73,
+          "is_best": false
+        },
+        {
+          "rank": 2,
+          "prompt": "You are a specialized AI for summarizing scientific article excerpts. Your sole task is to generate a structured summary with the six required fields: problem, method, dataset, results, limitations, and key_contributions. Crucially, you must derive all content exclusively from the provided text. You are prohibited from introducing any information, inferences, or details not explicitly stated in the excerpt. If the text does not contain information for a given field, output 'Not stated in the text' for that field. Your output must be strictly factual and confined to the content of the provided excerpt.",
+          "composite": 0.615,
+          "rouge1": 0.0,
+          "rouge2": 0.0,
+          "rougeL": 0.0,
+          "faithfulness": 0.575,
+          "coverage": 0.675,
+          "is_best": false
+        },
+        {
+          "rank": 3,
+          "prompt": "Act as a precise scientific summarizer. Given an excerpt from a scientific article, extract and structure the information into the following six fields: problem, method, dataset, results, limitations, key_contributions. Your summary must be grounded entirely in the provided text. Do not extrapolate, infer, or add any external knowledge or assumptions. Only include details that are directly mentioned in the excerpt. For any field not addressed in the text, respond with 'Not stated in the text'. Ensure your summary is accurate and contains no hallucinations or unfounded additions.",
+          "composite": 0.72,
+          "rouge1": 0.0,
+          "rouge2": 0.0,
+          "rougeL": 0.0,
+          "faithfulness": 0.7,
+          "coverage": 0.75,
+          "is_best": true
+        },
+        {
+          "rank": 4,
+          "prompt": "You are an assistant tasked with creating structured summaries of scientific article excerpts. Your output must contain exactly these six fields: problem, method, dataset, results, limitations, key_contributions. A critical rule is that you must base every part of your summary solely on the information explicitly provided in the given excerpt. Do not introduce any facts, conclusions, or context not present in the text. Avoid any form of inference or elaboration beyond what is stated. If the excerpt does not discuss a particular field, output 'Not stated in the text' for that field. Your goal is to produce a faithful, text-bound summary.",
+          "composite": 0.698,
+          "rouge1": 0.0,
+          "rouge2": 0.0,
+          "rougeL": 0.0,
+          "faithfulness": 0.65,
+          "coverage": 0.77,
+          "is_best": false
+        }
+      ],
+      "gradient_preview": "The current prompt fails to produce summaries that accurately reflect the content of the provided article excerpts, as evidenced by the consistently low ROUGE-L and faithfulness scores across all failure examples. The primary error pattern is that the generated summaries introduce specific details, ",
+      "n_candidates": 4,
+      "best_candidate_preview": "Act as a precise scientific summarizer. Given an excerpt from a scientific article, extract and structure the information into the following six fields: problem, method, dataset, results, limitations,"
+    },
+    {
+      "iteration": 2,
+      "train_composite": 0.6316,
+      "best_candidate_composite": 0.72,
+      "improved": false,
+      "gradient": "**Gradient:** The current prompt fails to enforce strict adherence to the six-field output structure, leading to summaries that are either unstructured or incorrectly populated, which directly causes low ROUGE-L scores. Across the failure examples, the model consistently generates free-form, paragraph-style text instead of filling each specified field with a concise, extracted statement. For instance, in Example 1, the model outputs a vague promotional paragraph rather than discrete fields, and in Examples 2-5, it produces run-on sentences that blend multiple fields (e.g., mixing problem, method, and results) without clear separation. The core issue is that the prompt’s instruction to “extract and structure the information into the following six fields” is too permissive; it does not explicitly mandate that each field must be output as a separate, labeled item (e.g., “problem: [text]”), nor does it prohibit prose-style responses. This allows the model to default to natural language generation, ignoring the structured format. To fix this, the prompt must be revised to require a rigid, line-by-line output format where each field is explicitly listed and populated only with content directly quoted or paraphrased from the excerpt, with no introductory or connecting sentences. Additionally, the prompt should forbid any explanatory text outside the six fields, ensuring the response is purely a structured list.",
+      "candidates": [
+        {
+          "rank": 1,
+          "prompt": "You are a scientific information extractor. Your task is to process a provided scientific abstract by extracting and outputting information in a strict, line-by-line format. You must output exactly six lines, each corresponding to one required field. Use the exact field labels as shown. For each field, extract only information explicitly stated in the text. If the text does not mention a field, output 'Not stated in the text' for that line. Do not write any introductory, concluding, or explanatory sentences. Do not combine fields. Do not generate prose or paragraphs. Your entire response must be only these six lines.\n\nproblem: [Extract or paraphrase the problem directly from the text. If not stated, use 'Not stated in the text.']\nmethod: [Extract or paraphrase the method directly from the text. If not stated, use 'Not stated in the text.']\ndataset: [Extract or paraphrase the dataset directly from the text. If not stated, use 'Not stated in the text.']\nresults: [Extract or paraphrase the results directly from the text. If not stated, use 'Not stated in the text.']\nlimitations: [Extract or paraphrase the limitations directly from the text. If not stated, use 'Not stated in the text.']\nkey_contributions: [Extract or paraphrase the key contributions directly from the text. If not stated, use 'Not stated in the text.']",
+          "composite": 0.637,
+          "rouge1": 0.0,
+          "rouge2": 0.0,
+          "rougeL": 0.0,
+          "faithfulness": 0.625,
+          "coverage": 0.655,
+          "is_best": false
+        },
+        {
+          "rank": 2,
+          "prompt": "Extract structured information from the given scientific abstract. Your output must be a structured list with exactly six items. Format each item exactly as: 'FIELD: CONTENT'. Use only these six fields in this order: problem, method, dataset, results, limitations, key_contributions. The CONTENT for each field must be a concise statement derived solely from the provided text. Do not invent, infer, or add any information. If the abstract does not contain information for a specific field, the CONTENT for that field must be exactly 'Not stated in the text'. Do not include any other text, commentary, or formatting. Your response should contain nothing but these six lines.",
+          "composite": 0.631,
+          "rouge1": 0.0,
+          "rouge2": 0.0,
+          "rougeL": 0.0,
+          "faithfulness": 0.625,
+          "coverage": 0.64,
+          "is_best": false
+        },
+        {
+          "rank": 3,
+          "prompt": "Role: Structured Data Extractor. Input: A scientific abstract. Task: Populate the following six predefined fields with information extracted verbatim or closely paraphrased from the input. Output Format: You must output the fields in the specified order as discrete, labeled lines. No narrative, no bullet points, no markdown. Just the lines.\n\nproblem: [content from text or 'Not stated in the text']\nmethod: [content from text or 'Not stated in the text']\ndataset: [content from text or 'Not stated in the text']\nresults: [content from text or 'Not stated in the text']\nlimitations: [content from text or 'Not stated in the text']\nkey_contributions: [content from text or 'Not stated in the text']\n\nRules: 1. Extract only explicitly stated information. 2. Do not write any text outside these six lines. 3. Keep each field's content concise and directly from the abstract. 4. If a field is not addressed, use the exact phrase 'Not stated in the text'.",
+          "composite": 0.585,
+          "rouge1": 0.0,
+          "rouge2": 0.0,
+          "rougeL": 0.0,
+          "faithfulness": 0.625,
+          "coverage": 0.525,
+          "is_best": false
+        },
+        {
+          "rank": 4,
+          "prompt": "System Instruction: You are a precise extraction tool. Given a scientific abstract, you will generate a structured summary consisting solely of six key-value pairs. The output must be plain text with each pair on a new line, formatted as 'field: extracted_information'. The fields are: problem, method, dataset, results, limitations, key_contributions. For each field, extract the relevant information directly from the text. If the text does not mention a field, write 'Not stated in the text' for that field. Do not include any other words, sentences, or formatting. Your response must be exclusively these six lines, with no additional commentary.",
+          "composite": 0.646,
+          "rouge1": 0.0,
+          "rouge2": 0.0,
+          "rougeL": 0.0,
+          "faithfulness": 0.65,
+          "coverage": 0.64,
+          "is_best": false
+        }
+      ],
+      "gradient_preview": "**Gradient:** The current prompt fails to enforce strict adherence to the six-field output structure, leading to summaries that are either unstructured or incorrectly populated, which directly causes low ROUGE-L scores. Across the failure examples, the model consistently generates free-form, paragra",
+      "n_candidates": 4,
+      "best_candidate_preview": "Act as a precise scientific summarizer. Given an excerpt from a scientific article, extract and structure the information into the following six fields: problem, method, dataset, results, limitations,"
+    }
+  ]
+}

@@ -1,0 +1,255 @@
+%% ============================================================
+%%  Chapitre 5 — Architecture multi-agents
+%% ============================================================
+\chapter{Architecture multi-agents}
+\label{ch:agents}
+
+\section{Principes de conception}
+
+L'architecture multi-agents de \textit{Scientific Watch Agent} repose sur
+quatre principes directeurs.
+
+\paragraph{Séparation des responsabilités.}
+Chaque agent a une responsabilité unique et bien délimitée : recherche,
+filtrage, résumé, synthèse, critique, analyse. Cette séparation facilite
+le test, la maintenance et l'évolution indépendante de chaque composant.
+
+\paragraph{Contrat de communication formalisé.}
+Tous les échanges entre agents transitent par un état partagé (\texttt{WatchState})
+dont chaque champ est typé par un schéma Pydantic v2. Ce contrat formalisé
+garantit la cohérence des données tout au long du pipeline et constitue
+une documentation vivante de l'interface entre agents.
+
+\paragraph{Principe Single Writer / Multiple Readers.}
+Chaque section de l'état partagé n'est écrite que par un unique agent,
+mais peut être lue par tous. Cette règle prévient les conditions de course
+(\textit{race conditions}) dans les architectures futures à agents concurrents.
+
+\paragraph{Abstraction du fournisseur LLM.}
+Les agents ne connaissent pas le fournisseur de LLM qu'ils utilisent.
+Ils invoquent une interface unifiée \texttt{LLMClient} qui délègue
+automatiquement au fournisseur approprié selon la tâche, via une fabrique
+(\texttt{factory.py}).
+
+\section{État partagé : \texttt{WatchState}}
+
+L'état partagé \texttt{WatchState} est défini comme un \texttt{TypedDict}
+Python dans \texttt{src/agents/state.py}. Il contient :
+
+\begin{itemize}
+  \item \texttt{topic} : le sujet de recherche soumis par l'utilisateur ;
+  \item \texttt{expanded\_queries} : liste des requêtes générées par
+    le \texttt{QueryExpander} ;
+  \item \texttt{raw\_articles} : liste d'objets \texttt{Article} récupérés
+    par le \texttt{Searcher} ;
+  \item \texttt{scored\_articles} : liste d'articles avec leur
+    \texttt{QualityScore} associé, produite par le \texttt{QualityCritic} ;
+  \item \texttt{summaries} : liste d'\texttt{ArticleSummary} ou
+    \texttt{NarrativeSummary} générés par le \texttt{Summarizer} ;
+  \item \texttt{synthesis} : objet \texttt{Synthesis} produit par
+    le \texttt{Synthesizer} ;
+  \item \texttt{critic\_feedback} : objet \texttt{CriticFeedback}
+    du dernier cycle Reflexion ;
+  \item \texttt{reflexion\_count} : compteur d'itérations Reflexion ;
+  \item \texttt{trend\_analysis} : objet \texttt{TrendAnalysis} final ;
+  \item \texttt{logs}, \texttt{errors} : listes accumulées via
+    \texttt{Annotated[list, operator.add]}.
+\end{itemize}
+
+\section{Couche d'abstraction LLM}
+
+\subsection{Interface \texttt{LLMClient}}
+
+L'interface \texttt{LLMClient} est définie comme un Protocol Python
+dans \texttt{src/llm/base.py}. Elle expose deux méthodes :
+
+\begin{lstlisting}[caption={Interface LLMClient (src/llm/base.py).}]
+class LLMClient(Protocol):
+    def chat(
+        self,
+        system: str,
+        messages: list[dict],
+        temperature: float = 0.3,
+        max_tokens: int = 2048,
+    ) -> LLMResponse: ...
+
+    def chat_structured(
+        self,
+        system: str,
+        messages: list[dict],
+        schema: type[T],
+        temperature: float = 0.1,
+    ) -> tuple[T, LLMResponse]: ...
+\end{lstlisting}
+
+\subsection{Quatre fournisseurs implémentés}
+
+Quatre implémentations de \texttt{LLMClient} sont disponibles,
+présentées dans le tableau~\ref{tab:providers}.
+
+\begin{table}[htbp]
+  \centering
+  \caption{Fournisseurs LLM intégrés et méthode de structured output.}
+  \label{tab:providers}
+  \rowcolors{2}{lightgray}{white}
+  \begin{tabular}{llll}
+    \toprule
+    \textbf{Provider} & \textbf{Modèles} & \textbf{Structured output} & \textbf{Coût relatif} \\
+    \midrule
+    Anthropic & claude-sonnet-4-6 & \texttt{tool\_use} forcé & $\times 10$ \\
+    OpenAI & gpt-4o-mini & \texttt{response\_format} JSON & $\times 3$ \\
+    Groq & llama-3.3-70b & \texttt{response\_format} JSON & $\times 1$ \\
+    Nebius & DeepSeek-V3.2, Qwen3 & \texttt{response\_format} JSON & $\times 0.5$ \\
+    \bottomrule
+  \end{tabular}
+\end{table}
+
+La fabrique \texttt{get\_llm\_for\_task(task)} dans \texttt{src/llm/factory.py}
+sélectionne automatiquement le modèle adapté à chaque type de tâche
+selon la table \texttt{TASK\_MODELS} définie dans \texttt{src/config.py}.
+Cette approche permet d'optimiser le rapport coût/qualité : Claude Sonnet
+pour la synthèse (contexte 200K), Nebius Qwen3 pour la summarisation
+répétitive (\$0.14/M tokens), GPT-4o-mini pour l'expansion de requêtes.
+
+\section{Les sept agents}
+\label{sec:agents}
+
+\subsection{QueryExpander — Expansion de requêtes (ReAct)}
+
+Le \texttt{QueryExpander} est le premier agent du pipeline. Il reçoit
+le topic brut de l'utilisateur et génère plusieurs requêtes de recherche
+diversifiées, optimisées pour maximiser la couverture des travaux pertinents.
+Il implémente le pattern ReAct (détaillé au Chapitre~\ref{ch:patterns}).
+
+À chaque itération, l'agent :
+\begin{enumerate}
+  \item Raisonne sur la meilleure requête à formuler ;
+  \item Sonde OpenAlex avec cette requête ;
+  \item Observe le nombre d'articles retournés et les concepts associés ;
+  \item Adapte sa stratégie (affiner, élargir ou diversifier).
+\end{enumerate}
+
+À l'issue de 4 itérations maximum, le \texttt{QueryExpander} produit
+une liste de 3 à 8 requêtes complémentaires qui alimentent le \texttt{Searcher}.
+
+\subsection{Searcher — Récupération et déduplication}
+
+Le \texttt{Searcher} exécute en parallèle toutes les requêtes produites
+par le \texttt{QueryExpander} sur l'API OpenAlex, fusionne les résultats
+et déduplique par identifiant OpenAlex. Il enrichit également les données
+auteurs (h-index, affiliations) via des appels secondaires à l'API.
+
+Le corpus résultant contient typiquement entre 80 et 300 articles, selon
+la richesse du domaine et le nombre de requêtes générées.
+
+\subsection{QualityCritic — Filtrage par qualité}
+
+Le \texttt{QualityCritic} applique le scorer multi-dimensionnel
+(Chapitre~\ref{ch:automl}) à chaque article du corpus. Il charge
+automatiquement les pondérations Optuna apprises pour le domaine correspondant
+(via \texttt{load\_weights\_for\_topic}), ou utilise les pondérations par
+défaut si aucune pondération spécifique n'est disponible.
+
+Il retient les $k$ articles les mieux classés (typiquement $k = 15$)
+pour alimenter le \texttt{Summarizer}.
+
+\subsection{Summarizer — Résumés structurés et narratifs}
+
+Le \texttt{Summarizer} génère, pour chaque article sélectionné, un résumé
+dans l'un des deux modes suivants :
+
+\paragraph{Mode structuré.}
+Le résumé est un objet \texttt{ArticleSummary} comportant six champs :
+\textit{problem} (problème adressé), \textit{method} (approche proposée),
+\textit{dataset} (données utilisées), \textit{results} (résultats obtenus),
+\textit{limitations} (limites identifiées), et \textit{contribution}
+(apport principal).
+
+\paragraph{Mode narratif.}
+Le résumé est un paragraphe en prose de 150 à 250 mots (\texttt{NarrativeSummary}),
+plus accessible et adapté à une présentation à des lecteurs non spécialistes.
+
+\subsection{Synthesizer — Synthèse globale (Reflexion)}
+
+Le \texttt{Synthesizer} reçoit l'ensemble des résumés et génère une
+synthèse globale du domaine (\texttt{Synthesis}) comprenant : une vue
+d'ensemble du domaine, les principales approches méthodologiques,
+les datasets de référence, et les résultats clés.
+
+Il est au cœur du pattern Reflexion (Chapitre~\ref{ch:patterns}) :
+sa production peut être révisée itérativement en réponse aux retours du
+\texttt{Critic}.
+
+\subsection{Critic — Évaluation Reflexion}
+
+Le \texttt{Critic} évalue la synthèse produite par le \texttt{Synthesizer}
+selon quatre axes : \textit{fidelity} (fidélité aux sources), \textit{completeness}
+(exhaustivité), \textit{specificity} (niveau de détail), et \textit{consistency}
+(cohérence interne). Il produit un objet \texttt{CriticFeedback} indiquant
+si une révision est nécessaire (\texttt{needs\_revision}) et, le cas échéant,
+les améliorations à apporter.
+
+\subsection{TrendAnalyst — Analyse des tendances}
+
+Le \texttt{TrendAnalyst} reçoit la synthèse finale et génère un objet
+\texttt{TrendAnalysis} comprenant : les tendances émergentes du domaine
+(avec leur niveau de maturité), les lacunes de recherche identifiées,
+et des perspectives de directions futures. Un mécanisme de retry automatique
+garantit que le champ \texttt{future\_perspectives} n'est jamais vide.
+
+\section{Flux d'exécution et arêtes conditionnelles}
+
+Le pipeline est compilé par LangGraph en un graphe orienté acyclique
+(DAG) avec une arête conditionnelle pour le cycle Reflexion.
+La figure~\ref{fig:langgraph_pipeline} illustre le flux complet.
+
+\begin{figure}[htbp]
+  \centering
+  \includegraphics[width=0.85\textwidth]{figures/langgraph_pipeline.pdf}
+  \caption{Pipeline LangGraph avec ses sept agents et l'arête conditionnelle
+  Reflexion. L'arête \texttt{route\_after\_critic} redirige vers le
+  \texttt{Synthesizer} si \texttt{needs\_revision = True} et que le
+  nombre d'itérations est inférieur au maximum autorisé (3).}
+  \label{fig:langgraph_pipeline}
+\end{figure}
+
+La fonction \texttt{route\_after\_critic} dans \texttt{src/agents/graph.py}
+implémente la logique de routage :
+\begin{itemize}
+  \item Si \texttt{critic\_feedback.needs\_revision = True} et
+    \texttt{reflexion\_count < MAX\_REFLEXION\_ITERATIONS} : retour au
+    \texttt{Synthesizer} ;
+  \item Sinon (qualité suffisante ou itérations épuisées) : passage au
+    \texttt{TrendAnalyst}.
+\end{itemize}
+
+\section{Évaluation du pipeline}
+
+Un exemple d'exécution du pipeline complet sur le topic
+``\textit{fake news detection}'' produit les métriques suivantes
+(tableau~\ref{tab:pipeline_demo}) :
+
+\begin{table}[htbp]
+  \centering
+  \caption{Métriques d'exécution typiques du pipeline (topic: fake news detection).}
+  \label{tab:pipeline_demo}
+  \rowcolors{2}{lightgray}{white}
+  \begin{tabular}{lrr}
+    \toprule
+    \textbf{Agent} & \textbf{Durée (s)} & \textbf{Coût (\$)} \\
+    \midrule
+    QueryExpander (4 iter.) & 12.3 & 0.002 \\
+    Searcher (3 requêtes) & 8.7 & 0.000 \\
+    QualityCritic (120 articles) & 0.3 & 0.000 \\
+    Summarizer (15 articles) & 45.2 & 0.031 \\
+    Synthesizer + Critic (2 iter.) & 18.9 & 0.012 \\
+    TrendAnalyst & 7.4 & 0.005 \\
+    \midrule
+    \textbf{Total} & \textbf{92.8} & \textbf{0.050} \\
+    \bottomrule
+  \end{tabular}
+\end{table}
+
+Le coût total d'un run est de l'ordre de \$0.05 avec la configuration
+Nebius/Groq, ce qui est compatible avec un usage régulier dans le cadre
+d'un projet de recherche académique.

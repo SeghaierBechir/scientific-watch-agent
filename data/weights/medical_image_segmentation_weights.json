@@ -1,0 +1,11 @@
+{
+  "topic": "medical image segmentation",
+  "weights": {
+    "venue": 0.237918,
+    "authors": 0.180753,
+    "impact": 0.15452,
+    "velocity": 0.161875,
+    "recency": 0.04056,
+    "relevance": 0.224374
+  }
+}

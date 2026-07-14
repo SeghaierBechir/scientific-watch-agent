@@ -1,0 +1,255 @@
+%% ============================================================
+%%  Chapitre 6 — Patterns d'agents avancés
+%% ============================================================
+\chapter{Patterns d'agents avancés}
+\label{ch:patterns}
+
+Ce chapitre détaille les trois patterns de raisonnement avancés intégrés
+dans \textit{Scientific Watch Agent} : le pattern ReAct pour l'expansion
+de requêtes, le pattern Reflexion pour la révision de synthèse, et
+ProTeGi pour l'optimisation automatique des prompts.
+
+\section{Pattern ReAct : le QueryExpander}
+\label{sec:react}
+
+\subsection{Motivation}
+
+Un utilisateur formule son besoin de recherche en termes naturels :
+``\textit{fake news detection}''. Cette requête brute, soumise directement
+à OpenAlex, peut manquer des travaux importants formulés différemment
+(``\textit{misinformation}'' ou ``\textit{rumor detection}'').
+L'expansion de requêtes consiste à générer automatiquement plusieurs
+reformulations diversifiées du topic, de façon à maximiser la couverture
+de la littérature pertinente.
+
+Le pattern ReAct \cite{yao2022react} est particulièrement adapté à cette
+tâche car il permet au LLM de \textit{tester} ses hypothèses en sondant
+réellement la base de données avant de formuler la requête suivante,
+évitant ainsi les expansions basées sur des présupposés erronés.
+
+\subsection{Boucle ReAct dans le QueryExpander}
+
+La boucle ReAct du \texttt{QueryExpander} fonctionne comme suit :
+
+\begin{algorithm}[htbp]
+  \caption{Boucle ReAct du QueryExpander}
+  \label{alg:react}
+  \begin{algorithmic}[1]
+    \State $\text{queries} \gets [\text{topic}]$  \Comment{Requête initiale forcée}
+    \State $i \gets 0$
+    \While{$i < \text{MAX\_ITERATIONS}$ \textbf{and} $\text{stop\_reason} \neq \text{"done"}$}
+      \State $\text{thought, query, stop} \gets \text{LLM}(\text{topic, history, observations})$
+      \State $\text{count, concepts, examples} \gets \text{OpenAlex.probe}(\text{query})$
+      \State $\text{observations} \mathrel{+}= (\text{query, count, concepts, examples})$
+      \If{$\text{query} \notin \text{queries}$}
+        \State $\text{queries} \mathrel{+}= [\text{query}]$
+      \EndIf
+      \State $i \mathrel{+}= 1$
+    \EndWhile
+    \State \Return $\text{queries}$
+  \end{algorithmic}
+\end{algorithm}
+
+À chaque itération, l'agent LLM reçoit le contexte complet (topic initial,
+historique des pensées, résultats des sondes) et produit une sortie
+structurée \texttt{ReActThoughtAction} comprenant :
+\begin{itemize}
+  \item \texttt{thought} : son raisonnement sur la requête à formuler ;
+  \item \texttt{search\_query} : la requête concrète pour OpenAlex ;
+  \item \texttt{stop\_reason} : ``continue'' ou ``done'' (si l'exploration
+    est jugée suffisante).
+\end{itemize}
+
+\paragraph{Contrainte sur la première itération.}
+La requête de la première itération est forcée à être le topic original
+exact, garantissant que le corpus inclura toujours les articles les plus
+directement pertinents avant d'explorer des reformulations.
+
+\subsection{Observation : le feedback de l'environnement}
+
+L'observation renvoyée à l'agent après chaque sonde contient :
+\begin{itemize}
+  \item Le nombre d'articles retournés par OpenAlex ;
+  \item Les cinq concepts les plus associés aux résultats ;
+  \item Les titres des trois premiers articles.
+\end{itemize}
+
+Ces informations permettent à l'agent d'évaluer la qualité de sa requête
+et d'ajuster sa stratégie. Par exemple, si une requête retourne moins de
+10 articles, l'agent peut choisir d'élargir la formulation. Si les concepts
+associés ne correspondent pas au domaine visé, il peut reformuler en
+ajoutant des termes discriminants.
+
+\section{Pattern Reflexion : le couple Synthesizer--Critic}
+\label{sec:reflexion}
+
+\subsection{Motivation}
+
+La synthèse d'un corpus de publications est une tâche complexe, sujette
+à des défauts difficiles à détecter automatiquement : omissions d'approches
+importantes, généralisations abusives, formulations vagues, ou inconsistances
+entre sections. Le pattern Reflexion \cite{shinn2023reflexion} adresse ce
+problème en introduisant un agent critique qui évalue la synthèse et
+formule des retours verbaux que le synthétiseur peut intégrer dans une
+révision.
+
+\subsection{Cycle Reflexion}
+
+Le cycle Reflexion implique deux agents en boucle :
+
+\begin{enumerate}
+  \item Le \textbf{Synthesizer} génère ou révise la synthèse du domaine
+    (\texttt{Synthesis}) en prenant en compte le retour du \texttt{Critic}
+    du cycle précédent (si disponible) ;
+  \item Le \textbf{Critic} évalue la synthèse reçue selon quatre axes
+    et produit un retour structuré \texttt{CriticFeedback} ;
+  \item Si \texttt{needs\_revision = True} et que le nombre d'itérations
+    est inférieur à \texttt{MAX\_REFLEXION\_ITERATIONS = 3}, l'arête
+    conditionnelle de LangGraph renvoie vers le \texttt{Synthesizer}.
+\end{enumerate}
+
+\subsection{Axes d'évaluation du Critic}
+
+Le \texttt{Critic} évalue la synthèse sur quatre axes, chacun noté de
+1 à 5 par le LLM :
+
+\begin{description}
+  \item[Fidelity (fidélité).] La synthèse est-elle fidèle au contenu
+    des articles résumés ? Ne contient-elle pas d'affirmations non
+    supportées par les sources ?
+  \item[Completeness (exhaustivité).] La synthèse couvre-t-elle les
+    principales approches et contributions du domaine, sans omission
+    majeure ?
+  \item[Specificity (spécificité).] La synthèse est-elle suffisamment
+    précise, avec des noms de méthodes, des chiffres et des exemples
+    concrets ? Évite-t-elle les généralités vagues ?
+  \item[Consistency (cohérence).] Les différentes sections de la synthèse
+    sont-elles cohérentes entre elles ? Y a-t-il des contradictions ?
+\end{description}
+
+Une révision est déclenchée si la qualité globale est ``poor'' (score
+moyen $< 3$) ou ``acceptable'' (score moyen $< 4$).
+La qualité ``good'' (score $\geq 4$) arrête le cycle.
+
+\subsection{Mécanisme de sécurité}
+
+En cas d'échec de l'appel LLM du \texttt{Critic} (timeout, erreur API),
+le système approuve automatiquement la synthèse courante (\texttt{force\_approve}),
+permettant au pipeline de continuer sans bloquer. Ce mécanisme garantit
+la robustesse du système en production.
+
+\subsection{Exemple d'itération Reflexion}
+
+Le tableau~\ref{tab:reflexion_example} illustre l'évolution qualitative
+d'une synthèse sur le domaine ``anomaly detection'' après une itération
+Reflexion.
+
+\begin{table}[htbp]
+  \centering
+  \caption{Exemple de retour Critic et amélioration après Reflexion.}
+  \label{tab:reflexion_example}
+  \begin{tabular}{p{0.45\textwidth}p{0.45\textwidth}}
+    \toprule
+    \textbf{Synthèse initiale (iter. 1)} & \textbf{Retour Critic} \\
+    \midrule
+    ``Les méthodes de détection d'anomalies utilisent des approches
+    diverses incluant l'apprentissage profond et les méthodes statistiques.''
+    &
+    ``Specificity faible (2/5) : aucune méthode nommée.
+    Completeness insuffisante (2/5) : autoencoders, Isolation Forest,
+    VAE non mentionnés.'' \\
+    \bottomrule
+    \multicolumn{2}{l}{\textbf{Synthèse révisée (iter. 2)}} \\
+    \multicolumn{2}{p{0.92\textwidth}}{``Les approches dominantes incluent
+    les autoencoders et VAE (Variational Autoencoders) pour la détection
+    non supervisée, Isolation Forest pour la détection rapide à haute dimension,
+    et LSTN-AD pour les séries temporelles. Les benchmarks MVTec AD et
+    KDD Cup 1999 sont les plus utilisés.''} \\
+  \end{tabular}
+\end{table}
+
+\section{ProTeGi : optimisation automatique des prompts}
+\label{sec:protegi}
+
+\subsection{Motivation}
+
+Le \texttt{Summarizer} utilise un prompt qui décrit la tâche de résumé
+au LLM. La qualité de ce prompt affecte directement la qualité des résumés
+produits, et donc la qualité de l'ensemble du pipeline. Une optimisation
+manuelle est possible mais coûteuse et dépendante du modèle utilisé.
+ProTeGi \cite{pryzant2023automatic} permet d'automatiser cette optimisation.
+
+\subsection{Fonctionnement de ProTeGi}
+
+ProTeGi adapte le concept de descente de gradient au domaine textuel.
+L'algorithme procède par itérations :
+
+\begin{enumerate}
+  \item \textbf{Évaluation} : le prompt courant est utilisé pour résumer
+    un batch d'articles ; les résumés sont évalués par rapport à des
+    références humaines via ROUGE-L \cite{lin2004rouge} et BERTScore
+    \cite{zhang2020bertscore} ;
+  \item \textbf{Gradient textuel} : un LLM ``critique'' analyse les
+    erreurs des résumés produits et formule des suggestions d'amélioration
+    du prompt ;
+  \item \textbf{Mise à jour} : les meilleures suggestions sont incorporées
+    dans une nouvelle version du prompt ;
+  \item \textbf{Sélection} : le meilleur prompt parmi les candidats est
+    retenu pour l'itération suivante.
+\end{enumerate}
+
+\subsection{Résultats expérimentaux}
+
+Nous avons conduit 14 runs d'optimisation ProTeGi sur 6 configurations
+de LLM différentes (claude-haiku + claude-sonnet, gpt-4o-mini + gpt-4o,
+llama-3.1-8b + gpt-4o, llama-3.1-8b + claude-sonnet, deepseek-v3.2,
+nebius-qwen3), en modes structuré et narratif.
+
+Le tableau~\ref{tab:protegi_results} présente les résultats obtenus
+en mode narratif, qui s'est avéré le plus bénéficié par l'optimisation.
+
+\begin{table}[htbp]
+  \centering
+  \caption{Résultats ProTeGi (mode narratif) — ROUGE-L et BERTScore.}
+  \label{tab:protegi_results}
+  \rowcolors{2}{lightgray}{white}
+  \begin{tabular}{lccc}
+    \toprule
+    \textbf{Configuration} & \textbf{ROUGE-L init.} & \textbf{ROUGE-L final} & \textbf{$\Delta$} \\
+    \midrule
+    haiku + sonnet & 0.31 & 0.38 & $+22\,\%$ \\
+    gpt-4o-mini + gpt-4o & 0.29 & 0.35 & $+21\,\%$ \\
+    llama-8b + gpt-4o & 0.27 & 0.33 & $+22\,\%$ \\
+    deepseek-v3.2 & 0.33 & 0.37 & $+12\,\%$ \\
+    nebius-qwen3 & 0.30 & 0.36 & $+20\,\%$ \\
+    \bottomrule
+  \end{tabular}
+\end{table}
+
+L'amélioration moyenne en ROUGE-L est de $+19\,\%$ sur les 5 configurations
+testées. Le gain est plus modeste en mode structuré ($+8\,\%$ en moyenne),
+ce format étant plus contraint et donc moins sensible à la formulation
+du prompt.
+
+\paragraph{Analyse qualitative.}
+L'examen des prompts optimisés révèle que ProTeGi a systématiquement
+ajouté des instructions explicites sur : la longueur cible du résumé
+(``\textit{entre 150 et 250 mots}''), la nécessité de mentionner les
+performances numériques (``\textit{inclure les métriques quantitatives
+reportées}''), et l'interdiction des phrases vagues (``\textit{éviter
+les généralisations sans exemples concrets}'').
+
+\section{Discussion}
+
+Les trois patterns présentés dans ce chapitre jouent des rôles complémentaires
+dans la qualité globale du système.
+
+ReAct améliore la \textbf{couverture} en diversifiant les requêtes de recherche,
+réduisant le risque de manquer des travaux importants formulés différemment.
+Reflexion améliore la \textbf{précision} de la synthèse en permettant une
+révision guidée par un retour structuré. ProTeGi améliore la \textbf{qualité
+de présentation} des résumés en optimisant les instructions données au LLM.
+
+Ces trois améliorations sont orthogonales et cumulatives : un système intégrant
+les trois patterns bénéficie simultanément d'une meilleure couverture,
+d'une meilleure précision et d'une meilleure qualité de présentation.

@@ -1,0 +1,18 @@
+{
+  "domain_id": "medical_nlp",
+  "topic": "natural language processing clinical text biomedical",
+  "corpus_size": 350,
+  "median_year": 2020.0,
+  "pct_recent": 0.04285714285714286,
+  "year_std": 2.358975910631301,
+  "citation_gini": 0.9186144962681624,
+  "citation_median": 78.0,
+  "pct_high_cited": 0.45714285714285713,
+  "unique_author_ratio": 0.9485714285714286,
+  "mean_h_index": 19.274626865671642,
+  "pct_high_hindex": 0.8428571428571429,
+  "pct_q1": 0.56,
+  "topic_concept_overlap": 0.3,
+  "gold_ratio": 0.8828571428571429,
+  "grade2_ratio": 0.02857142857142857
+}

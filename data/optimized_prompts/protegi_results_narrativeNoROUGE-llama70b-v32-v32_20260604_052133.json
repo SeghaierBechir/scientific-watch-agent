@@ -1,0 +1,30 @@
+{
+  "run_name": "narrativeNoROUGE-llama70b-v32-v32",
+  "initial_composite": 0.654,
+  "final_composite": 0.892,
+  "improvement_pct": 36.39,
+  "n_iterations": 2,
+  "beam_size": 4,
+  "n_worst": 5,
+  "use_llm_judge": true,
+  "iterations": [
+    {
+      "iteration": 1,
+      "train_composite": 0.6808,
+      "best_candidate_composite": 0.725,
+      "improved": true,
+      "gradient_preview": "The current prompt fails because it does not explicitly instruct the model to **ignore peripheral or non-scientific content** and to **focus exclusively on the core research article**. The failure examples reveal a consistent pattern where the model incorrectly summarizes acknowledgments, background",
+      "n_candidates": 4,
+      "best_candidate_preview": "You are a scientific paper summarizer. Your task is to write a concise narrative summary of the core scientific article. First, identify the primary research study described. Ignore all peripheral con"
+    },
+    {
+      "iteration": 2,
+      "train_composite": 0.7294,
+      "best_candidate_composite": 0.892,
+      "improved": true,
+      "gradient_preview": "The current prompt fails because it does not explicitly require the summary to be grounded *exclusively* in the provided article excerpt, leading to severe hallucinations and off-topic summaries. Across the failure examples, the generated text introduces extraneous information not present in the exc",
+      "n_candidates": 4,
+      "best_candidate_preview": "You are a scientific paper summarizer. Your task is to write a concise narrative summary of the core scientific article based solely and directly on the text provided below. Do not add any information"
+    }
+  ]
+}

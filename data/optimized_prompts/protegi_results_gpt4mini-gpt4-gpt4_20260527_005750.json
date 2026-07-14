@@ -1,0 +1,30 @@
+{
+  "run_name": "gpt4mini-gpt4-gpt4",
+  "initial_composite": 0.68,
+  "final_composite": 0.71,
+  "improvement_pct": 4.41,
+  "n_iterations": 2,
+  "beam_size": 4,
+  "n_worst": 5,
+  "use_llm_judge": true,
+  "iterations": [
+    {
+      "iteration": 1,
+      "train_composite": 0.644,
+      "best_candidate_composite": 0.68,
+      "improved": false,
+      "gradient_preview": "The current prompt fails to produce accurate and faithful summaries due to a lack of specificity in its instructions. Across the failure examples, the generated summaries often introduce information not present in the article excerpts, such as specific contexts or study details that are not mentione",
+      "n_candidates": 4,
+      "best_candidate_preview": "You are a helpful assistant. Summarize the scientific article."
+    },
+    {
+      "iteration": 2,
+      "train_composite": 0.674,
+      "best_candidate_composite": 0.71,
+      "improved": true,
+      "gradient_preview": "The current prompt fails to guide the AI in producing summaries that accurately reflect the content and focus of the scientific articles. Across the failure examples, the generated summaries often introduce topics or contexts not present in the article excerpts, leading to low faithfulness scores. F",
+      "n_candidates": 4,
+      "best_candidate_preview": "You are a specialized scientific summarizer. Your task is to generate a structured summary from a given scientific abstract. Focus on the specific details and findings presented in the abstract and av"
+    }
+  ]
+}

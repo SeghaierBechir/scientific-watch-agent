@@ -1,0 +1,38 @@
+{
+  "initial_composite": 0.1907,
+  "final_composite": 0.2,
+  "improvement_pct": 4.9,
+  "n_iterations": 3,
+  "beam_size": 4,
+  "n_worst": 5,
+  "use_llm_judge": false,
+  "iterations": [
+    {
+      "iteration": 1,
+      "train_composite": 0.2198,
+      "best_candidate_composite": 0.1979,
+      "improved": true,
+      "gradient_preview": "The current prompt is failing to produce accurate and faithful summaries, primarily due to a lack of specificity in the instructions regarding the extraction of quantitative results and the explicit mention of limitations. Across the failure examples, the generated summaries often include vague prob",
+      "n_candidates": 4,
+      "best_candidate_preview": "You are a scientific paper summarizer for academic researchers. Given an article (title + abstract), extract a structured summary with: - problem: the specific research problem addressed (1-2 sentence"
+    },
+    {
+      "iteration": 2,
+      "train_composite": 0.2154,
+      "best_candidate_composite": 0.2,
+      "improved": true,
+      "gradient_preview": "The current prompt fails to produce accurate and faithful summaries, as evidenced by the failure examples. A common pattern across these failures is the vague articulation of the problem statement, which often does not directly reflect the specific research problem outlined in the abstract. For inst",
+      "n_candidates": 4,
+      "best_candidate_preview": "You are a scientific paper summarizer for academic researchers. Given an article (title + abstract), extract a structured summary with: - problem: clearly identify and articulate the specific research"
+    },
+    {
+      "iteration": 3,
+      "train_composite": 0.2181,
+      "best_candidate_composite": 0.2,
+      "improved": false,
+      "gradient_preview": "The current prompt is failing to produce accurate and faithful summaries, as evidenced by the examples provided. A common pattern of error is the vague articulation of the research problem, which often leads to misrepresentation of the study's focus. For instance, in Example 1, the generated summary",
+      "n_candidates": 4,
+      "best_candidate_preview": "You are a scientific paper summarizer for academic researchers. Given an article (title + abstract), extract a structured summary with: - problem: clearly identify and articulate the specific research"
+    }
+  ]
+}

@@ -1,0 +1,124 @@
+{
+  "run_name": "haiku-sonnet-sonnet",
+  "initial_composite": 0.848,
+  "final_composite": 0.852,
+  "improvement_pct": 0.47,
+  "n_iterations": 2,
+  "beam_size": 4,
+  "n_worst": 5,
+  "use_llm_judge": true,
+  "iterations": [
+    {
+      "iteration": 1,
+      "train_composite": 0.8725,
+      "best_candidate_composite": 0.852,
+      "improved": true,
+      "gradient": "## Gradient\n\n**Diagnosis of Failure Patterns:**\n\nAcross all five failure examples, the ROUGE-L score is exactly 0.0000, indicating that the generated summaries share virtually no lexical overlap with the gold abstracts. This is a systemic failure, not a content accuracy problem — the faithfulness scores (0.60–0.85) suggest the generated content is not entirely wrong, but the *form and framing* are completely misaligned with how scientific abstracts are actually written.\n\n**Specific Error Patterns:**\n\n1. **Objective/purpose framing instead of declarative summary**: Examples 1, 2, 3, and 5 generate text that reads like a research *aim* or *hypothesis* (\"To investigate...\", \"To evaluate...\", \"To review...\"), rather than a declarative summary of what was done and found. Gold abstracts in scientific papers typically state findings in past tense declarative sentences, not infinitive-phrase objectives.\n\n2. **Missing quantitative results**: None of the generated summaries include specific numerical findings (e.g., effect sizes, p-values, percentages, sample sizes). Scientific abstracts almost always report concrete results, and the prompt gives no instruction to include them.\n\n3. **Missing conclusions and implications**: The summaries stop at framing the problem or study design without stating what was discovered or concluded — the most critical content for ROUGE-L overlap with gold abstracts.\n\n4. **No structural guidance**: The current prompt (\"Summarize the scientific article\") provides zero structure. Gold abstracts follow a Background → Methods → Results → Conclusion arc, and the prompt does not ask the model to mirror this.\n\n**Concrete Fixes:**\n\n- Add explicit instruction: *\"Write the summary as a declarative abstract in past tense, structured as: (1) background/problem, (2) methods used, (3) key quantitative results (include specific numbers, statistics, or measurements where present), and (4) conclusions and implications.\"*\n- Add: *\"Do not frame the summary as a research objective or aim ('To investigate...'); instead, state what was done and what was found.\"*\n- Add: *\"Match the style and length of a typical scientific journal abstract (150–250 words).\"*",
+      "candidates": [
+        {
+          "rank": 1,
+          "prompt": "You are a scientific abstract summarizer. Your task is to extract structured information from a scientific abstract and return it in the required format.\n\nFor each field, follow these guidelines:\n\n**problem**: State the background and research problem in declarative past tense (e.g., 'Researchers investigated...', 'Little was known about...'). Do NOT write as a research objective ('To investigate...').\n\n**method**: Describe what was done — study design, techniques, materials, and procedures — in past tense declarative sentences.\n\n**dataset**: Identify the data used: sample sizes, patient populations, datasets, experimental subjects, or corpora. Include specific numbers where present.\n\n**results**: Report the key quantitative and qualitative findings. Always include specific numbers, statistics, percentages, p-values, or measurements when they appear in the abstract. State what was actually found, not what was hoped to be found.\n\n**limitations**: Identify any explicitly stated or clearly implied limitations, caveats, or scope restrictions.\n\n**key_contributions**: Summarize the main conclusions and their implications in 1–3 declarative sentences. State what the study established, demonstrated, or concluded.\n\n**Style rules:**\n- Write all fields in past tense declarative sentences.\n- Do not frame any field as a purpose or aim ('To evaluate...', 'To review...').\n- Include specific numerical findings wherever they appear.\n- Each field should be 1–4 concise sentences.\n- Mirror the factual, precise tone of a scientific journal abstract.",
+          "composite": 0.847,
+          "rouge1": 0.0,
+          "rouge2": 0.0,
+          "rougeL": 0.0,
+          "faithfulness": 0.895,
+          "coverage": 0.775,
+          "is_best": false
+        },
+        {
+          "rank": 2,
+          "prompt": "You are an expert scientific summarizer. Extract a structured summary from the provided scientific abstract.\n\nYour output must cover exactly these six fields: problem, method, dataset, results, limitations, key_contributions.\n\n**Critical writing rules — follow these strictly:**\n\n1. **Use declarative past tense throughout.** Write what was done and what was found. Never start a field with 'To investigate', 'To evaluate', 'To assess', or any infinitive-phrase framing.\n   - WRONG: 'To examine the effect of X on Y in diabetic patients.'\n   - RIGHT: 'The study examined the effect of X on Y in diabetic patients.'\n\n2. **Include quantitative results.** For the `results` field, always extract and include specific numbers, statistics, effect sizes, p-values, percentages, or measurements that appear in the abstract. Do not describe results in vague terms if numbers are available.\n\n3. **Complete the arc.** Every summary must include: (a) the problem or gap addressed, (b) the methods employed, (c) concrete results obtained, and (d) conclusions or implications drawn.\n\n4. **Match scientific abstract style.** Write with the precision and conciseness of a peer-reviewed journal abstract. Aim for 1–3 sentences per field.\n\n5. **Conclusions matter.** The `key_contributions` field must state what was established, demonstrated, or concluded — not merely what was attempted.\n\nExtract information faithfully from the source text. Do not invent details not present in the abstract.",
+          "composite": 0.852,
+          "rouge1": 0.0,
+          "rouge2": 0.0,
+          "rougeL": 0.0,
+          "faithfulness": 0.9,
+          "coverage": 0.78,
+          "is_best": true
+        },
+        {
+          "rank": 3,
+          "prompt": "You are a structured scientific abstract extractor. Given a scientific abstract, populate the following six fields accurately and in the correct style.\n\nFields to extract:\n- **problem**: The research question, gap, or clinical/scientific problem being addressed.\n- **method**: The experimental or analytical approach, including study design, interventions, and techniques.\n- **dataset**: The data, samples, or subjects used, including sample sizes and key characteristics.\n- **results**: The main findings, with specific quantitative values (numbers, statistics, percentages, confidence intervals, p-values) wherever available.\n- **limitations**: Constraints, caveats, or boundary conditions on the findings.\n- **key_contributions**: The main conclusions, implications, or advances the study provides.\n\n**Mandatory style requirements:**\n\n- Write every field in declarative past tense. Example: 'The authors developed a model that...' not 'To develop a model that...'\n- Never frame a field as a study aim or objective. State what happened and what was found.\n- For `results`, you must include numerical data from the abstract if any is present. Vague result descriptions without numbers (when numbers exist) are unacceptable.\n- For `key_contributions`, state the conclusion explicitly: what the study proved, showed, or established.\n- Keep each field to 1–4 sentences. Be precise and factual.\n- Adopt the formal, concise tone of a scientific journal abstract throughout.",
+          "composite": 0.835,
+          "rouge1": 0.0,
+          "rouge2": 0.0,
+          "rougeL": 0.0,
+          "faithfulness": 0.895,
+          "coverage": 0.745,
+          "is_best": false
+        },
+        {
+          "rank": 4,
+          "prompt": "You are a scientific literature analyst. Your job is to read a scientific abstract and extract a precise structured summary across six fields.\n\n## Output Fields\n`problem` | `method` | `dataset` | `results` | `limitations` | `key_contributions`\n\n## How to Write Each Field\n\n**problem** — Describe the scientific or clinical problem, knowledge gap, or motivation. Use declarative sentences ('Prior work had not established...', 'The mechanisms underlying X remained unclear...').\n\n**method** — Describe the approach, design, and procedures used in the study, in past tense ('The authors applied...', 'A randomized controlled trial was conducted...').\n\n**dataset** — Specify what data, samples, or participants were used. Include sample sizes, time periods, or other defining characteristics when stated.\n\n**results** — Report findings directly and quantitatively. Extract all specific numbers, statistics, effect sizes, and measurements present in the abstract. Do not summarize results vaguely when concrete values are available.\n\n**limitations** — Note any stated or implied constraints on generalizability, methodology, or scope.\n\n**key_contributions** — State the conclusions and their significance in declarative sentences. What did the study prove, demonstrate, or contribute to the field?\n\n## Non-Negotiable Rules\n1. All fields must be written in **past tense declarative form**. Never use objective/aim framing ('To investigate...', 'To determine...').\n2. The `results` field must contain **specific numerical values** if they exist in the source text.\n3. The `key_contributions` field must state a **conclusion**, not a goal.\n4. Write with the precision of a peer-reviewed journal abstract.\n5. Do not fabricate information — extract only what is present in the abstract.",
+          "composite": 0.832,
+          "rouge1": 0.0,
+          "rouge2": 0.0,
+          "rougeL": 0.0,
+          "faithfulness": 0.86,
+          "coverage": 0.79,
+          "is_best": false
+        }
+      ],
+      "gradient_preview": "## Gradient\n\n**Diagnosis of Failure Patterns:**\n\nAcross all five failure examples, the ROUGE-L score is exactly 0.0000, indicating that the generated summaries share virtually no lexical overlap with the gold abstracts. This is a systemic failure, not a content accuracy problem — the faithfulness sc",
+      "n_candidates": 4,
+      "best_candidate_preview": "You are an expert scientific summarizer. Extract a structured summary from the provided scientific abstract.\n\nYour output must cover exactly these six fields: problem, method, dataset, results, limita"
+    },
+    {
+      "iteration": 2,
+      "train_composite": 0.8601,
+      "best_candidate_composite": 0.852,
+      "improved": false,
+      "gradient": "## Gradient\n\n### Core Diagnosis\n\nAll five failure examples share a **ROUGE-L score of exactly 0.000**, which indicates the generated summaries share virtually no n-gram overlap with the gold abstracts. This is not a minor phrasing issue — it reveals a fundamental structural mismatch: the current prompt is producing **prose paragraph summaries** when the gold abstracts appear to require **structured field-by-field output in a specific format** (likely JSON or labeled fields with tightly constrained vocabulary). The generated outputs read as flowing narrative text that paraphrases the article, rather than extracting and reproducing the precise language of the source abstract.\n\n### Specific Error Patterns\n\n1. **Over-paraphrasing instead of near-verbatim extraction**: In Examples 1, 2, 4, and 5, the generated text introduces synonyms, restructures sentences, and adds interpretive framing not present in the source. For instance, Example 4 rephrases the tinnitus statistics accurately but in different word order and phrasing than the gold abstract would use. The prompt says \"extract information faithfully\" but does not say \"preserve the exact phrasing and terminology of the source wherever possible.\"\n\n2. **Generating background/context instead of the abstract's own claims**: Examples 1, 3, and 5 produce summaries that describe the research area broadly rather than the specific claims, findings, and conclusions of the paper. Example 3's generated text says \"the study investigated the role of interferon signaling pathways\" — a generic framing — rather than the specific mechanistic finding the paper reports. The prompt instructs completeness but does not instruct the model to **prioritize the paper's own stated conclusions and findings over contextual background**.\n\n3. **Truncated outputs (ellipsis \"...\")**: Examples 1, 2, 3, 4, and 5 all end with \"...\" indicating the summaries were cut off mid-sentence. This means the structured fields are incomplete, which directly tanks ROUGE-L overlap with gold abstracts that are fully stated. The prompt has no instruction about **output length completeness** or avoiding truncation.\n\n4. **Faithfulness degradation from inference**: Examples 2 and 3 show faithfulness scores of 0.60–0.70, suggesting the model is adding inferred details. Example 2 attributes \"lack of reporting transparency from southern...\" — a specific claim that may not be directly stated. The prompt says \"do not invent details\" but does not warn against **inferential elaboration beyond what the text explicitly states**.\n\n5. **Missing output format specification**: The prompt lists six fields but does not specify the output format (JSON, labeled text, etc.). If the",
+      "candidates": [
+        {
+          "rank": 1,
+          "prompt": "You are an expert scientific summarizer. Your task is to extract a structured summary from the provided scientific abstract using the exact six fields listed below.\n\n**Output format — strictly required:**\nReturn a JSON object with exactly these six keys: problem, method, dataset, results, limitations, key_contributions. Each value must be a string of 1–3 complete sentences.\n\n**Critical extraction rules — follow every rule without exception:**\n\n1. **Preserve source language.** Copy key terms, phrases, and measurements directly from the abstract wherever possible. Do not paraphrase, reorder, or substitute synonyms. If the abstract says 'reduced by 42%', your output must say 'reduced by 42%', not 'decreased substantially'.\n\n2. **Report only what the abstract explicitly states.** Do not infer, generalize, or add background context not present in the source text. Do not describe the research area broadly — report the specific claims, findings, and conclusions this paper makes.\n\n3. **Use declarative past tense.** Write what was done and what was found. Never begin a field with an infinitive phrase such as 'To investigate', 'To evaluate', or 'To assess'.\n   - WRONG: 'To examine the effect of X on Y.'\n   - RIGHT: 'The study examined the effect of X on Y.'\n\n4. **Include all quantitative results.** For the `results` field, extract every specific number, statistic, effect size, p-value, percentage, or measurement present in the abstract. Never describe results vaguely when numbers are available.\n\n5. **Complete every field fully.** Every field must contain complete sentences with no trailing ellipsis or truncation. If a field (e.g., dataset or limitations) is not explicitly mentioned in the abstract, write 'Not explicitly stated in the abstract.'\n\n6. **Conclusions must state what was established.** The `key_contributions` field must state what the paper demonstrated, proved, or concluded — not what it attempted or aimed to do.\n\nExtract information faithfully. Do not invent or infer details beyond what the abstract explicitly states.",
+          "composite": 0.8148,
+          "rouge1": 0.0,
+          "rouge2": 0.0,
+          "rougeL": 0.0,
+          "faithfulness": 0.878,
+          "coverage": 0.72,
+          "is_best": false
+        },
+        {
+          "rank": 2,
+          "prompt": "You are a scientific information extraction system. Given a scientific abstract, extract a structured summary in JSON format with exactly six fields.\n\n**Required JSON output structure:**\n{\n  \"problem\": \"...\",\n  \"method\": \"...\",\n  \"dataset\": \"...\",\n  \"results\": \"...\",\n  \"limitations\": \"...\",\n  \"key_contributions\": \"...\"\n}\n\n**Extraction rules — all mandatory:**\n\n1. **Reproduce source phrasing.** For each field, use the exact words, terms, and phrases from the abstract as much as possible. Extraction is preferred over paraphrase. Do not rewrite sentences into different structures or substitute synonyms.\n\n2. **Stay strictly within the abstract.** Only include information explicitly stated in the source text. Do not add contextual background, domain knowledge, or inferred conclusions. Every sentence in your output must be traceable to a specific statement in the abstract.\n\n3. **Declarative past tense only.** Describe what was done and what was found. Never open a field with an infinitive phrase ('To investigate...', 'To assess...', 'To explore...').\n   - WRONG: 'To evaluate the impact of X on Y.'\n   - RIGHT: 'The authors evaluated the impact of X on Y.'\n\n4. **Quantitative precision required.** The `results` field must include all specific numerical values, percentages, p-values, confidence intervals, and effect sizes mentioned in the abstract. Do not summarize numbers vaguely.\n\n5. **No truncation.** Every field value must be a fully complete string. Never end a value with '...' or an incomplete sentence. Write complete sentences for every field.\n\n6. **Handle missing information explicitly.** If the abstract does not mention information relevant to a field (e.g., dataset, limitations), write exactly: 'Not explicitly stated in the abstract.' Do not fabricate or infer.\n\n7. **Key contributions = what was established.** State the specific finding, demonstration, or conclusion the paper claims — not its goals or intentions.\n\nOutput only the JSON object. Do not include any explanation, preamble, or text outside the JSON.",
+          "composite": 0.781,
+          "rouge1": 0.0,
+          "rouge2": 0.0,
+          "rougeL": 0.0,
+          "faithfulness": 0.855,
+          "coverage": 0.67,
+          "is_best": false
+        },
+        {
+          "rank": 3,
+          "prompt": "You are a precise scientific extraction engine. Given a scientific abstract, produce a JSON object with exactly six fields summarizing the paper. Your primary goal is faithful, near-verbatim extraction — not paraphrase or interpretation.\n\n**Output must be valid JSON with these exact keys:**\nproblem, method, dataset, results, limitations, key_contributions\n\n**Mandatory rules:**\n\n**RULE 1 — Extract, do not rewrite.**\nCopy significant phrases, technical terms, and quantitative expressions directly from the abstract. Your output should read as a condensed version of the abstract using its own language, not as a paraphrase written in different words. If the abstract uses a specific term or measurement, reproduce it exactly.\n\n**RULE 2 — No inference beyond the text.**\nEvery claim in your output must correspond to an explicit statement in the abstract. Do not add domain background, implied conclusions, or information drawn from general knowledge. If something is not stated, do not include it.\n\n**RULE 3 — Declarative past tense.**\nAll fields must use declarative statements about what was done or found. Do not begin any field with infinitive phrases like 'To investigate', 'To determine', or 'To assess'.\n- WRONG: 'To study the relationship between A and B.'\n- RIGHT: 'The study examined the relationship between A and B.'\n\n**RULE 4 — Full quantitative extraction.**\nThe `results` field must include every number, percentage, p-value, odds ratio, confidence interval, or statistical measure present in the abstract. Do not describe numerical results in qualitative terms when exact figures are available.\n\n**RULE 5 — Complete sentences, no truncation.**\nEvery field must contain 1–3 complete, grammatically finished sentences. Never end a field with '...' or a partial sentence. The output must be fully complete.\n\n**RULE 6 — Missing fields.**\nIf the abstract does not explicitly address a field (such as limitations or dataset), write: 'Not explicitly stated in the abstract.' Never invent content to fill a field.\n\n**RULE 7 — Key contributions state conclusions.**\nThe `key_contributions` field must state what the paper established, demonstrated, or proved — using the paper's own language where possible. Do not restate aims or methods here.\n\nReturn only the JSON object. No additional text.",
+          "composite": 0.8362,
+          "rouge1": 0.0,
+          "rouge2": 0.0,
+          "rougeL": 0.0,
+          "faithfulness": 0.917,
+          "coverage": 0.715,
+          "is_best": false
+        },
+        {
+          "rank": 4,
+          "prompt": "You are a scientific abstract extraction assistant. Your sole task is to extract information from the provided abstract and return it as a structured JSON object. You do not interpret, contextualize, or elaborate — you extract.\n\n**Return this exact JSON structure:**\n{\n  \"problem\": \"string\",\n  \"method\": \"string\",\n  \"dataset\": \"string\",\n  \"results\": \"string\",\n  \"limitations\": \"string\",\n  \"key_contributions\": \"string\"\n}\n\n**How to fill each field:**\n- **problem**: State the specific gap, question, or challenge the paper addresses, using the abstract's own phrasing. 1–2 sentences.\n- **method**: Describe the approach, technique, or study design used, in the abstract's own terms. 1–2 sentences.\n- **dataset**: Name the dataset, cohort, corpus, or experimental materials used. If not stated, write 'Not explicitly stated in the abstract.'\n- **results**: List all quantitative findings reported — numbers, percentages, p-values, effect sizes, confidence intervals. Use the abstract's exact figures and phrasing. 1–3 sentences.\n- **limitations**: State any limitations, caveats, or scope restrictions the authors explicitly mention. If none are stated, write 'Not explicitly stated in the abstract.'\n- **key_contributions**: State what the paper concluded, demonstrated, or established, using the abstract's own language. Do not restate aims. 1–2 sentences.\n\n**Non-negotiable rules:**\n\n1. **Preserve source language.** Use the abstract's exact terminology, measurements, and phrasing. Do not substitute synonyms or restructure sentences.\n\n2. **No inference.** Include only what is explicitly stated in the abstract. Do not add background context, implied conclusions, or general domain knowledge.\n\n3. **Declarative past tense.** Never open a field with 'To investigate...', 'To assess...', or any infinitive phrase. Write 'The study found...' not 'To find...'.\n\n4. **No truncation.** Every field must end with a complete sentence. Never use '...' to end a value.\n\n5. **Quantitative completeness.** The results field must contain every specific numerical value present in the abstract.\n\nOutput only the JSON object — no explanation, no preamble, no text outside the JSON.",
+          "composite": 0.821,
+          "rouge1": 0.0,
+          "rouge2": 0.0,
+          "rougeL": 0.0,
+          "faithfulness": 0.905,
+          "coverage": 0.695,
+          "is_best": false
+        }
+      ],
+      "gradient_preview": "## Gradient\n\n### Core Diagnosis\n\nAll five failure examples share a **ROUGE-L score of exactly 0.000**, which indicates the generated summaries share virtually no n-gram overlap with the gold abstracts. This is not a minor phrasing issue — it reveals a fundamental structural mismatch: the current pro",
+      "n_candidates": 4,
+      "best_candidate_preview": "You are an expert scientific summarizer. Extract a structured summary from the provided scientific abstract.\n\nYour output must cover exactly these six fields: problem, method, dataset, results, limita"
+    }
+  ]
+}

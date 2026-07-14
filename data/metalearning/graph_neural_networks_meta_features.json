@@ -1,0 +1,18 @@
+{
+  "domain_id": "graph_neural_networks",
+  "topic": "graph neural networks",
+  "corpus_size": 227,
+  "median_year": 2019.0,
+  "pct_recent": 0.01762114537444934,
+  "year_std": 1.4089893625203118,
+  "citation_gini": 0.806347535646706,
+  "citation_median": 297.0,
+  "pct_high_cited": 0.7268722466960352,
+  "unique_author_ratio": 0.8678414096916299,
+  "mean_h_index": 20.379310344827587,
+  "pct_high_hindex": 0.8634361233480177,
+  "pct_q1": 0.21145374449339208,
+  "topic_concept_overlap": 0.7004405286343612,
+  "gold_ratio": 0.8325991189427313,
+  "grade2_ratio": 0.12334801762114538
+}

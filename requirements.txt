@@ -1,0 +1,44 @@
+# ============================================================
+# Scientific Watch Agent — Dependencies
+# ============================================================
+
+# Core
+pydantic>=2.5.0           # Data validation (V2)
+python-dotenv>=1.0.0      # Load .env files
+requests>=2.31.0          # HTTP client for OpenAlex API
+tenacity>=8.2.0           # Retry logic with exponential backoff
+
+# LLM
+anthropic>=0.40.0         # Claude API client
+openai>=1.50.0            # OpenAI/GPT API client
+
+# Agent orchestration (will be used in Phase 4)
+langgraph>=0.2.0
+langchain-anthropic>=0.3.0
+
+# AutoML (will be used in Phase 3)
+optuna>=3.5.0
+scikit-learn>=1.3.0
+numpy>=1.26.0
+pandas>=2.1.0
+
+# PDF export
+reportlab>=4.0.0          # PDF generation for export_to_pdf.py
+
+# Semantic relevance scoring V2
+sentence-transformers>=2.7.0  # Dense embeddings for relevance_score_v2.py
+                               # Model auto-downloaded on first use (~80 MB)
+
+# Prompt optimization (Phase 4 — ProTeGi)
+rouge-score>=0.1.2        # ROUGE-1/2/L metrics for summary evaluation
+kagglehub>=0.3.0          # Download PubMed dataset from Kaggle
+# bert-score>=0.3.13      # Optional: semantic similarity (heavy ~400MB model)
+
+# API server (api.py + Dockerfile deployment)
+fastapi>=0.115.0
+uvicorn[standard]>=0.30.0
+
+# Dev tools
+pytest>=7.4.0
+pytest-mock>=3.12.0
+ipykernel>=6.27.0         # For notebooks

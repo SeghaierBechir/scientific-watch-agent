@@ -1,0 +1,11 @@
+{
+  "topic": "graph attention network",
+  "weights": {
+    "venue": 0.034272,
+    "authors": 0.277359,
+    "impact": 0.237133,
+    "velocity": 0.213436,
+    "recency": 0.025555,
+    "relevance": 0.212244
+  }
+}

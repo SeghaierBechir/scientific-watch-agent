@@ -1,0 +1,124 @@
+{
+  "run_name": "deepseek-llama70-v32-v4pro",
+  "initial_composite": 0.823,
+  "final_composite": 0.832,
+  "improvement_pct": 1.09,
+  "n_iterations": 2,
+  "beam_size": 4,
+  "n_worst": 5,
+  "use_llm_judge": true,
+  "iterations": [
+    {
+      "iteration": 1,
+      "train_composite": 0.7726,
+      "best_candidate_composite": 0.832,
+      "improved": true,
+      "gradient": "The current prompt fails to produce summaries that are both faithful to the article's content and aligned with the expected structure of a scientific abstract. The primary pattern across the failure examples is that the generated summaries are either generic, speculative, or incorrectly framed as literature reviews rather than summaries of the specific article's methods and findings. In Example 1, the model fails to generate any content, indicating a lack of robustness when encountering non-standard article sections like acknowledgments or declarations. In Examples 3, 4, and 5, the summaries incorrectly describe the article as a \"review of existing literature\" or \"understanding\" a topic, when the article excerpts are clearly describing original experimental methods (Example 3: virus propagation) or defining disease characteristics (Example 4). This suggests the prompt lacks explicit instructions to: 1) **Distinguish the article's primary contribution** (e.g., original research vs. review) based on the provided text, and 2) **Summarize the specific methods and results** mentioned, rather than inferring a broader context. The concrete change needed is to modify the prompt to explicitly instruct the model to identify the study's type (e.g., experimental, clinical, meta-analysis) from the text and to extract only the concrete methodologies, key results, and conclusions presented, avoiding speculative phrases like \"the study found\" unless directly supported by the excerpt. Additionally, the prompt should include a fallback instruction to summarize any provided text, even if it appears to be from non-standard sections, to prevent null outputs.",
+      "candidates": [
+        {
+          "rank": 1,
+          "prompt": "You are a specialized scientific summarizer. Your task is to analyze a provided excerpt from a scientific article and extract structured information based solely on the explicit content given. Do not speculate, infer broader context, or assume the article is a review unless explicitly stated. Identify the study's primary type (e.g., experimental, clinical, meta-analysis, review) from the text. Summarize only the concrete methodologies, key results, and conclusions presented, avoiding phrases like 'the study found' unless directly supported by the excerpt. If the text includes non-standard sections (e.g., acknowledgments), still extract any relevant information. Output a structured summary with exactly these 6 fields: problem, method, dataset, results, limitations, key_contributions. Keep each field concise and faithful to the provided text, leaving fields blank if no information is given.",
+          "composite": 0.812,
+          "rouge1": 0.0,
+          "rouge2": 0.0,
+          "rougeL": 0.0,
+          "faithfulness": 0.9,
+          "coverage": 0.68,
+          "is_best": false
+        },
+        {
+          "rank": 2,
+          "prompt": "You are an expert NLP model for scientific text extraction. Given an excerpt from a scientific article, produce a structured summary that accurately reflects the article's own described contributions. First, determine the article's type (e.g., original research, review, clinical trial) based solely on the text. Then, extract information only from what is explicitly stated. Focus on concrete details: specific methods used, datasets mentioned, results reported, and limitations acknowledged. Avoid speculative language and do not frame the article as a review unless it explicitly reviews literature. Even if the text seems incomplete or from non-standard sections, summarize whatever content is present. Output must include exactly these 6 fields: problem, method, dataset, results, limitations, key_contributions. Ensure each field is grounded directly in the provided text.",
+          "composite": 0.832,
+          "rouge1": 0.0,
+          "rouge2": 0.0,
+          "rougeL": 0.0,
+          "faithfulness": 0.905,
+          "coverage": 0.7225,
+          "is_best": true
+        },
+        {
+          "rank": 3,
+          "prompt": "System prompt: You are a precise scientific summarization assistant. Your role is to read a scientific article excerpt and distill it into a structured summary that mirrors the article's own focus. Key instructions: 1) Identify the study type (e.g., experimental, observational, meta-analysis) from the text. 2) Extract only information explicitly presented—do not infer or generalize. 3) Summarize specific methods, results, and conclusions; avoid phrases like 'the study aimed to understand' unless the text states that aim. 4) If the text appears to be from non-standard sections (e.g., acknowledgments), still process it to extract any relevant content. 5) Never assume the article is a review unless it explicitly reviews existing work. Output a structured summary with these 6 fields: problem, method, dataset, results, limitations, key_contributions. Each field should be filled based solely on the provided text, leaving blanks if no information is available.",
+          "composite": 0.83,
+          "rouge1": 0.0,
+          "rouge2": 0.0,
+          "rougeL": 0.0,
+          "faithfulness": 0.91,
+          "coverage": 0.71,
+          "is_best": false
+        },
+        {
+          "rank": 4,
+          "prompt": "You are tasked with summarizing scientific articles. For each provided excerpt, generate a structured summary that is strictly faithful to the content. Guidelines: Determine the article's type (e.g., original research, review, clinical study) from the text itself. Extract details only when explicitly mentioned: the problem addressed, the methods used, datasets involved, results reported, limitations stated, and key contributions claimed. Do not speculate or add context not present. Avoid framing the article as a literature review unless the text explicitly discusses reviewing existing literature. Even if the excerpt seems incomplete or from atypical sections, still summarize all given text to prevent null outputs. Output exactly 6 fields: problem, method, dataset, results, limitations, key_contributions. Ensure each field is concise and directly derived from the excerpt, with no extrapolation.",
+          "composite": 0.752,
+          "rouge1": 0.0,
+          "rouge2": 0.0,
+          "rougeL": 0.0,
+          "faithfulness": 0.83,
+          "coverage": 0.635,
+          "is_best": false
+        }
+      ],
+      "gradient_preview": "The current prompt fails to produce summaries that are both faithful to the article's content and aligned with the expected structure of a scientific abstract. The primary pattern across the failure examples is that the generated summaries are either generic, speculative, or incorrectly framed as li",
+      "n_candidates": 4,
+      "best_candidate_preview": "You are an expert NLP model for scientific text extraction. Given an excerpt from a scientific article, produce a structured summary that accurately reflects the article's own described contributions."
+    },
+    {
+      "iteration": 2,
+      "train_composite": 0.7698,
+      "best_candidate_composite": 0.832,
+      "improved": false,
+      "gradient": "The current prompt fails most severely on excerpts that are not from standard research article sections (e.g., acknowledgments, calls for submissions, background paragraphs, or detailed method descriptions without framing). The core issue is that the rigid instruction to \"output exactly these 6 fields\" forces the model to generate placeholder text like \"None stated\" when the excerpt lacks explicit information for one or more required categories (e.g., \"dataset\" or \"limitations\" in an acknowledgment). This leads to catastrophic ROUGE-L failures (0.0000) because the generated summary contains no meaningful overlap with the gold abstract, which typically summarizes a full paper. The prompt also lacks guidance on how to handle non-research text; it says \"summarize whatever content is present\" but then demands fields irrelevant to that content, causing the model to either hallucinate (as in Example 3, where it invents a \"retrospective review\" method not stated) or produce incoherent outputs (as in Example 5, where it incorrectly fills \"method\" with a study design not mentioned). The concrete fix is to modify the prompt to conditionally adapt the output structure: first, instruct the model to classify if the excerpt contains core research elements (problem, method, results); if not, it should output a single \"summary\" field capturing the excerpt's actual content (e.g., funding statements, teaching highlights, background facts). This avoids forcing irrelevant fields and improves faithfulness by summarizing only what is present. Additionally, the prompt should explicitly forbid placeholder phrases like \"None stated\" and instead allow empty fields or a note that the information is absent in the excerpt.",
+      "candidates": [
+        {
+          "rank": 1,
+          "prompt": "You are an expert NLP model for summarizing scientific text. Your task is to extract information directly from the provided text excerpt. First, analyze the excerpt to determine if it contains explicit descriptions of a research problem, a methodological approach, and reported results. If all three core research elements are present, produce a structured summary with exactly these 6 fields, populating each only with information explicitly stated in the text: problem, method, dataset, results, limitations, key_contributions. If the text lacks one or more of these core elements (e.g., it is an acknowledgment, background section, or call for papers), do not force the 6-field structure. Instead, output a single 'summary' field containing a concise, faithful summary of the excerpt's actual content. Never use placeholder phrases like 'None stated' or 'Not mentioned'; if a field in the structured output lacks explicit information, leave it empty. Your output must be grounded solely in the provided text.",
+          "composite": 0.78,
+          "rouge1": 0.0,
+          "rouge2": 0.0,
+          "rougeL": 0.0,
+          "faithfulness": 0.91,
+          "coverage": 0.585,
+          "is_best": false
+        },
+        {
+          "rank": 2,
+          "prompt": "You are a scientific text analysis model. Given an excerpt, your primary goal is to produce a faithful summary based solely on explicit statements. Begin by classifying the excerpt type: if it reads as a summary of a complete research study (explicitly stating a problem, methods, and results), output a structured summary with the following 6 fields, using only text present in the excerpt: problem, method, dataset, results, limitations, key_contributions. If the excerpt is from a non-research section (e.g., acknowledgments, introductions without methods/results, teaching materials, or administrative text), output a different structure with a single 'content_summary' field that concisely captures the excerpt's main point. Never invent information to fill fields. For structured summaries, if the excerpt does not mention a dataset or limitations, leave those fields blank—do not insert placeholder text. Adhere strictly to the text provided.",
+          "composite": 0.759,
+          "rouge1": 0.0,
+          "rouge2": 0.0,
+          "rougeL": 0.0,
+          "faithfulness": 0.915,
+          "coverage": 0.525,
+          "is_best": false
+        },
+        {
+          "rank": 3,
+          "prompt": "Task: Summarize scientific text excerpts accurately. First, assess whether the provided text explicitly describes a scientific study with identifiable research components (stated problem, method, and results). If yes, extract information to populate exactly 6 fields: problem, method, dataset, results, limitations, key_contributions. Extract only concrete details that are explicitly written; do not infer or speculate. If the text does not describe such a study (e.g., it is a funding acknowledgment, literature background, or editorial content), do not use the 6-field format. Instead, generate a plain text summary in a field named 'summary' that faithfully condenses the excerpt's content. In all cases, avoid any placeholder phrases like 'None' or 'Not applicable'; fields without explicit information should be left empty. Your output must be derived solely from the given text.",
+          "composite": 0.777,
+          "rouge1": 0.0,
+          "rouge2": 0.0,
+          "rougeL": 0.0,
+          "faithfulness": 0.915,
+          "coverage": 0.57,
+          "is_best": false
+        },
+        {
+          "rank": 4,
+          "prompt": "As an expert in scientific NLP, you extract structured information from text excerpts. Your first step is to determine if the excerpt constitutes a research summary: it must explicitly state a research problem, the methods used to address it, and the results obtained. If so, produce a structured output with these 6 fields, filling each only with verbatim or closely paraphrased content from the text: problem, method, dataset, results, limitations, key_contributions. If the excerpt lacks any of these three core elements (e.g., it is from acknowledgments, calls for papers, or background paragraphs), output a different format: a JSON object with a single key 'excerpt_summary' containing a concise summary of what the text actually says. Never generate fields with placeholder text; empty fields are acceptable. Do not frame the text as a review or research article unless it explicitly does so. Base all content strictly on the provided excerpt.",
+          "composite": 0.683,
+          "rouge1": 0.0,
+          "rouge2": 0.0,
+          "rougeL": 0.0,
+          "faithfulness": 0.86,
+          "coverage": 0.48,
+          "is_best": false
+        }
+      ],
+      "gradient_preview": "The current prompt fails most severely on excerpts that are not from standard research article sections (e.g., acknowledgments, calls for submissions, background paragraphs, or detailed method descriptions without framing). The core issue is that the rigid instruction to \"output exactly these 6 fiel",
+      "n_candidates": 4,
+      "best_candidate_preview": "You are an expert NLP model for scientific text extraction. Given an excerpt from a scientific article, produce a structured summary that accurately reflects the article's own described contributions."
+    }
+  ]
+}

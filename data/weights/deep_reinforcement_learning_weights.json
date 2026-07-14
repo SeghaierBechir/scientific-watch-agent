@@ -1,0 +1,11 @@
+{
+  "topic": "deep reinforcement learning",
+  "weights": {
+    "venue": 0.040034,
+    "authors": 0.067497,
+    "impact": 0.127253,
+    "velocity": 0.245218,
+    "recency": 0.479405,
+    "relevance": 0.040593
+  }
+}

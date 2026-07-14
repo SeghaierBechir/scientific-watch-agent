@@ -1,0 +1,11 @@
+{
+  "topic": "anomaly detection deep learning",
+  "weights": {
+    "venue": 0.028492,
+    "authors": 0.327551,
+    "impact": 0.204592,
+    "velocity": 0.329015,
+    "recency": 0.037427,
+    "relevance": 0.072924
+  }
+}

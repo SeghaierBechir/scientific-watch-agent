@@ -1,0 +1,11 @@
+{
+  "topic": "object detection deep learning",
+  "weights": {
+    "venue": 0.033072,
+    "authors": 0.254793,
+    "impact": 0.138267,
+    "velocity": 0.204228,
+    "recency": 0.302195,
+    "relevance": 0.067446
+  }
+}

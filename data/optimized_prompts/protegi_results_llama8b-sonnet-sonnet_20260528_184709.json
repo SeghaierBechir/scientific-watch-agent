@@ -1,0 +1,30 @@
+{
+  "run_name": "llama8b-sonnet-sonnet",
+  "initial_composite": 0.762,
+  "final_composite": 0.762,
+  "improvement_pct": 0.0,
+  "n_iterations": 2,
+  "beam_size": 4,
+  "n_worst": 5,
+  "use_llm_judge": true,
+  "iterations": [
+    {
+      "iteration": 1,
+      "train_composite": 0.7197,
+      "best_candidate_composite": 0.762,
+      "improved": false,
+      "gradient_preview": "## Gradient\n\n**Diagnosis of Failure Patterns**\n\nAcross all five failure examples, the generated summaries share a consistent set of problems that explain both the zero ROUGE-L scores and the low faithfulness scores:\n\n1. **Structured as implicit IMRaD headers without explicit labels, producing vague,",
+      "n_candidates": 4,
+      "best_candidate_preview": "You are a helpful assistant. Summarize the scientific article."
+    },
+    {
+      "iteration": 2,
+      "train_composite": 0.7148,
+      "best_candidate_composite": 0.762,
+      "improved": false,
+      "gradient_preview": "## Gradient\n\n**Diagnosis of Failure Patterns**\n\nAcross all five failure examples, the generated summaries share a consistent set of problems that explain both the zero ROUGE-L scores and low faithfulness scores:\n\n1. **Vague, generic problem statements instead of specific findings**: Every generated ",
+      "n_candidates": 4,
+      "best_candidate_preview": "You are a helpful assistant. Summarize the scientific article."
+    }
+  ]
+}

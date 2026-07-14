@@ -1,0 +1,176 @@
+%% ============================================================
+%%  Chapitre 1 — Introduction
+%% ============================================================
+\chapter{Introduction}
+\label{ch:introduction}
+
+\section{Contexte et motivation}
+
+La production scientifique mondiale connaît une croissance exponentielle :
+selon les estimations, plus de deux millions d'articles de recherche sont
+publiés chaque année dans les seules disciplines relevant des sciences et
+technologies de l'information \cite{priem2022openalex}. Pour un chercheur
+débutant sa thèse ou souhaitant explorer un domaine adjacent au sien, cette
+abondance constitue paradoxalement un obstacle. Il est désormais impossible
+de lire l'intégralité de la littérature pertinente ; la sélection, la
+hiérarchisation et la synthèse des travaux existants sont devenues des tâches
+à part entière, chronophages et susceptibles d'erreurs d'omission.
+
+Les pratiques actuelles de veille scientifique reposent principalement sur des
+approches manuelles ou semi-automatisées : interrogation des moteurs de
+recherche académiques (Google Scholar, Semantic Scholar, Web of Science),
+lecture d'articles de revue (\textit{survey papers}), alertes par mots-clés,
+ou recommandation par les pairs. Ces approches présentent plusieurs limitations
+majeures. Premièrement, elles requièrent un investissement temporel considérable,
+estimé à plusieurs semaines pour une revue de littérature exhaustive dans un
+nouveau domaine \cite{kitchenham2007guidelines}. Deuxièmement, elles sont
+sujettes à des biais de sélection, en particulier pour les chercheurs non
+initiés qui manquent des critères experts pour évaluer la qualité d'un travail.
+Troisièmement, elles ne permettent pas d'actualisation automatique lorsque de
+nouveaux articles paraissent.
+
+L'émergence des grands modèles de langage (LLM, \textit{Large Language Models})
+\cite{openai2023gpt4, anthropic2024claude} offre de nouvelles perspectives pour
+l'automatisation de ces tâches cognitives. La capacité des LLM à comprendre,
+résumer et synthétiser des textes techniques ouvre la voie à des systèmes
+capables d'assister le chercheur de manière substantielle. Parallèlement,
+les architectures multi-agents fondées sur des LLM \cite{wang2024survey}
+permettent de décomposer des tâches complexes en sous-tâches spécialisées,
+d'implémenter des mécanismes de contrôle qualité, et d'exploiter les forces
+complémentaires de plusieurs modèles ou stratégies de raisonnement.
+
+\section{Problématique}
+
+La problématique centrale de ce mémoire peut être formulée en deux questions
+imbriquées :
+
+\begin{enumerate}
+  \item \textbf{Comment concevoir un système automatisé de veille scientifique}
+    qui produise des résultats de qualité comparable à celle d'un expert humain,
+    en termes de pertinence des articles sélectionnés, de fidélité des résumés
+    et de richesse de l'analyse des tendances ?
+  \item \textbf{Comment rendre ce système généralisable à de nouveaux domaines}
+    sans nécessiter une reconfiguration manuelle coûteuse pour chaque nouveau
+    domaine de recherche ?
+\end{enumerate}
+
+La seconde question est au cœur de la contribution scientifique de ce travail.
+Un système de veille conçu spécifiquement pour un domaine (par exemple, la
+détection de fausses nouvelles) exploitera des critères de qualité spécifiques
+à ce domaine : l'importance de la vélocité des citations pour les sujets
+d'actualité, ou le poids accordé à la pertinence sémantique pour des champs
+très techniques. Transférer naïvement ces critères à un autre domaine (par
+exemple, la biologie computationnelle) peut conduire à des résultats
+sous-optimaux. La généralisation constitue donc un enjeu technique et
+scientifique de premier ordre.
+
+\section{Objectifs}
+
+Ce mémoire poursuit les objectifs suivants :
+
+\begin{enumerate}
+  \item \textbf{Concevoir et implémenter} un pipeline multi-agents complet de
+    veille scientifique, intégrant la recherche d'articles, le filtrage par
+    qualité, la summarisation, la synthèse et l'analyse des tendances.
+
+  \item \textbf{Optimiser automatiquement} les paramètres de scoring documentaire
+    par domaine, en utilisant des techniques d'AutoML (Optuna TPE), et démontrer
+    l'amélioration par rapport aux configurations expertes fixes.
+
+  \item \textbf{Développer une approche de méta-learning} qui prédit les
+    paramètres optimaux pour un nouveau domaine à partir de caractéristiques
+    mesurables de ce domaine (\textit{meta-features}), sans nécessiter
+    d'optimisation préalable dans ce domaine.
+
+  \item \textbf{Évaluer rigoureusement} la généralisation cross-domaine sur
+    19 domaines de recherche couvrant à la fois les domaines de l'intelligence
+    artificielle et des disciplines hors-IA (biologie computationnelle,
+    traitement du langage médical, finance quantitative).
+\end{enumerate}
+
+\section{Hypothèses de recherche}
+\label{sec:hypotheses}
+
+Cinq hypothèses structurent l'évaluation expérimentale de ce mémoire.
+Parmi celles-ci, deux ont été confirmées et constituent les résultats
+centraux du travail :
+
+\begin{hypothese}[H1 — AutoML par domaine]
+  Les pondérations apprises par Optuna sur un domaine donné surpassent
+  les pondérations expertes fixes sur ce même domaine, avec une amélioration
+  relative d'au moins 5\,\% en NDCG@15.
+\end{hypothese}
+
+\begin{hypothese}[H3 — Méta-learning cross-domaine]
+  La prédiction des pondérations optimales pour un nouveau domaine via
+  une fonction $f_\theta : \text{meta\_features}(D) \to \text{weights}$,
+  apprise sur d'autres domaines, surpasse le Transfer Direct
+  (utilisation des pondérations moyennes) sur au moins 75\,\% des
+  domaines de test.
+\end{hypothese}
+
+Les hypothèses H2, H4 et H5 portent respectivement sur la dégradation
+prévisible du Transfer Direct, l'identification des goulots de généralisation
+par l'architecture multi-agents, et la comparaison des profils de généralisation
+de Claude versus GPT. Ces dernières hypothèses feront l'objet d'investigations
+dans les travaux futurs (Chapitre~\ref{ch:conclusion}).
+
+\section{Contributions}
+
+Les contributions de ce mémoire sont les suivantes :
+
+\paragraph{Contribution 1 — Système de veille scientifique opérationnel.}
+Nous présentons un système complet, généraliste et déployable, fondé sur
+sept agents LLM orchestrés par LangGraph, intégrant quatre fournisseurs
+de LLM (Anthropic, OpenAI, Groq, Nebius) via une abstraction unifiée.
+
+\paragraph{Contribution 2 — Scorer de qualité multi-dimensionnel et AutoML.}
+Nous proposons un scorer à six dimensions calibré par domaine via
+l'algorithme TPE d'Optuna, atteignant une amélioration moyenne de
+$+68.7\,\%$ en NDCG@15 par rapport aux pondérations par défaut (H1 confirmée).
+
+\paragraph{Contribution 3 — Méta-learning pour la généralisation cross-domaine.}
+Nous montrons qu'un ensemble de méta-learners (\textit{Borda Count} combinant
+kNN et BayesianRidge) prédit efficacement les pondérations optimales pour
+de nouveaux domaines, surpassant le Transfer Direct sur 15 domaines sur 19
+(79\,\%, test de Wilcoxon : $W^+ = 149$, $p = 0.014$, effet large $r_{rb} = +0.57$).
+
+\paragraph{Contribution 4 — Patterns d'agents avancés.}
+Nous appliquons les patterns Reflexion \cite{shinn2023reflexion} et
+ReAct \cite{yao2022react} au contexte de la veille scientifique, et
+évaluons l'optimisation automatique des prompts via ProTeGi
+\cite{pryzant2023automatic}.
+
+\section{Organisation du mémoire}
+
+Ce mémoire est organisé comme suit :
+
+\begin{itemize}
+  \item Le \textbf{Chapitre~\ref{ch:etat_art}} présente l'état de l'art en
+    matière de systèmes multi-agents LLM, d'AutoML pour la configuration
+    de systèmes, de méta-learning, et de veille scientifique automatisée.
+
+  \item Le \textbf{Chapitre~\ref{ch:methodologie}} décrit la méthodologie
+    générale : la source de données (OpenAlex), les six dimensions de qualité,
+    les oracles d'évaluation et le protocole expérimental.
+
+  \item Le \textbf{Chapitre~\ref{ch:automl}} présente le scorer de qualité
+    et son optimisation par AutoML, avec les résultats de l'hypothèse H1
+    sur 19 domaines.
+
+  \item Le \textbf{Chapitre~\ref{ch:agents}} décrit l'architecture
+    multi-agents : pipeline LangGraph, contrat de communication Pydantic,
+    et les sept agents spécialisés.
+
+  \item Le \textbf{Chapitre~\ref{ch:patterns}} détaille les patterns avancés :
+    ReAct (expansion de requêtes), Reflexion (révision de synthèse), et
+    ProTeGi (optimisation de prompts).
+
+  \item Le \textbf{Chapitre~\ref{ch:metalearning}} présente la contribution
+    centrale : l'extraction de meta-features, les méta-learners évalués,
+    et la validation de l'hypothèse H3 par test de Wilcoxon.
+
+  \item Le dernier chapitre conclut et propose des pistes pour les
+    travaux futurs, notamment la Phase 7 (agents concurrents Best-of-N)
+    et le renforcement du protocole expérimental.
+\end{itemize}

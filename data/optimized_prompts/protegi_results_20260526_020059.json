@@ -1,0 +1,29 @@
+{
+  "initial_composite": 0.6333,
+  "final_composite": 0.75,
+  "improvement_pct": 18.42,
+  "n_iterations": 2,
+  "beam_size": 4,
+  "n_worst": 5,
+  "use_llm_judge": true,
+  "iterations": [
+    {
+      "iteration": 1,
+      "train_composite": 0.659,
+      "best_candidate_composite": 0.72,
+      "improved": true,
+      "gradient_preview": "The current prompt fails to guide the AI in generating summaries that are both accurate and faithful to the source material. A recurring pattern across the failure examples is the generation of summaries that introduce details or contexts not present in the original article excerpts, leading to low ",
+      "n_candidates": 4,
+      "best_candidate_preview": "You are a scientific summarization assistant. Carefully read the provided excerpt from a scientific article and extract a structured summary. Ensure that your summary accurately and faithfully reflect"
+    },
+    {
+      "iteration": 2,
+      "train_composite": 0.739,
+      "best_candidate_composite": 0.75,
+      "improved": true,
+      "gradient_preview": "The current prompt fails to produce accurate and faithful summaries due to several recurring issues. Firstly, the generated summaries often introduce information or interpretations not present in the original excerpts, as seen in Examples 1 and 4, where the summaries mention specific treatments or s",
+      "n_candidates": 4,
+      "best_candidate_preview": "You are a scientific summarization assistant. Your role is to generate a structured summary from the provided excerpt of a scientific article. The summary should contain the following fields: problem,"
+    }
+  ]
+}

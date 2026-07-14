@@ -1,0 +1,18 @@
+{
+  "domain_id": "anomaly_detection",
+  "topic": "anomaly detection deep learning",
+  "corpus_size": 204,
+  "median_year": 2018.0,
+  "pct_recent": 0.00980392156862745,
+  "year_std": 1.637225548639067,
+  "citation_gini": 0.8555737220161785,
+  "citation_median": 287.0,
+  "pct_high_cited": 0.803921568627451,
+  "unique_author_ratio": 0.9362745098039216,
+  "mean_h_index": 22.661290322580644,
+  "pct_high_hindex": 0.8774509803921569,
+  "pct_q1": 0.4852941176470588,
+  "topic_concept_overlap": 0.7058823529411765,
+  "gold_ratio": 0.7647058823529411,
+  "grade2_ratio": 0.12745098039215685
+}

@@ -1,0 +1,11 @@
+{
+  "topic": "fake news detection",
+  "weights": {
+    "venue": 0.269059,
+    "authors": 0.246397,
+    "impact": 0.029092,
+    "velocity": 0.320167,
+    "recency": 0.065207,
+    "relevance": 0.070078
+  }
+}

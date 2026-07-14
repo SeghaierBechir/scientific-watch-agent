@@ -1,0 +1,38 @@
+{
+  "initial_composite": 0.9567,
+  "final_composite": 0.98,
+  "improvement_pct": 2.44,
+  "n_iterations": 3,
+  "beam_size": 4,
+  "n_worst": 5,
+  "use_llm_judge": true,
+  "iterations": [
+    {
+      "iteration": 1,
+      "train_composite": 0.986,
+      "best_candidate_composite": 0.98,
+      "improved": true,
+      "gradient_preview": "The current prompt is failing to produce accurate and faithful summaries, as evidenced by the failure examples where the generated outputs show a complete lack of overlap with the original abstracts (ROUGE-L scores of 0.0000) and low faithfulness scores (0.50). A common pattern in these failures is ",
+      "n_candidates": 4,
+      "best_candidate_preview": "You are a scientific paper summarizer for academic researchers. Given an article (title + abstract), extract a structured summary with: - problem: the research problem addressed (1-2 sentences) - meth"
+    },
+    {
+      "iteration": 2,
+      "train_composite": 0.971,
+      "best_candidate_composite": 0.98,
+      "improved": false,
+      "gradient_preview": "The current prompt is failing to produce accurate and faithful summaries due to several recurring issues. Firstly, the summaries often lack specific quantitative results, which are crucial for conveying the significance of the research findings. For instance, in Example 1, the generated summary does",
+      "n_candidates": 4,
+      "best_candidate_preview": "You are a scientific paper summarizer for academic researchers. Given an article (title + abstract), extract a structured summary with: - problem: the research problem addressed (1-2 sentences) - meth"
+    },
+    {
+      "iteration": 3,
+      "train_composite": 0.971,
+      "best_candidate_composite": 0.98,
+      "improved": false,
+      "gradient_preview": "The current prompt is failing to produce accurate and faithful summaries due to several recurring issues. First, the summaries often lack specificity, particularly in the \"results\" section, where quantitative findings are either omitted or inaccurately represented. For instance, in Example 1, the ge",
+      "n_candidates": 4,
+      "best_candidate_preview": "You are a scientific paper summarizer for academic researchers. Given an article (title + abstract), extract a structured summary with: - problem: the research problem addressed (1-2 sentences) - meth"
+    }
+  ]
+}

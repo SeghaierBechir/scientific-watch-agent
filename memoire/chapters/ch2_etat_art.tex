@@ -1,0 +1,345 @@
+%% ============================================================
+%%  Chapitre 2 — État de l'art
+%% ============================================================
+\chapter{État de l'art}
+\label{ch:etat_art}
+
+\section{Grands modèles de langage et agents LLM}
+
+\subsection{Des LLM aux agents}
+
+Les grands modèles de langage (LLM), tels que GPT-4 \cite{openai2023gpt4},
+Claude \cite{anthropic2024claude} ou LLaMA \cite{touvron2023llama}, ont
+transformé le traitement automatique du langage naturel. Ces modèles, pré-entraînés
+sur de vastes corpus textuels, exhibent des capacités remarquables en matière de
+compréhension, de génération et de raisonnement. Cependant, leur utilisation
+isolée présente des limitations importantes : absence de mémoire persistante
+entre les appels, incapacité à accéder à des sources d'information externes
+en temps réel, et difficulté à décomposer des tâches complexes en sous-tâches
+gérables.
+
+La notion d'\textbf{agent LLM} adresse ces limitations en dotant le LLM de
+capacités supplémentaires : accès à des outils (\textit{tool use}),
+mémoire externe, et capacité à planifier une séquence d'actions. Un agent
+est formellement défini comme un système capable de percevoir son environnement
+et d'agir sur lui pour atteindre un objectif \cite{wooldridge1995intelligent}.
+Dans le contexte des LLM, un agent correspond à un modèle de langage augmenté
+d'un ensemble d'outils (API, bases de données, moteurs de recherche) et d'un
+mécanisme de contrôle déterminant quand et comment les utiliser.
+
+\subsection{Patterns de raisonnement des agents}
+
+Plusieurs paradigmes de raisonnement ont été proposés pour structurer le
+comportement des agents LLM.
+
+\paragraph{ReAct (Reason + Act).}
+Yao et al. \cite{yao2022react} proposent un cadre interleaved où l'agent
+alterne entre des étapes de \textit{Thought} (raisonnement verbalisé),
+d'\textit{Action} (appel à un outil) et d'\textit{Observation} (résultat
+de l'outil). Ce pattern améliore significativement la précision sur des
+tâches de questions-réponses nécessitant des recherches factuelles,
+tout en rendant le processus de raisonnement interprétable.
+
+\paragraph{Reflexion.}
+Shinn et al. \cite{shinn2023reflexion} introduisent Reflexion, un mécanisme
+par lequel un agent LLM peut s'auto-évaluer et réviser ses productions en
+s'appuyant sur un signal de feedback verbal. Contrairement au fine-tuning
+traditionnel qui modifie les poids du modèle, Reflexion stocke les retours
+dans la mémoire épisodique et les exploite lors des itérations suivantes.
+Ce pattern présente l'avantage d'améliorer la qualité des sorties sans
+nécessiter d'entraînement supplémentaire.
+
+\paragraph{Tree-of-Thought (ToT).}
+Yao et al. \cite{yao2023tree} généralisent la chaîne de pensée (\textit{chain
+of thought}) à une exploration arborescente de l'espace de raisonnement. L'agent
+génère plusieurs chemins de pensée en parallèle, les évalue, et sélectionne le
+plus prometteur. Ce paradigme excelle pour les problèmes de planification à
+plusieurs étapes.
+
+\paragraph{Self-Consistency.}
+Wang et al. \cite{wang2022self} montrent que la génération de plusieurs
+chemins de raisonnement indépendants suivie d'un vote majoritaire améliore
+la précision des LLM sur des tâches de raisonnement arithmétique et logique.
+Ce principe est à la base des approches de Best-of-N que nous envisageons
+pour les travaux futurs.
+
+\subsection{Systèmes multi-agents LLM}
+
+Au-delà des agents individuels, les \textbf{systèmes multi-agents LLM}
+(LLM-MAS) mettent en jeu plusieurs agents spécialisés qui collaborent
+pour résoudre des tâches complexes. Wang et al. \cite{wang2024survey}
+proposent une taxonomie distinguant les architectures coopératives
+(les agents poursuivent un objectif commun) des architectures compétitives
+(les agents débattent pour converger vers une réponse de meilleure qualité).
+
+Du et al. \cite{du2023improving} démontrent que le débat multi-agents
+améliore la précision factuelle des LLM sur des benchmarks de mathématiques
+et de raisonnement. Les agents génèrent indépendamment leurs réponses,
+puis les échangent itérativement pour raffiner leurs positions jusqu'à
+convergence.
+
+\section{Orchestration d'agents : LangGraph}
+
+\subsection{LangChain et l'écosystème agent}
+
+LangChain \cite{chase2022langchain} est un framework Python qui simplifie
+le chaînage d'appels aux LLM et l'intégration d'outils. Il propose des
+abstractions pour les chaînes (\textit{chains}), les mémoires (\textit{memory})
+et les agents. Cependant, pour des pipelines complexes avec des boucles,
+des conditions et un état partagé entre agents, LangChain seul s'avère
+insuffisant.
+
+\subsection{LangGraph : graphes d'état pour les agents}
+
+LangGraph \cite{langgraph2024} est une extension de LangChain qui modélise
+les pipelines agents comme des graphes orientés dont les nœuds sont des
+agents et les arêtes représentent les transitions d'état. L'état du système
+est un dictionnaire partagé (\texttt{TypedDict}) que chaque agent peut lire
+et écrire, dans le respect de la règle \textit{Single Writer / Multiple
+Readers}. Cette architecture offre trois avantages majeurs par rapport
+aux approches séquentielles : la gestion naturelle des boucles (Reflexion,
+ReAct), la possibilité d'arêtes conditionnelles (\textit{conditional edges})
+pour router dynamiquement le flux selon l'état, et la persistance de l'état
+entre les nœuds sans besoin de variables globales.
+
+\section{Qualité des publications scientifiques}
+
+\subsection{Indicateurs bibliométriques}
+
+L'évaluation de la qualité d'une publication académique s'appuie
+traditionnellement sur plusieurs indicateurs bibliométriques.
+
+\paragraph{Impact de la revue.}
+Le facteur d'impact (\textit{Impact Factor}) \cite{garfield1972citation}
+et le classement par quartile (Q1, Q2, Q3, Q4 selon Scimago ou Web of Science)
+mesurent la visibilité d'une revue dans sa discipline. Un article publié dans
+une revue de rang Q1 bénéficie d'une présomption de qualité supérieure,
+bien que ce critère doive être nuancé par la culture de publication propre
+à chaque discipline.
+
+\paragraph{Citations.}
+Le nombre de citations d'un article constitue le proxy le plus commun de
+son impact \cite{hirsch2005index}. L'indice H (\textit{h-index}) de Hirsch,
+qui mesure la productivité et l'influence d'un chercheur, est un indicateur
+complémentaire permettant d'évaluer l'autorité scientifique des auteurs
+d'un article.
+
+\paragraph{Vélocité des citations.}
+Au-delà du compte brut, la \textit{vélocité de citation} — nombre de citations
+récentes par unité de temps — permet d'identifier les travaux émergents à fort
+impact potentiel, notamment les articles récents qui accumulent rapidement
+des citations \cite{ke2015defining}.
+
+\subsection{Pertinence sémantique}
+
+La pertinence sémantique d'un article par rapport à un sujet de recherche
+peut être mesurée à deux niveaux. L'approche lexicale, basée sur les
+n-grammes et la correspondance de mots-clés \cite{jones1972statistical},
+est rapide mais souffre du problème de synonymie et de polysémie.
+L'approche par embeddings, fondée sur des modèles de langage comme
+\textit{Sentence-BERT} \cite{reimers2019sentencebert} ou ses variantes
+légères (all-MiniLM-L6-v2 \cite{wang2020minilm}), capture la similarité
+sémantique dans un espace vectoriel continu et s'avère bien plus robuste.
+
+\section{AutoML et optimisation d'hyperparamètres}
+
+\subsection{Optimisation bayésienne}
+
+L'optimisation bayésienne \cite{snoek2012practical} est une méthode de
+recherche d'hyperparamètres fondée sur la construction d'un modèle de
+substitution (\textit{surrogate model}) de la fonction objectif. À chaque
+itération, l'algorithme sélectionne les hyperparamètres les plus prometteurs
+en équilibrant exploration (zones peu connues de l'espace) et exploitation
+(zones connues pour leur haute performance), via une fonction d'acquisition
+telle que l'espérance d'amélioration (\textit{Expected Improvement}).
+
+\subsection{Optuna et l'échantillonneur TPE}
+
+Optuna \cite{akiba2019optuna} est un framework AutoML Python qui implémente
+l'algorithme TPE (\textit{Tree-structured Parzen Estimator}) de Bergstra et
+al.\ \cite{bergstra2011algorithms}. TPE modélise séparément la distribution
+des hyperparamètres associés aux bons résultats $l(x)$ et aux mauvais résultats
+$g(x)$, puis sélectionne les candidats qui maximisent le ratio $l(x)/g(x)$.
+Comparé à la recherche aléatoire ou par grille, TPE converge vers de bonnes
+solutions avec significativement moins d'évaluations de la fonction objectif,
+ce qui est crucial lorsque chaque évaluation nécessite un appel API coûteux.
+
+\section{Méta-learning}
+
+\subsection{Définition et taxonomie}
+
+Le méta-learning, ou \textit{apprentissage à apprendre}, désigne un ensemble
+de techniques visant à améliorer les performances d'un algorithme d'apprentissage
+en exploitant l'expérience accumulée sur de multiples tâches passées
+\cite{vanschoren2018meta}. Contrairement à l'apprentissage conventionnel qui
+optimise les performances sur une tâche spécifique, le méta-learning cherche à
+apprendre une représentation ou une procédure générale transférable à de
+nouvelles tâches avec peu d'exemples.
+
+Trois grandes familles d'approches existent :
+\begin{itemize}
+  \item Les méthodes fondées sur l'optimisation du modèle initial (MAML
+    \cite{finn2017model} et ses variantes), qui apprennent une initialisation
+    des poids du modèle facilitant le fine-tuning rapide sur de nouvelles tâches ;
+  \item Les méthodes fondées sur des métriques (Prototypical Networks
+    \cite{snell2017prototypical}), qui apprennent un espace d'embedding dans
+    lequel la classification par plus proche voisin est efficace ;
+  \item Les méthodes fondées sur des modèles (\textit{model-based}), qui apprennent
+    un mécanisme d'inférence rapide, souvent sous la forme d'un réseau de
+    mémoire ou d'un transformeur.
+\end{itemize}
+
+\subsection{Méta-learning pour la configuration de systèmes}
+
+Notre travail s'inscrit dans un paradigme de méta-learning différent des
+approches précédentes, plus proche du domaine AutoML \cite{hutter2019automated}
+et du \textit{meta-learning for algorithm configuration}
+\cite{feurer2015initializing}. L'idée est de prédire les hyperparamètres
+optimaux d'un algorithme (ici, les pondérations du scorer) pour une nouvelle
+tâche (ici, un nouveau domaine de recherche), à partir de caractéristiques
+descriptives de cette tâche (\textit{meta-features}).
+
+Feurer et al.\ \cite{feurer2015initializing} utilisent les meta-features
+d'un dataset (nombre d'instances, de features, ratio de classes, etc.) pour
+initialiser intelligemment la recherche d'hyperparamètres dans Auto-sklearn.
+Dans notre contexte, les meta-features décrivent le corpus de publications
+d'un domaine (distribution des citations, niveau des auteurs, récence des
+articles, etc.) et permettent de prédire les pondérations optimales du scorer.
+
+\subsection{Combinaison d'estimateurs : agrégation de rangs}
+
+La combinaison de plusieurs estimateurs (\textit{ensemble methods}) améliore
+typiquement la robustesse et la performance par rapport à un estimateur unique.
+Dans le contexte de la prédiction de vecteurs de pondérations, nous adaptons
+des méthodes d'agrégation de rangs initialement développées pour la fusion
+de résultats de recherche d'information.
+
+Le \textbf{comptage de Borda} \cite{borda1784memoire}, formalisé dans un
+contexte d'apprentissage par Dwork et al.\ \cite{dwork2001rank}, attribue
+à chaque alternative un score égal à sa position dans le classement inverse,
+puis somme ces scores sur tous les votants. Il s'agit d'une méthode robuste
+aux outliers et naturellement insensible aux différences d'échelle entre
+estimateurs.
+
+La \textbf{fusion par rang réciproque} (RRF, \textit{Reciprocal Rank Fusion})
+\cite{cormack2009reciprocal} assigne à chaque alternative un score
+$\text{RRF}(d) = \sum_{r \in R} \frac{1}{k + \text{rank}_r(d)}$ où $k$ est
+un paramètre de lissage. RRF est particulièrement efficace pour la fusion
+de listes de rangs provenant de systèmes hétérogènes.
+
+\section{Métriques d'évaluation en recherche d'information}
+
+\subsection{NDCG (\textit{Normalized Discounted Cumulative Gain})}
+
+La métrique NDCG \cite{jarvelin2002cumulated} est le standard d'évaluation
+des systèmes de classement en recherche d'information. Elle prend en compte
+à la fois la pertinence et la position des documents dans le classement,
+en appliquant un facteur de discount logarithmique aux positions inférieures.
+
+Pour une liste de $k$ documents, le DCG est défini par :
+\begin{equation}
+  \text{DCG}@k = \sum_{i=1}^{k} \frac{2^{r_i} - 1}{\log_2(i+1)}
+  \label{eq:dcg}
+\end{equation}
+où $r_i \in \{0, 1, 2\}$ est la pertinence du document en position $i$
+(0 = non pertinent, 1 = pertinent, 2 = très pertinent).
+
+Le NDCG est obtenu en normalisant le DCG par le DCG idéal (IDCG) :
+\begin{equation}
+  \text{NDCG}@k = \frac{\text{DCG}@k}{\text{IDCG}@k}
+  \label{eq:ndcg}
+\end{equation}
+
+Nous utilisons NDCG@15 comme métrique principale, ce choix étant motivé
+par la pratique usuelle de consulter les 15 à 20 premiers résultats d'une
+recherche académique.
+
+\subsection{Tests statistiques non-paramétriques}
+\label{sec:etat_art_wilcoxon}
+
+Le \textbf{test de Wilcoxon signé} \cite{wilcoxon1945individual} est une
+alternative non-paramétrique au test $t$ apparié, adaptée aux situations
+où les hypothèses de normalité ne peuvent être vérifiées. Pour $n$ paires
+d'observations $(x_i, y_i)$, on considère les différences $d_i = y_i - x_i$,
+on les classe par valeur absolue, et on calcule la statistique $W^+$ (somme
+des rangs des différences positives). La corrélation rang-bisériale
+$r_{rb} = (W^+ - W^-) / (W^+ + W^-)$ mesure la taille d'effet, avec les
+conventions : $|r_{rb}| < 0.3$ (petit), $0.3$--$0.5$ (moyen), $> 0.5$ (grand).
+
+\section{Optimisation automatique des prompts}
+
+\subsection{L'importance du \textit{prompt engineering}}
+
+La qualité des sorties d'un LLM dépend fortement de la formulation des
+instructions (\textit{prompts}) qui lui sont soumises. Le \textit{prompt
+engineering} manuel est un processus itératif et subjectif, difficile à
+systématiser. Plusieurs travaux ont proposé d'automatiser cette optimisation.
+
+\subsection{ProTeGi}
+
+Pryzant et al.\ \cite{pryzant2023automatic} proposent ProTeGi
+(\textit{Prompt Optimization with Textual Gradients}), une méthode qui
+adapte le concept de gradient de descente au domaine textuel. ProTeGi
+utilise un LLM ``critique'' pour identifier les faiblesses d'un prompt
+et proposer des modifications ciblées, de façon analogue à un gradient
+qui indique la direction d'amélioration. Cette approche ne nécessite
+pas d'accès aux gradients du modèle et est donc applicable à tout LLM
+accessible via API.
+
+\section{Veille scientifique automatisée — travaux existants}
+
+\subsection{Systèmes de recommandation académique}
+
+Plusieurs systèmes automatisés de veille ou de recommandation académique
+ont été proposés. \textit{Semantic Scholar} \cite{lo2020s2orc} utilise des
+embeddings pour recommander des articles similaires. \textit{ResearchRabbit}
+et \textit{Connected Papers} proposent des visualisations de graphes de
+citations pour explorer des corpus. Ces systèmes se concentrent sur la
+découverte d'articles similaires à un corpus de départ, sans aborder
+l'analyse automatique du contenu ni la synthèse.
+
+\subsection{Génération automatique de revues de littérature}
+
+Des travaux récents ont exploré la génération automatique de revues de
+littérature (\textit{automated survey generation}) à l'aide de LLM.
+Liu et al.\ \cite{liu2023survey} utilisent un agent LLM pour décomposer
+un sujet de recherche en sous-thèmes et récupérer les articles pertinents
+pour chacun. Cependant, ces approches ne proposent pas de mécanisme de
+filtrage par qualité ni d'évaluation rigoureuse de la généralisation à de
+nouveaux domaines.
+
+\subsection{Positionnement de notre travail}
+
+Par rapport aux travaux existants, notre contribution se distingue sur
+trois axes :
+\begin{enumerate}
+  \item \textbf{Scoring multi-dimensionnel et calibration par AutoML} : nous
+    formalisons l'évaluation de la qualité d'un article selon six dimensions
+    et apprenons automatiquement les pondérations optimales par domaine.
+  \item \textbf{Architecture multi-agents complète} : nous proposons un pipeline
+    end-to-end intégrant sept agents spécialisés, des patterns de raisonnement
+    avancés (ReAct, Reflexion) et un contrat de communication formalisé.
+  \item \textbf{Méta-learning pour la généralisation} : nous évaluons
+    rigoureusement, sur 19 domaines, la capacité du système à s'adapter
+    à de nouveaux domaines sans reconfiguration manuelle.
+\end{enumerate}
+
+Le tableau~\ref{tab:related_work} synthétise le positionnement de notre
+approche par rapport aux systèmes existants.
+
+\begin{table}[htbp]
+  \centering
+  \caption{Comparaison des approches de veille scientifique automatisée.}
+  \label{tab:related_work}
+  \rowcolors{2}{lightgray}{white}
+  \begin{tabular}{lcccc}
+    \toprule
+    \textbf{Système} & \textbf{Multi-agents} & \textbf{Scoring} & \textbf{Synthèse} & \textbf{Généralisation} \\
+    \midrule
+    Semantic Scholar & \texttimes & partiel & \texttimes & \checkmark \\
+    Liu et al. (2023) & \checkmark & \texttimes & \checkmark & \texttimes \\
+    ResearchRabbit & \texttimes & \texttimes & \texttimes & \checkmark \\
+    \textbf{Notre approche} & \checkmark & \checkmark & \checkmark & \checkmark \\
+    \bottomrule
+  \end{tabular}
+\end{table}

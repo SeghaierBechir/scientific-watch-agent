@@ -1,0 +1,30 @@
+# Secrets
+.env
+
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.pytest_cache/
+.ipynb_checkpoints/
+venv/
+.venv/
+
+# Generated reports (do not commit)
+output/
+*.pdf
+
+# ProTeGi training data (large CSV files downloaded by kagglehub, ~2.4 GB)
+protegi_data/
+
+# Data (often large or regenerable)
+data/cache/
+data/hindex_cache.json
+data/oracle/
+data/plots/
+*.pkl
+*.db
+
+# IDE
+.vscode/
+.idea/

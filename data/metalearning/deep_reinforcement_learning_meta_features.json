@@ -1,0 +1,18 @@
+{
+  "domain_id": "deep_reinforcement_learning",
+  "topic": "deep reinforcement learning",
+  "corpus_size": 169,
+  "median_year": 2018.0,
+  "pct_recent": 0.01775147928994083,
+  "year_std": 1.7419780675914405,
+  "citation_gini": 0.7611271998363911,
+  "citation_median": 273.0,
+  "pct_high_cited": 0.7218934911242604,
+  "unique_author_ratio": 0.8402366863905325,
+  "mean_h_index": 24.435064935064936,
+  "pct_high_hindex": 0.8461538461538461,
+  "pct_q1": 0.2485207100591716,
+  "topic_concept_overlap": 0.7514792899408284,
+  "gold_ratio": 0.7455621301775148,
+  "grade2_ratio": 0.05325443786982249
+}

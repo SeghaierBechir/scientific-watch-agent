@@ -1,0 +1,11 @@
+{
+  "topic": "machine learning financial prediction stock market",
+  "weights": {
+    "venue": 0.333393,
+    "authors": 0.164078,
+    "impact": 0.032355,
+    "velocity": 0.105539,
+    "recency": 0.031985,
+    "relevance": 0.33265
+  }
+}

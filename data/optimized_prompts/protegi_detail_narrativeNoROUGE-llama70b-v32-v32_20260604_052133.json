@@ -1,0 +1,124 @@
+{
+  "run_name": "narrativeNoROUGE-llama70b-v32-v32",
+  "initial_composite": 0.654,
+  "final_composite": 0.892,
+  "improvement_pct": 36.39,
+  "n_iterations": 2,
+  "beam_size": 4,
+  "n_worst": 5,
+  "use_llm_judge": true,
+  "iterations": [
+    {
+      "iteration": 1,
+      "train_composite": 0.6808,
+      "best_candidate_composite": 0.725,
+      "improved": true,
+      "gradient": "The current prompt fails because it does not explicitly instruct the model to **ignore peripheral or non-scientific content** and to **focus exclusively on the core research article**. The failure examples reveal a consistent pattern where the model incorrectly summarizes acknowledgments, background descriptions, or editorial content as if they were the primary study. For instance, in Example 1 (train_81), the model summarized funding statements and conflict-of-interest disclosures as the study's methodology and findings, resulting in a complete factual mismatch and a ROUGE-L score of zero. Similarly, in Example 5 (train_90), the model treated a call for teaching portfolio submissions as a research investigation into teaching methods. This indicates the prompt lacks a critical filtering instruction: it must direct the model to identify and summarize only the actual research problem, methods, results, and conclusions, while explicitly avoiding summaries of boilerplate text like author affiliations, funding, advertisements, or introductory background material. A concrete fix is to add an instruction such as: **\"Identify and summarize only the primary research study described. Do not summarize acknowledgments, author disclosures, calls for submissions, or general background information unless they are the central focus of the research.\"** This would prevent the model from being misled by non-research sections and force it to seek out the substantive scientific content.",
+      "candidates": [
+        {
+          "rank": 1,
+          "prompt": "You are a scientific paper summarizer. Your task is to write a concise narrative summary of the core scientific article. First, identify the primary research study described. Ignore all peripheral content such as acknowledgments, funding statements, author disclosures, calls for submissions, affiliations, and general background material unless they are the central focus of the research. Summarize only the actual research problem, methodology, key quantitative results (include specific numbers, statistics, or percentages when present), and the authors' main conclusions. Write in past tense throughout. Produce a single flowing paragraph of 150-250 words, styled like a scientific abstract, with no bullet points, headers, or markdown.",
+          "composite": 0.725,
+          "rouge1": 0.0,
+          "rouge2": 0.0,
+          "rougeL": 0.0,
+          "faithfulness": 0.725,
+          "coverage": 0.725,
+          "is_best": true
+        },
+        {
+          "rank": 2,
+          "prompt": "You are a scientific paper summarizer. Write a concise narrative summary of the scientific article in 150-250 words. Focus exclusively on the core research study. Do not summarize acknowledgments, author disclosures, funding information, calls for submissions, or introductory background material. Cover the research problem, methodology, key quantitative results (include specific numbers, statistics, or percentages when present), and the authors' main conclusions. Write in past tense throughout. Use a single flowing paragraph — no bullet points, no headers, no markdown. Style your output like a scientific abstract.",
+          "composite": 0.573,
+          "rouge1": 0.0,
+          "rouge2": 0.0,
+          "rougeL": 0.0,
+          "faithfulness": 0.525,
+          "coverage": 0.645,
+          "is_best": false
+        },
+        {
+          "rank": 3,
+          "prompt": "You are a scientific paper summarizer. Your task is to write a concise narrative summary of the scientific article. Identify and summarize only the primary research study. Avoid summarizing any non-research content such as acknowledgments, disclosures, funding details, advertisements, or general background sections. Cover the research problem, methodology, key quantitative results (include specific numbers, statistics, or percentages when present), and the authors' main conclusions. Write in past tense throughout. Produce a single flowing paragraph of 150-250 words, styled like a scientific abstract, with no bullet points, headers, or markdown.",
+          "composite": 0.692,
+          "rouge1": 0.0,
+          "rouge2": 0.0,
+          "rougeL": 0.0,
+          "faithfulness": 0.65,
+          "coverage": 0.755,
+          "is_best": false
+        },
+        {
+          "rank": 4,
+          "prompt": "You are a scientific paper summarizer. Write a concise narrative summary of the scientific article in 150-250 words. Focus on the core research content: the research problem, methodology, key quantitative results (include specific numbers, statistics, or percentages when present), and the authors' main conclusions. Explicitly ignore and do not summarize acknowledgments, author disclosures, funding statements, calls for submissions, or peripheral background information. Write in past tense throughout. Use a single flowing paragraph — no bullet points, no headers, no markdown. Style your output like a scientific abstract.",
+          "composite": 0.664,
+          "rouge1": 0.0,
+          "rouge2": 0.0,
+          "rougeL": 0.0,
+          "faithfulness": 0.64,
+          "coverage": 0.7,
+          "is_best": false
+        }
+      ],
+      "gradient_preview": "The current prompt fails because it does not explicitly instruct the model to **ignore peripheral or non-scientific content** and to **focus exclusively on the core research article**. The failure examples reveal a consistent pattern where the model incorrectly summarizes acknowledgments, background",
+      "n_candidates": 4,
+      "best_candidate_preview": "You are a scientific paper summarizer. Your task is to write a concise narrative summary of the core scientific article. First, identify the primary research study described. Ignore all peripheral con"
+    },
+    {
+      "iteration": 2,
+      "train_composite": 0.7294,
+      "best_candidate_composite": 0.892,
+      "improved": true,
+      "gradient": "The current prompt fails because it does not explicitly require the summary to be grounded *exclusively* in the provided article excerpt, leading to severe hallucinations and off-topic summaries. Across the failure examples, the generated text introduces extraneous information not present in the excerpt. For instance, Example 1 invents a study about a cell line and a predator bug, while the excerpt only discusses the pest status of a moth. Example 2 fabricates a study on soy phytoestrogens, whereas the excerpt is about endocannabinoids and anandamide. Even examples with partial faithfulness (Examples 3-5) begin correctly but then drift into unsupported generalizations or conclusions not detailed in the provided text. The core instruction to \"summarize only the actual research problem, methodology, key quantitative results... and the authors' main conclusions\" is insufficient because it does not mandate that every claim must be directly derivable from the given text. The prompt needs a concrete, forceful addition that binds the summary strictly to the source material. A fix would be to prepend a clear, non-negotiable rule: **\"Your summary must be based solely and directly on the text provided below. Do not add any information, examples, or conclusions that are not explicitly stated or logically implied in the provided text. If the text does not mention a specific study's methodology or results, do not invent them.\"** This would prevent the model from extrapolating beyond the excerpt and force it to confine the summary to the actual content, addressing the critical failure of generating unfaithful, low-ROUGE summaries.",
+      "candidates": [
+        {
+          "rank": 1,
+          "prompt": "You are a scientific paper summarizer. Your task is to write a concise narrative summary of the core scientific article based solely and directly on the text provided below. Do not add any information, examples, or conclusions that are not explicitly stated or logically implied in the provided text. If the text does not mention a specific study's methodology or results, do not invent them. Ignore all peripheral content such as acknowledgments, funding statements, author disclosures, calls for submissions, affiliations, and general background material unless they are the central focus of the research. Summarize only the actual research problem, methodology, key quantitative results (include specific numbers, statistics, or percentages when present), and the authors' main conclusions, ensuring every claim is derivable from the given text. Write in past tense throughout. Produce a single flowing paragraph of 150-250 words, styled like a scientific abstract, with no bullet points, headers, or markdown.",
+          "composite": 0.892,
+          "rouge1": 0.0,
+          "rouge2": 0.0,
+          "rougeL": 0.0,
+          "faithfulness": 0.89,
+          "coverage": 0.895,
+          "is_best": true
+        },
+        {
+          "rank": 2,
+          "prompt": "You are a scientific paper summarizer. Your summary must be based exclusively on the provided article excerpt. Do not introduce any facts, data, or conclusions not present in the text. First, identify the primary research study described. Ignore peripheral content like acknowledgments, funding, disclosures, submissions calls, affiliations, and general background unless central to the research. Summarize only the research problem, methodology, key quantitative results (include specific numbers, statistics, or percentages when available), and the authors' main conclusions, strictly as stated in the excerpt. Write in past tense. Produce a single flowing paragraph of 150-250 words, like a scientific abstract, with no bullet points, headers, or markdown. Ensure faithfulness to the source: if the text lacks details, do not fabricate them.",
+          "composite": 0.74,
+          "rouge1": 0.0,
+          "rouge2": 0.0,
+          "rougeL": 0.0,
+          "faithfulness": 0.75,
+          "coverage": 0.725,
+          "is_best": false
+        },
+        {
+          "rank": 3,
+          "prompt": "You are a scientific paper summarizer. Your task is to write a concise narrative summary of the core scientific article using only the information in the provided text. Do not extrapolate, infer beyond what is stated, or add external knowledge. Ignore all peripheral content such as acknowledgments, funding statements, author disclosures, calls for submissions, affiliations, and general background material unless they are the central focus of the research. Summarize solely the actual research problem, methodology, key quantitative results (include specific numbers, statistics, or percentages when present), and the authors' main conclusions as directly expressed in the excerpt. Write in past tense throughout. Produce a single flowing paragraph of 150-250 words, styled like a scientific abstract, with no bullet points, headers, or markdown. Adhere strictly to the source: every sentence must be grounded in the provided text.",
+          "composite": 0.795,
+          "rouge1": 0.0,
+          "rouge2": 0.0,
+          "rougeL": 0.0,
+          "faithfulness": 0.775,
+          "coverage": 0.825,
+          "is_best": false
+        },
+        {
+          "rank": 4,
+          "prompt": "You are a scientific paper summarizer. Generate a narrative summary of the core scientific article based strictly on the provided excerpt. Your summary must not contain any information absent from the text—do not invent studies, methods, results, or conclusions. First, identify the primary research study described. Ignore peripheral content like acknowledgments, funding, author disclosures, calls for submissions, affiliations, and general background unless central to the research. Summarize only the research problem, methodology, key quantitative results (include specific numbers, statistics, or percentages when present), and the authors' main conclusions, ensuring each element is explicitly supported by the excerpt. Write in past tense. Produce a single flowing paragraph of 150-250 words, like a scientific abstract, with no bullet points, headers, or markdown. Faithfulness is mandatory: confine all content to the given text.",
+          "composite": 0.796,
+          "rouge1": 0.0,
+          "rouge2": 0.0,
+          "rougeL": 0.0,
+          "faithfulness": 0.8,
+          "coverage": 0.79,
+          "is_best": false
+        }
+      ],
+      "gradient_preview": "The current prompt fails because it does not explicitly require the summary to be grounded *exclusively* in the provided article excerpt, leading to severe hallucinations and off-topic summaries. Across the failure examples, the generated text introduces extraneous information not present in the exc",
+      "n_candidates": 4,
+      "best_candidate_preview": "You are a scientific paper summarizer. Your task is to write a concise narrative summary of the core scientific article based solely and directly on the text provided below. Do not add any information"
+    }
+  ]
+}

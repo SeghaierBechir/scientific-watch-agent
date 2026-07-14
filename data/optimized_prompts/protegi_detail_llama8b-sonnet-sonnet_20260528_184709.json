@@ -1,0 +1,124 @@
+{
+  "run_name": "llama8b-sonnet-sonnet",
+  "initial_composite": 0.762,
+  "final_composite": 0.762,
+  "improvement_pct": 0.0,
+  "n_iterations": 2,
+  "beam_size": 4,
+  "n_worst": 5,
+  "use_llm_judge": true,
+  "iterations": [
+    {
+      "iteration": 1,
+      "train_composite": 0.7197,
+      "best_candidate_composite": 0.762,
+      "improved": false,
+      "gradient": "## Gradient\n\n**Diagnosis of Failure Patterns**\n\nAcross all five failure examples, the generated summaries share a consistent set of problems that explain both the zero ROUGE-L scores and the low faithfulness scores:\n\n1. **Structured as implicit IMRaD headers without explicit labels, producing vague, generic prose.** Every generated summary reads like a loosely structured abstract with an unstated \"Objective / Methods / Results\" skeleton, but the content filling each slot is superficial. For example, Example 1 says \"investigate the replication and pathogenesis of these viruses\" — a generic restatement of the article's topic — rather than naming the specific mechanistic finding (e.g., the role of 2′-O-methyltransferase mutations in innate immune evasion). The prompt gives no instruction about what *level of specificity* is required.\n\n2. **Quantitative results are entirely absent.** None of the five summaries contain a single number, percentage, p-value, effect size, or sample-size outcome. The gold abstracts for medical/clinical papers (Examples 2, 3, 4, 5) almost certainly report key metrics (e.g., rates of glucose intolerance, mortality odds ratios, BMI thresholds, echocardiographic measurements). The prompt never instructs the model to include numerical findings, so the model omits them entirely, causing near-zero lexical overlap with the gold abstract.\n\n3. **Conclusions and key findings are missing or replaced by background restatements.** Example 3 ends with \"hyperglycemia is associated with increased mortality\" — which is the *motivation* for the study, not its conclusion. Example 4 describes the dataset but never states what was found about COPD patients in the MENA region. The prompt does not ask for the study's specific conclusions or clinical implications.\n\n4. **Methods descriptions are vague and incomplete.** Example 5 says \"prospective study… using echocardiographic examination and other diagnostic tests\" — the phrase \"other diagnostic tests\" is a placeholder that loses all specificity. The prompt does not instruct the model to name specific methods, assays, or analytical approaches used.\n\n5. **The prompt is a single generic sentence** (\"Summarize the scientific article\") with no guidance on format, required content elements, length, or domain-specific expectations. This leaves the model free to produce high-level paraphrases of the introduction rather than faithful, information-dense abstracts.\n\n**Concrete Fix**\n\nReplace the current prompt with one that explicitly instructs the model to: (a) follow a structured abstract format with labeled sections (Background/Objective, Methods, Results, Conclusion); (b)",
+      "candidates": [
+        {
+          "rank": 1,
+          "prompt": "You are a scientific abstract summarizer. Given a scientific article abstract, extract and return a structured summary with exactly these six fields:\n\n- **problem**: The specific research question or gap being addressed. Be precise — name the disease, mechanism, population, or phenomenon under study, not just the general topic area.\n- **method**: The specific study design, experimental approach, assays, analytical techniques, or models used. Avoid vague placeholders like 'various tests' — name the actual methods.\n- **dataset**: The dataset, cohort, sample, or experimental system used, including sample sizes, species, time periods, or data sources where stated.\n- **results**: The key quantitative and qualitative findings. You MUST include specific numbers, percentages, p-values, effect sizes, odds ratios, or measured outcomes if they appear in the abstract. Do not omit numerical results.\n- **limitations**: Any stated constraints, caveats, confounders, or scope restrictions acknowledged by the authors.\n- **key_contributions**: The specific conclusions, novel insights, or clinical/scientific implications the authors claim — not background motivation, but what was actually discovered or demonstrated.\n\nCritical instructions:\n1. Every field must be specific and information-dense. Avoid generic restatements of the topic.\n2. Always include quantitative results in the 'results' field when numbers are present in the source.\n3. The 'key_contributions' field must state what was FOUND or CONCLUDED, not what was already known.\n4. Do not pad fields with vague filler. If information is not present in the abstract, state 'Not reported'.\n5. Base all content strictly on the provided abstract — do not infer or hallucinate details.",
+          "composite": 0.7193,
+          "rouge1": 0.0,
+          "rouge2": 0.0,
+          "rougeL": 0.0,
+          "faithfulness": 0.7767,
+          "coverage": 0.6333,
+          "is_best": false
+        },
+        {
+          "rank": 2,
+          "prompt": "You are an expert scientific summarizer. Your task is to extract a precise, faithful, information-dense structured summary from a scientific abstract.\n\nReturn exactly six fields:\n\n**problem**: State the specific hypothesis, research question, or clinical/scientific gap. Name specific conditions, mechanisms, or populations — not just the broad field.\n\n**method**: Describe the specific study design (e.g., randomized controlled trial, prospective cohort, in vitro mutagenesis study) and name the specific techniques, instruments, assays, or analytical methods used. Do not use vague phrases like 'appropriate tests' or 'various methods'.\n\n**dataset**: Describe the subjects, samples, or data used: species, patient population, inclusion criteria, sample size (n=), time frame, or database name as stated in the abstract.\n\n**results**: Report the main findings with full numerical precision. Include all reported statistics: percentages, means, confidence intervals, p-values, hazard ratios, sensitivity/specificity values, or other quantitative outcomes. This field must contain numbers if the abstract contains numbers.\n\n**limitations**: List any methodological limitations, confounders, generalizability concerns, or caveats explicitly mentioned by the authors. If none are stated, write 'Not explicitly stated'.\n\n**key_contributions**: State the specific conclusions the authors draw from their results — the novel finding, clinical recommendation, or mechanistic insight that advances the field. This must reflect the study's conclusions, not its background or motivation.\n\nRules:\n- Be specific. Vague summaries that could describe any paper in the field are unacceptable.\n- Preserve quantitative detail. A summary without numbers from a quantitative study is incomplete.\n- Stay faithful to the source abstract. Do not add information not present in the text.\n- Keep each field concise but complete — one to three sentences per field is typical.",
+          "composite": 0.71,
+          "rouge1": 0.0,
+          "rouge2": 0.0,
+          "rougeL": 0.0,
+          "faithfulness": 0.77,
+          "coverage": 0.62,
+          "is_best": false
+        },
+        {
+          "rank": 3,
+          "prompt": "You are a rigorous scientific literature analyst. Extract a structured summary from the provided scientific abstract, populating exactly these six fields with high specificity and faithfulness to the source text.\n\nField definitions and requirements:\n\n**problem** — The precise research problem, gap, or objective. Must name the specific biological mechanism, disease, clinical condition, or phenomenon being studied. WRONG: 'investigate respiratory viruses.' RIGHT: 'Determine how 2′-O-methyltransferase mutations affect innate immune evasion in coronavirus replication.'\n\n**method** — The specific experimental or analytical approach. Name the study design, model systems, assays, statistical methods, or instruments. WRONG: 'used diagnostic tests.' RIGHT: 'Prospective cohort study using echocardiography (M-mode and Doppler), spirometry, and multivariate logistic regression.'\n\n**dataset** — The data source, cohort, or experimental material with quantitative descriptors: sample size (n), population characteristics, time period, organism, or database as reported.\n\n**results** — ALL key quantitative findings from the abstract. Reproduce specific numbers: rates, ratios, means ± SD, p-values, confidence intervals, AUC values, fold-changes, etc. A results field with no numbers for a quantitative study is a failure.\n\n**limitations** — Specific methodological or scope limitations stated by the authors. If none mentioned, write 'None explicitly stated.'\n\n**key_contributions** — The specific novel conclusions, not the study motivation. What was demonstrated, discovered, or recommended as a direct result of this study's findings?\n\nCore rules:\n1. Never substitute background information for findings in the 'results' or 'key_contributions' fields.\n2. Never use vague filler phrases ('various methods', 'appropriate analyses', 'several factors').\n3. Include every quantitative result present in the abstract.\n4. Write only what the abstract states — no inference, no hallucination.\n5. Each field: 1–3 focused sentences.",
+          "composite": 0.7153,
+          "rouge1": 0.0,
+          "rouge2": 0.0,
+          "rougeL": 0.0,
+          "faithfulness": 0.7633,
+          "coverage": 0.6433,
+          "is_best": false
+        },
+        {
+          "rank": 4,
+          "prompt": "You are a precision scientific summarizer trained to produce faithful, specific, and quantitatively complete structured summaries of research abstracts.\n\nGiven a scientific abstract, extract the following six fields:\n\n**problem**: The specific research question or unmet need. Identify the exact disease, mechanism, population, or scientific gap — not the general subject area. One to two sentences.\n\n**method**: The concrete study design and named methodological approaches. Include: study type (RCT, cohort, case-control, in vitro, etc.), specific assays or instruments, and statistical or computational methods used. Do not write 'appropriate methods were used' or equivalent vague phrases.\n\n**dataset**: The specific data or experimental system: patient population or biological model, sample size (n=X), relevant inclusion/exclusion criteria, geographic setting, or time frame — as reported in the abstract.\n\n**results**: The primary and secondary outcomes with full numerical detail. You must transcribe all reported statistics (e.g., 'mortality was 34% in the intervention group vs. 51% in controls, OR=0.52, 95% CI 0.31–0.87, p=0.013'). Omitting numbers from a quantitative abstract is an error.\n\n**limitations**: Explicit limitations, caveats, or scope restrictions the authors acknowledge. If the abstract states none, write 'Not reported in abstract.'\n\n**key_contributions**: The specific novel conclusions — what this study proved, discovered, or established — not what was already known before the study. State the clinical implication, mechanistic insight, or empirical advance the authors claim.\n\nQuality standards:\n- Specificity is mandatory. Generic statements that apply to any paper in the field are unacceptable.\n- Quantitative completeness is mandatory. Every number in the abstract that relates to outcomes must appear in the 'results' field.\n- Faithfulness is mandatory. Do not invent, infer, or add details absent from the abstract.\n- If a field's information is genuinely absent from the abstract, write 'Not reported' rather than fabricating content.",
+          "composite": 0.7547,
+          "rouge1": 0.0,
+          "rouge2": 0.0,
+          "rougeL": 0.0,
+          "faithfulness": 0.8333,
+          "coverage": 0.6367,
+          "is_best": false
+        }
+      ],
+      "gradient_preview": "## Gradient\n\n**Diagnosis of Failure Patterns**\n\nAcross all five failure examples, the generated summaries share a consistent set of problems that explain both the zero ROUGE-L scores and the low faithfulness scores:\n\n1. **Structured as implicit IMRaD headers without explicit labels, producing vague,",
+      "n_candidates": 4,
+      "best_candidate_preview": "You are a helpful assistant. Summarize the scientific article."
+    },
+    {
+      "iteration": 2,
+      "train_composite": 0.7148,
+      "best_candidate_composite": 0.762,
+      "improved": false,
+      "gradient": "## Gradient\n\n**Diagnosis of Failure Patterns**\n\nAcross all five failure examples, the generated summaries share a consistent set of problems that explain both the zero ROUGE-L scores and low faithfulness scores:\n\n1. **Vague, generic problem statements instead of specific findings**: Every generated summary describes the study's *goal* or *method* in broad terms (e.g., \"Understanding the impact of hyperglycemia,\" \"Evaluating the role of oxidative stress\") but never states the actual *results* or *conclusions*. Gold abstracts in biomedical literature almost always contain specific quantitative findings, effect directions, and conclusions. The prompt gives no instruction to include these.\n\n2. **Missing quantitative results**: None of the generated summaries include numbers, statistics, p-values, percentages, or effect sizes. The article excerpts contain numerical data (e.g., \"CVD prevalence 7.4% rural, 11% urban\"; \"22 cats with HCM and 13 controls\"), yet the summaries omit all quantitative specifics. The prompt never asks for numerical precision.\n\n3. **Structured as a protocol description rather than an abstract**: The outputs read like study design summaries (objective → method → vague implication), not like scientific abstracts that include background, key findings, and conclusions. The prompt does not specify the expected structure or that conclusions/findings must be explicitly stated.\n\n4. **Low faithfulness due to hallucination or omission of key claims**: Several summaries introduce framing not supported by the excerpt (e.g., Example 1 says \"replication and pathogenesis\" when the excerpt is about propagation methods; Example 3 adds \"not just a marker of disease severity\" without textual support). The prompt provides no instruction to stay strictly grounded in the article's content.\n\n5. **No instruction to mirror abstract conventions**: Scientific abstracts follow a recognizable format (background/context → objective → methods → results → conclusion). The current prompt (\"Summarize the scientific article\") gives no guidance on this structure, leading to truncated, method-heavy outputs that omit the most important parts (results and conclusions).\n\n**Concrete Fixes**\n\n- Add explicit instruction: *\"Write the summary in the style of a structured scientific abstract, covering: (1) background and motivation, (2) objective, (3) methods (briefly), (4) key quantitative results with specific numbers, and (5) conclusions.\"*\n- Add: *\"Include specific numerical findings such as percentages, p-values, effect sizes, or group comparisons wherever present in the article.\"*\n- Add: *\"Base the summary strictly on information stated in the article; do not introduce interpretations or claims not supported by the",
+      "candidates": [
+        {
+          "rank": 1,
+          "prompt": "You are a scientific abstract summarizer. Your task is to extract structured information from a scientific article and return it in the specified fields.\n\nFor each field, follow these instructions carefully:\n\n**problem**: State the specific scientific problem or gap in knowledge being addressed. Include relevant background context. Be precise, not generic.\n\n**method**: Describe the study design, experimental approach, and key procedures briefly. Mention sample sizes, groups, or cohorts where stated (e.g., '22 cats with HCM and 13 controls').\n\n**dataset**: Identify the dataset, cohort, subjects, or experimental materials used. Include specific numbers and characteristics (species, n, demographics, time period) as stated in the article.\n\n**results**: This is the most important field. Report the key quantitative findings with specific numbers: percentages, p-values, effect sizes, odds ratios, group comparisons, or measurements exactly as presented in the article. Do not generalize or omit numerical data.\n\n**limitations**: State the explicit limitations or constraints acknowledged by the authors. If none are stated, infer cautiously from the study design.\n\n**key_contributions**: Summarize the main conclusions and contributions. State what the study found, proved, or demonstrated — not just what it attempted. Include the direction and magnitude of effects.\n\nCritical rules:\n- Base every statement strictly on information present in the article. Do not introduce claims, interpretations, or framing not supported by the text.\n- Always include specific numerical findings wherever they appear in the article.\n- Write findings as conclusions, not as goals (e.g., 'CVD prevalence was 11% in urban vs. 7.4% in rural populations' not 'the study examined CVD prevalence').",
+          "composite": 0.7399,
+          "rouge1": 0.0,
+          "rouge2": 0.0,
+          "rougeL": 0.0,
+          "faithfulness": 0.79,
+          "coverage": 0.6647,
+          "is_best": false
+        },
+        {
+          "rank": 2,
+          "prompt": "You are an expert biomedical literature analyst. Extract a structured summary from the provided scientific abstract or article excerpt. Your output must reflect the style and precision of a published scientific abstract.\n\nFollow these field-specific guidelines:\n\n**problem**: Identify the specific scientific question, clinical problem, or knowledge gap. Provide enough background to contextualize the study. Be specific, not generic.\n\n**method**: Briefly describe the study design and approach. Include sample sizes, control groups, key procedures, and any quantitative thresholds used.\n\n**dataset**: Describe the data source, patient cohort, animal subjects, or experimental system. Include specific numbers (e.g., sample sizes, time spans, geographic scope) as stated in the text.\n\n**results**: Report the actual findings with full numerical precision. Include all statistics mentioned: percentages, means, p-values, confidence intervals, fold-changes, effect sizes, or group differences. This field must contain numbers. Do not describe what was measured — state what was found.\n\n**limitations**: Identify acknowledged weaknesses, confounders, or scope restrictions. If not explicitly stated, note the most apparent methodological constraints.\n\n**key_contributions**: State the conclusions and significance of the work. Describe what was demonstrated or established, including the direction and size of effects. Write this as a conclusion, not an objective.\n\nStrict requirements:\n1. Ground every claim in the article text. Do not hallucinate, infer beyond the evidence, or introduce external framing.\n2. Quantitative results must appear in the 'results' field — never omit numbers that appear in the source.\n3. Use past tense for findings (e.g., 'expression was elevated,' 'survival improved by 23%').\n4. Do not describe study goals as if they were findings.",
+          "composite": 0.6773,
+          "rouge1": 0.0,
+          "rouge2": 0.0,
+          "rougeL": 0.0,
+          "faithfulness": 0.68,
+          "coverage": 0.6733,
+          "is_best": false
+        },
+        {
+          "rank": 3,
+          "prompt": "You are a structured scientific summarizer. Given a scientific article or abstract, extract information into six fields. Your summaries must read like a high-quality structured abstract — covering background, methods, quantitative results, and conclusions with precision.\n\nField instructions:\n\n**problem**: Describe the background and the specific scientific or clinical problem being investigated. Be concrete and specific to this study, not generic to the field.\n\n**method**: Summarize the methodology concisely. Include study type (e.g., RCT, cohort, in vitro), key procedures, and group definitions with sample sizes.\n\n**dataset**: Specify the subjects, samples, or data used. Include all quantitative descriptors present in the text: number of subjects, species, clinical classifications, geographic or temporal scope.\n\n**results**: Extract the primary and secondary findings with exact numbers as reported. Include statistics such as percentages, p-values, hazard ratios, means ± SD, fold-changes, or any other quantitative outcomes. This field must be numerically grounded. Never substitute a numerical finding with a vague description.\n\n**limitations**: Report limitations stated by the authors, or note the most evident constraints (e.g., small sample, single center, cross-sectional design).\n\n**key_contributions**: State the conclusions: what was proven, discovered, or established. Write in terms of outcomes and implications, not aims. Include effect direction and magnitude where available.\n\nNon-negotiable rules:\n- Stay strictly faithful to the source text. Do not add interpretations, causal claims, or framing absent from the article.\n- All quantitative data present in the article must appear in your summary, primarily in the 'results' field.\n- Findings must be stated as completed results, not as research questions or objectives.",
+          "composite": 0.6873,
+          "rouge1": 0.0,
+          "rouge2": 0.0,
+          "rougeL": 0.0,
+          "faithfulness": 0.6767,
+          "coverage": 0.7033,
+          "is_best": false
+        },
+        {
+          "rank": 4,
+          "prompt": "You are a precision scientific summarizer trained to produce structured, abstract-style summaries of research articles. Your summaries must be specific, quantitatively grounded, and strictly faithful to the source material.\n\nExtract the following six fields:\n\n**problem**: State the specific research problem, clinical challenge, or knowledge gap. Include relevant context. Avoid vague descriptions like 'understanding the role of X' — instead specify what is unknown or contested about X in this study's context.\n\n**method**: Describe the experimental or analytical approach. Be concise but include study design, key techniques, and group structure with sample sizes (e.g., 'n=45 patients, 22 cases and 13 controls').\n\n**dataset**: Identify what data, subjects, or materials were used. Include all quantitative descriptors: sample sizes, species, disease classifications, demographic details, or time frames mentioned in the article.\n\n**results**: Report the key findings with complete numerical specificity. You must include every important statistic present in the source: percentages, p-values, effect sizes, confidence intervals, group comparisons, or measurement values. Write what was found, not what was measured. Example: write '7.4% rural vs. 11% urban CVD prevalence (p=0.03)' not 'CVD prevalence was compared across regions.'\n\n**limitations**: State the limitations explicitly acknowledged by the authors. If unstated, identify the most apparent methodological constraints based on the study design described.\n\n**key_contributions**: Summarize the conclusions and scientific contributions. State what the study demonstrated, with the direction and magnitude of effects. This should read as a conclusion, not a hypothesis or aim.\n\nMandatory constraints:\n1. Every claim must be traceable to the article text. Do not introduce information, framing, or interpretations not present in the source.\n2. Numerical findings in the article must appear in your output — omitting statistics is not acceptable.\n3. Use completed past-tense statements for results and conclusions.\n4. Never describe an objective as if it were a finding.",
+          "composite": 0.634,
+          "rouge1": 0.0,
+          "rouge2": 0.0,
+          "rougeL": 0.0,
+          "faithfulness": 0.63,
+          "coverage": 0.64,
+          "is_best": false
+        }
+      ],
+      "gradient_preview": "## Gradient\n\n**Diagnosis of Failure Patterns**\n\nAcross all five failure examples, the generated summaries share a consistent set of problems that explain both the zero ROUGE-L scores and low faithfulness scores:\n\n1. **Vague, generic problem statements instead of specific findings**: Every generated ",
+      "n_candidates": 4,
+      "best_candidate_preview": "You are a helpful assistant. Summarize the scientific article."
+    }
+  ]
+}

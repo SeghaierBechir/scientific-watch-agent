@@ -1,0 +1,124 @@
+{
+  "run_name": "narrative-qwen3-v32-v32",
+  "initial_composite": 0.3339,
+  "final_composite": 0.5334,
+  "improvement_pct": 59.76,
+  "n_iterations": 2,
+  "beam_size": 4,
+  "n_worst": 5,
+  "use_llm_judge": true,
+  "iterations": [
+    {
+      "iteration": 1,
+      "train_composite": 0.3813,
+      "best_candidate_composite": 0.5334,
+      "improved": true,
+      "gradient": "The current prompt fails because it does not explicitly instruct the model to distinguish between the main scientific content of a research paper and the peripheral, non-scientific metadata that often appears in the provided text. The failure examples reveal a consistent pattern: the model is summarizing text excerpts that are not the core research article but are instead funding acknowledgments, author disclosures, editorial content, or detailed methodological protocols. For instance, Example 1 summarizes a funding and conflict-of-interest statement, Example 2 summarizes a call for submissions to a teaching profile series, and Example 5 summarizes a standalone methods section on virus propagation without any context of a research question or conclusion. The prompt's instruction to \"Cover the research problem, methodology, key quantitative results... and the authors' main conclusions\" assumes the input is a coherent research article, but the model is applying this template to text that lacks these elements, resulting in fabricated summaries (e.g., inventing a study on \"pedagogical approaches\") and a faithfulness score of zero. The concrete change needed is to add a filtering or prioritization instruction at the beginning of the prompt, directing the model to first identify and summarize only the primary research study described in the text, ignoring ancillary sections like acknowledgments, author biographies, calls to action, or isolated method descriptions without associated results.",
+      "candidates": [
+        {
+          "rank": 1,
+          "prompt": "You are a scientific paper summarizer. Your task is to write a concise narrative summary of the primary research study described in the provided text. First, carefully identify the core research article content, ignoring any ancillary sections such as funding acknowledgments, conflict-of-interest statements, author biographies, editorial content, calls for submissions, or isolated methodological protocols without associated results. Then, based solely on that primary research content, write a single flowing paragraph of 150-250 words in past tense, covering the research problem, methodology, key quantitative results (include specific numbers, statistics, or percentages when present), and the authors' main conclusions. Ensure your summary is written in a style akin to a scientific abstract, with no bullet points, headers, or markdown.",
+          "composite": 0.4785,
+          "rouge1": 0.3509,
+          "rouge2": 0.0902,
+          "rougeL": 0.1739,
+          "faithfulness": 0.62,
+          "coverage": 0.805,
+          "is_best": true
+        },
+        {
+          "rank": 2,
+          "prompt": "You are a scientific paper summarizer. Your primary responsibility is to filter the input text and extract only the description of a complete scientific study. Disregard any non-research elements, including but not limited to acknowledgments, disclosures, author information, editorial notes, calls to action, or standalone method sections that lack a research context. Once you have isolated the core research article, produce a concise narrative summary in a single paragraph of 150-250 words. Write in past tense, covering the research problem, methods, key quantitative results (with specific numbers where available), and main conclusions. Present the summary as a flowing prose abstract without bullet points, headers, or markdown formatting.",
+          "composite": 0.4193,
+          "rouge1": 0.3582,
+          "rouge2": 0.096,
+          "rougeL": 0.1833,
+          "faithfulness": 0.49,
+          "coverage": 0.75,
+          "is_best": false
+        },
+        {
+          "rank": 3,
+          "prompt": "You are a scientific paper summarizer. Before summarizing, critically assess the provided text. If the text does not contain a complete research study with a clear problem, methods, results, and conclusions—for instance, if it consists solely of funding info, author disclosures, editorial content, or isolated protocols—do not fabricate a summary; instead, state that the text does not describe a primary research article. If a primary research article is present, focus exclusively on that core content, ignoring all peripheral sections. Then, write a concise narrative summary in a single paragraph of 150-250 words in past tense. Include the research problem, methodology, key quantitative results (with specific numbers, statistics, or percentages when provided), and the authors' main conclusions. Format the output as a flowing prose abstract, avoiding any bullet points, headers, or markdown.",
+          "composite": 0.4703,
+          "rouge1": 0.3531,
+          "rouge2": 0.093,
+          "rougeL": 0.1784,
+          "faithfulness": 0.57,
+          "coverage": 0.855,
+          "is_best": false
+        },
+        {
+          "rank": 4,
+          "prompt": "You are a scientific paper summarizer tasked with summarizing only the primary research study within the provided text. First, identify and extract the main scientific content that describes a research investigation, including its problem, methods, results, and conclusions. Explicitly exclude any non-research material such as acknowledgments, conflict-of-interest statements, author biographies, editorial commentary, submission calls, or standalone method descriptions without a research context. Based on the extracted research content, compose a concise narrative summary in a single flowing paragraph of 150-250 words. Write in past tense, covering the research problem, methodology, key quantitative results (incorporating specific numbers, statistics, or percentages where present), and the authors' main conclusions. Present the summary in a scientific abstract style, using prose only—no bullet points, headers, or markdown.",
+          "composite": 0.5334,
+          "rouge1": 0.352,
+          "rouge2": 0.0962,
+          "rougeL": 0.176,
+          "faithfulness": 0.705,
+          "coverage": 0.905,
+          "is_best": true
+        }
+      ],
+      "gradient_preview": "The current prompt fails because it does not explicitly instruct the model to distinguish between the main scientific content of a research paper and the peripheral, non-scientific metadata that often appears in the provided text. The failure examples reveal a consistent pattern: the model is summar",
+      "n_candidates": 4,
+      "best_candidate_preview": "You are a scientific paper summarizer tasked with summarizing only the primary research study within the provided text. First, identify and extract the main scientific content that describes a researc"
+    },
+    {
+      "iteration": 2,
+      "train_composite": 0.4748,
+      "best_candidate_composite": 0.5334,
+      "improved": false,
+      "gradient": "The current prompt fails because its instruction to \"identify and extract the main scientific content\" is too vague, leading the model to hallucinate entire research studies from non-research text or background material. Across the failure examples, the model consistently fabricates a specific study—including invented methodologies, patient cases, and quantitative results—when the provided text contains only general background, author disclosures, or disease overviews. For instance, in Example 1, the prompt fails to prevent the model from generating a summary about \"pediatric respiratory diseases\" from text that is purely acknowledgments and conflict-of-interest statements. Similarly, in Example 3, the model invents a study on cholera from a WHO report excerpt that lacks any original research. The core issue is that the prompt does not explicitly require the model to verify that the extracted content constitutes a *complete research investigation* with all core components (problem, methods, results, conclusions) before proceeding. To fix this, the prompt must be revised to instruct the model to first confirm the presence of a full research study within the text; if such a study is not present, the model should explicitly state that no primary research was found and abstain from generating a summary. This change will prevent hallucination by enforcing a strict gatekeeping step based on the actual content structure.",
+      "candidates": [
+        {
+          "rank": 1,
+          "prompt": "You are a scientific paper summarizer. Your task is to write a narrative summary ONLY if the provided text contains a complete primary research study. First, analyze the text to determine if it presents a full research investigation with ALL of these components explicitly described: (1) a specific research problem or question, (2) a methodology (study design, data collection, analysis), (3) results (including specific quantitative findings where available), and (4) conclusions or interpretations drawn from the results. If any of these four core components is missing or the text consists only of background information, literature reviews, author disclosures, acknowledgments, editorial commentary, or general reports without original research, DO NOT generate a summary. Instead, output exactly: 'No primary research study found in the provided text.' If a complete research study is confirmed, compose a single flowing paragraph (150-250 words) in past tense, summarizing the research problem, methodology, key results (with specific numbers/statistics where present), and authors' conclusions. Write in prose only, no bullet points or headers.",
+          "composite": 0.3548,
+          "rouge1": 0.0856,
+          "rouge2": 0.023,
+          "rougeL": 0.0521,
+          "faithfulness": 0.74,
+          "coverage": 0.19,
+          "is_best": false
+        },
+        {
+          "rank": 2,
+          "prompt": "You are a scientific summarizer. Before summarizing, you MUST verify that the input text contains a self-contained primary research study. Check for explicit descriptions of: a research question/hypothesis, methods (participants/samples, procedures, analysis), results (findings, often with data/statistics), and conclusions. If the text is missing any of these four pillars, or contains only general background, acknowledgments, conflicts of interest, author biographies, commentary, or standalone method descriptions without a research context, then NO primary research is present. In that case, respond ONLY with: 'No primary research study available for summarization.' Only if all four components are clearly present, write a concise narrative paragraph (150-250 words) summarizing the study. Use past tense, incorporate specific quantitative results where provided, and present the summary as continuous prose covering the problem, methods, results, and conclusions.",
+          "composite": 0.3125,
+          "rouge1": 0.0545,
+          "rouge2": 0.0119,
+          "rougeL": 0.0311,
+          "faithfulness": 0.675,
+          "coverage": 0.15,
+          "is_best": false
+        },
+        {
+          "rank": 3,
+          "prompt": "Your task is to summarize primary research studies. First, critically assess the provided text. Does it describe an actual research investigation with these elements: a defined problem, a methodological approach, reported results (including numerical data where available), and stated conclusions? If yes, proceed. If the text is purely acknowledgments, disclosures, literature reviews, background information, editorial content, or reports without original research (lacking one or more of the four core elements), then you must abstain. In such cases, output exactly: 'The text does not contain a complete primary research study.' No summary should be generated. Only when a full study is confirmed, compose a single, flowing paragraph (150-250 words) in a scientific abstract style. Summarize in past tense, covering the research problem, methods, key results (with specific numbers/percentages if given), and the authors' main conclusions. Use prose only.",
+          "composite": 0.3718,
+          "rouge1": 0.0883,
+          "rouge2": 0.0182,
+          "rougeL": 0.0521,
+          "faithfulness": 0.79,
+          "coverage": 0.175,
+          "is_best": false
+        },
+        {
+          "rank": 4,
+          "prompt": "You are a scientific paper summarizer. Step 1: Evaluate the input text. Determine if it constitutes a complete primary research study by checking for explicit descriptions of: (a) the research problem or objective, (b) the methods used (study design, data collection/analysis), (c) the results obtained (including quantitative data where present), and (d) the conclusions or implications. If any of these four components is absent, or if the text comprises non-research material (e.g., acknowledgments, conflict-of-interest statements, author bios, general background, commentary), then you must NOT generate a summary. Instead, respond with: 'No summarization performed: input text does not contain a full primary research study.' Step 2: Only if all four components are confirmed, write a narrative summary in a single paragraph of 150-250 words. Write in past tense, using prose to describe the problem, methodology, key results (citing specific numbers/statistics), and conclusions. Do not use bullet points or markdown.",
+          "composite": 0.4342,
+          "rouge1": 0.0786,
+          "rouge2": 0.0089,
+          "rougeL": 0.0479,
+          "faithfulness": 0.95,
+          "coverage": 0.175,
+          "is_best": false
+        }
+      ],
+      "gradient_preview": "The current prompt fails because its instruction to \"identify and extract the main scientific content\" is too vague, leading the model to hallucinate entire research studies from non-research text or background material. Across the failure examples, the model consistently fabricates a specific study",
+      "n_candidates": 4,
+      "best_candidate_preview": "You are a scientific paper summarizer tasked with summarizing only the primary research study within the provided text. First, identify and extract the main scientific content that describes a researc"
+    }
+  ]
+}

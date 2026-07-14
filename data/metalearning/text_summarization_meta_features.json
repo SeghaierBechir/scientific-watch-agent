@@ -1,0 +1,18 @@
+{
+  "domain_id": "text_summarization",
+  "topic": "text summarization neural abstractive",
+  "corpus_size": 337,
+  "median_year": 2019.0,
+  "pct_recent": 0.008902077151335312,
+  "year_std": 1.5844974922129467,
+  "citation_gini": 0.9036538585333285,
+  "citation_median": 69.0,
+  "pct_high_cited": 0.3857566765578635,
+  "unique_author_ratio": 0.8724035608308606,
+  "mean_h_index": 15.734567901234568,
+  "pct_high_hindex": 0.771513353115727,
+  "pct_q1": 0.20771513353115728,
+  "topic_concept_overlap": 0.6676557863501483,
+  "gold_ratio": 0.9109792284866469,
+  "grade2_ratio": 0.10979228486646884
+}

@@ -1,0 +1,11 @@
+{
+  "topic": "sentiment analysis deep learning",
+  "weights": {
+    "venue": 0.071947,
+    "authors": 0.278254,
+    "impact": 0.340418,
+    "velocity": 0.235155,
+    "recency": 0.029424,
+    "relevance": 0.044802
+  }
+}

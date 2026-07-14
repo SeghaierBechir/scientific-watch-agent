@@ -1,0 +1,11 @@
+{
+  "topic": "knowledge graph embedding",
+  "weights": {
+    "venue": 0.142835,
+    "authors": 0.204804,
+    "impact": 0.286982,
+    "velocity": 0.062295,
+    "recency": 0.028361,
+    "relevance": 0.274723
+  }
+}

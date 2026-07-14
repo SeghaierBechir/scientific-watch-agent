@@ -1,0 +1,30 @@
+{
+  "run_name": "narrative-qwen3-v32-v32",
+  "initial_composite": 0.3339,
+  "final_composite": 0.5334,
+  "improvement_pct": 59.76,
+  "n_iterations": 2,
+  "beam_size": 4,
+  "n_worst": 5,
+  "use_llm_judge": true,
+  "iterations": [
+    {
+      "iteration": 1,
+      "train_composite": 0.3813,
+      "best_candidate_composite": 0.5334,
+      "improved": true,
+      "gradient_preview": "The current prompt fails because it does not explicitly instruct the model to distinguish between the main scientific content of a research paper and the peripheral, non-scientific metadata that often appears in the provided text. The failure examples reveal a consistent pattern: the model is summar",
+      "n_candidates": 4,
+      "best_candidate_preview": "You are a scientific paper summarizer tasked with summarizing only the primary research study within the provided text. First, identify and extract the main scientific content that describes a researc"
+    },
+    {
+      "iteration": 2,
+      "train_composite": 0.4748,
+      "best_candidate_composite": 0.5334,
+      "improved": false,
+      "gradient_preview": "The current prompt fails because its instruction to \"identify and extract the main scientific content\" is too vague, leading the model to hallucinate entire research studies from non-research text or background material. Across the failure examples, the model consistently fabricates a specific study",
+      "n_candidates": 4,
+      "best_candidate_preview": "You are a scientific paper summarizer tasked with summarizing only the primary research study within the provided text. First, identify and extract the main scientific content that describes a researc"
+    }
+  ]
+}

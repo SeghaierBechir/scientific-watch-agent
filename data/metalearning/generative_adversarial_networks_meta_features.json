@@ -1,0 +1,18 @@
+{
+  "domain_id": "generative_adversarial_networks",
+  "topic": "generative adversarial network image synthesis",
+  "corpus_size": 147,
+  "median_year": 2018.0,
+  "pct_recent": 0.02040816326530612,
+  "year_std": 1.667319044887783,
+  "citation_gini": 0.8168122597438123,
+  "citation_median": 191.0,
+  "pct_high_cited": 0.6530612244897959,
+  "unique_author_ratio": 0.8571428571428571,
+  "mean_h_index": 21.26086956521739,
+  "pct_high_hindex": 0.8979591836734694,
+  "pct_q1": 0.21768707482993196,
+  "topic_concept_overlap": 0.6530612244897959,
+  "gold_ratio": 0.6938775510204082,
+  "grade2_ratio": 0.08843537414965986
+}

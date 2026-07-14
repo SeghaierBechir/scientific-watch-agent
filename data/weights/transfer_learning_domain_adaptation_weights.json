@@ -1,0 +1,11 @@
+{
+  "topic": "transfer learning domain adaptation",
+  "weights": {
+    "venue": 0.248998,
+    "authors": 0.079726,
+    "impact": 0.271012,
+    "velocity": 0.286192,
+    "recency": 0.056313,
+    "relevance": 0.05776
+  }
+}

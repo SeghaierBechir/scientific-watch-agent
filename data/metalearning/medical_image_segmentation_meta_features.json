@@ -1,0 +1,18 @@
+{
+  "domain_id": "medical_image_segmentation",
+  "topic": "medical image segmentation",
+  "corpus_size": 1143,
+  "median_year": 2019.0,
+  "pct_recent": 0.00699912510936133,
+  "year_std": 1.695448670274872,
+  "citation_gini": 0.8943528426460217,
+  "citation_median": 127.0,
+  "pct_high_cited": 0.5520559930008749,
+  "unique_author_ratio": 0.8031496062992126,
+  "mean_h_index": 20.754578754578755,
+  "pct_high_hindex": 0.8818897637795275,
+  "pct_q1": 0.30708661417322836,
+  "topic_concept_overlap": 0.6456692913385826,
+  "gold_ratio": 0.9711286089238845,
+  "grade2_ratio": 0.09011373578302712
+}

@@ -1,0 +1,508 @@
+%% ============================================================
+%%  Bibliographie — Scientific Watch Agent (mémoire PFE)
+%%  Style IEEE / biblatex
+%% ============================================================
+
+%% ─── LLMs fondamentaux ──────────────────────────────────────
+
+@article{openai2023gpt4,
+  author  = {OpenAI},
+  title   = {{GPT-4} Technical Report},
+  journal = {arXiv preprint arXiv:2303.08774},
+  year    = {2023},
+  url     = {https://arxiv.org/abs/2303.08774},
+}
+
+@article{anthropic2024claude,
+  author  = {Anthropic},
+  title   = {The {Claude} 3 Model Family: Opus, Sonnet, Haiku},
+  year    = {2024},
+  url     = {https://www.anthropic.com/news/claude-3-family},
+}
+
+@article{touvron2023llama,
+  author  = {Hugo Touvron and Thibaut Lavril and Gautier Izacard and
+             Xavier Martinet and Marie-Anne Lachaux and Timothée Lacroix
+             and Baptiste Rozière and Naman Goyal and Eric Hambro
+             and Faisal Azhar and others},
+  title   = {{LLaMA}: Open and Efficient Foundation Language Models},
+  journal = {arXiv preprint arXiv:2302.13971},
+  year    = {2023},
+  url     = {https://arxiv.org/abs/2302.13971},
+}
+
+@article{brown2020gpt3,
+  author  = {Tom B. Brown and Benjamin Mann and Nick Ryder and Melanie Subbiah
+             and Jared Kaplan and Prafulla Dhariwal and Arvind Neelakantan
+             and Pranav Shyam and Girish Sastry and Amanda Askell and others},
+  title   = {Language Models are Few-Shot Learners},
+  journal = {Advances in Neural Information Processing Systems ({NeurIPS})},
+  volume  = {33},
+  pages   = {1877--1901},
+  year    = {2020},
+}
+
+@inproceedings{vaswani2017attention,
+  author    = {Ashish Vaswani and Noam Shazeer and Niki Parmar and Jakob
+               Uszkoreit and Llion Jones and Aidan N. Gomez and Łukasz Kaiser
+               and Illia Polosukhin},
+  title     = {Attention Is All You Need},
+  booktitle = {Advances in Neural Information Processing Systems ({NeurIPS})},
+  volume    = {30},
+  year      = {2017},
+}
+
+%% ─── Agents LLM et patterns de raisonnement ─────────────────
+
+@article{wooldridge1995intelligent,
+  author  = {Michael Wooldridge and Nicholas R. Jennings},
+  title   = {Intelligent Agents: Theory and Practice},
+  journal = {The Knowledge Engineering Review},
+  volume  = {10},
+  number  = {2},
+  pages   = {115--152},
+  year    = {1995},
+  doi     = {10.1017/S0269888900008122},
+}
+
+@inproceedings{yao2022react,
+  author    = {Shunyu Yao and Jeffrey Zhao and Dian Yu and Nan Du and
+               Izhak Shafran and Karthik Narasimhan and Yuan Cao},
+  title     = {{ReAct}: Synergizing Reasoning and Acting in Language Models},
+  booktitle = {International Conference on Learning Representations ({ICLR})},
+  year      = {2023},
+  url       = {https://arxiv.org/abs/2210.03629},
+}
+
+@article{shinn2023reflexion,
+  author  = {Noah Shinn and Federico Cassano and Ashwin Gopinath and
+             Karthik Narasimhan and Shunyu Yao},
+  title   = {Reflexion: Language Agents with Verbal Reinforcement Learning},
+  journal = {Advances in Neural Information Processing Systems ({NeurIPS})},
+  volume  = {36},
+  year    = {2023},
+  url     = {https://arxiv.org/abs/2303.11366},
+}
+
+@article{yao2023tree,
+  author  = {Shunyu Yao and Dian Yu and Jeffrey Zhao and Izhak Shafran and
+             Tom Griffiths and Yuan Cao and Karthik Narasimhan},
+  title   = {Tree of Thoughts: Deliberate Problem Solving with Large Language Models},
+  journal = {Advances in Neural Information Processing Systems ({NeurIPS})},
+  volume  = {36},
+  year    = {2023},
+  url     = {https://arxiv.org/abs/2305.10601},
+}
+
+@article{wang2022self,
+  author  = {Xuezhi Wang and Jason Wei and Dale Schuurmans and Quoc Le and
+             Ed Chi and Sharan Narang and Aakanksha Chowdhery and Denny Zhou},
+  title   = {Self-Consistency Improves Chain of Thought Reasoning in Language Models},
+  journal = {International Conference on Learning Representations ({ICLR})},
+  year    = {2023},
+  url     = {https://arxiv.org/abs/2203.11171},
+}
+
+@article{wei2022cot,
+  author  = {Jason Wei and Xuezhi Wang and Dale Schuurmans and Maarten Bosma
+             and Brian Ichter and Fei Xia and Ed Chi and Quoc Le and Denny Zhou},
+  title   = {Chain-of-Thought Prompting Elicits Reasoning in Large Language Models},
+  journal = {Advances in Neural Information Processing Systems ({NeurIPS})},
+  volume  = {35},
+  year    = {2022},
+  url     = {https://arxiv.org/abs/2201.11903},
+}
+
+@article{du2023improving,
+  author  = {Yilun Du and Shuang Li and Antonio Torralba and Joshua Tenenbaum
+             and Igor Mordatch},
+  title   = {Improving Factuality and Reasoning in Language Models through
+             Multiagent Debate},
+  journal = {International Conference on Machine Learning ({ICML})},
+  year    = {2023},
+  url     = {https://arxiv.org/abs/2305.14325},
+}
+
+@article{wang2024survey,
+  author  = {Lei Wang and Chen Ma and Xueyang Feng and Zeyu Zhang and
+             Hao Yang and Jingsen Zhang and Zhiyuan Chen and Jiakai Tang
+             and Xu Chen and Yankai Lin and Wayne Xin Zhao and Zhewei Wei
+             and Ji-Rong Wen},
+  title   = {A Survey on Large Language Model based Autonomous Agents},
+  journal = {Frontiers of Computer Science},
+  volume  = {18},
+  number  = {6},
+  year    = {2024},
+  doi     = {10.1007/s11704-024-40231-1},
+}
+
+@article{xi2023rise,
+  author  = {Zhiheng Xi and Wenxiang Chen and Xin Guo and Wei He and
+             Yiwen Ding and others},
+  title   = {The Rise and Potential of Large Language Model Based Agents:
+             A Survey},
+  journal = {arXiv preprint arXiv:2309.07864},
+  year    = {2023},
+  url     = {https://arxiv.org/abs/2309.07864},
+}
+
+@article{pryzant2023automatic,
+  author  = {Reid Pryzant and Dan Iter and Jerry Li and Yin Tat Lee and
+             Chenguang Zhu and Michael Zeng},
+  title   = {Automatic Prompt Optimization with ``Gradient Descent'' and
+             Beam Search},
+  journal = {Proceedings of the 2023 Conference on Empirical Methods in
+             Natural Language Processing ({EMNLP})},
+  year    = {2023},
+  url     = {https://arxiv.org/abs/2305.03495},
+}
+
+%% ─── Orchestration : LangChain / LangGraph ───────────────────
+
+@misc{chase2022langchain,
+  author       = {Harrison Chase},
+  title        = {{LangChain}: Building applications with {LLMs} through
+                  composability},
+  year         = {2022},
+  howpublished = {\url{https://github.com/langchain-ai/langchain}},
+}
+
+@misc{langgraph2024,
+  author       = {LangChain},
+  title        = {{LangGraph}: Building stateful, multi-actor applications
+                  with {LLMs}},
+  year         = {2024},
+  howpublished = {\url{https://langchain-ai.github.io/langgraph/}},
+}
+
+%% ─── Bibliométrie ───────────────────────────────────────────
+
+@article{garfield1972citation,
+  author  = {Eugene Garfield},
+  title   = {Citation Analysis as a Tool in Journal Evaluation},
+  journal = {Science},
+  volume  = {178},
+  number  = {4060},
+  pages   = {471--479},
+  year    = {1972},
+  doi     = {10.1126/science.178.4060.471},
+}
+
+@article{garfield1955if,
+  author  = {Eugene Garfield},
+  title   = {Citation Indexes for Science: A New Dimension in Documentation
+             through Association of Ideas},
+  journal = {Science},
+  volume  = {122},
+  number  = {3159},
+  pages   = {108--111},
+  year    = {1955},
+  doi     = {10.1126/science.122.3159.108},
+}
+
+@article{hirsch2005index,
+  author  = {Jorge E. Hirsch},
+  title   = {An index to quantify an individual's scientific research output},
+  journal = {Proceedings of the National Academy of Sciences ({PNAS})},
+  volume  = {102},
+  number  = {46},
+  pages   = {16569--16572},
+  year    = {2005},
+  doi     = {10.1073/pnas.0507655102},
+}
+
+@article{ke2015defining,
+  author  = {Qing Ke and Emilio Ferrara and Filippo Radicchi and Alessandro Flammini},
+  title   = {Defining and evaluating network communities based on ground-truth},
+  journal = {Knowledge and Information Systems},
+  volume  = {42},
+  pages   = {181--213},
+  year    = {2015},
+  doi     = {10.1007/s10115-013-0693-z},
+}
+
+@article{scimago2007sjr,
+  author  = {{SCImago Research Group}},
+  title   = {{SJR}: {SCImago} Journal Rank indicator},
+  year    = {2007},
+  url     = {http://www.scimagojr.com},
+  note    = {Accessed 2026},
+}
+
+%% ─── Recherche d'information et pertinence ──────────────────
+
+@article{jones1972statistical,
+  author  = {Karen Spärck Jones},
+  title   = {A Statistical Interpretation of Term Specificity and Its
+             Application in Retrieval},
+  journal = {Journal of Documentation},
+  volume  = {28},
+  number  = {1},
+  pages   = {11--21},
+  year    = {1972},
+  doi     = {10.1108/eb026526},
+}
+
+@article{wang2020minilm,
+  author  = {Wenhui Wang and Furu Wei and Li Dong and Hangbo Bao and
+             Nan Yang and Ming Zhou},
+  title   = {{MiniLM}: Deep Self-Attention Distillation for Task-Agnostic
+             Compression of Pre-Trained Transformers},
+  journal = {Advances in Neural Information Processing Systems ({NeurIPS})},
+  volume  = {33},
+  pages   = {5776--5788},
+  year    = {2020},
+}
+
+@article{reimers2019sentencebert,
+  author  = {Nils Reimers and Iryna Gurevych},
+  title   = {Sentence-{BERT}: Sentence Embeddings using Siamese {BERT}-Networks},
+  journal = {Proceedings of the 2019 Conference on Empirical Methods in
+             Natural Language Processing ({EMNLP})},
+  year    = {2019},
+  url     = {https://arxiv.org/abs/1908.10084},
+}
+
+%% ─── AutoML et Optimisation bayésienne ──────────────────────
+
+@article{snoek2012practical,
+  author  = {Jasper Snoek and Hugo Larochelle and Ryan P. Adams},
+  title   = {Practical Bayesian Optimization of Machine Learning Algorithms},
+  journal = {Advances in Neural Information Processing Systems ({NeurIPS})},
+  volume  = {25},
+  year    = {2012},
+  url     = {https://arxiv.org/abs/1206.2944},
+}
+
+@inproceedings{akiba2019optuna,
+  author    = {Takuya Akiba and Shotaro Sano and Toshihiko Yanase and
+               Takeru Ohta and Masanori Koyama},
+  title     = {Optuna: A Next-generation Hyperparameter Optimization Framework},
+  booktitle = {Proceedings of the 25th {ACM SIGKDD} International Conference
+               on Knowledge Discovery and Data Mining ({KDD})},
+  pages     = {2623--2631},
+  year      = {2019},
+  doi       = {10.1145/3292500.3330701},
+}
+
+@inproceedings{bergstra2011algorithms,
+  author    = {James Bergstra and Rémi Bardenet and Yoshua Bengio
+               and Balázs Kégl},
+  title     = {Algorithms for Hyper-Parameter Optimization},
+  booktitle = {Advances in Neural Information Processing Systems ({NeurIPS})},
+  volume    = {24},
+  year      = {2011},
+}
+
+@book{hutter2019automated,
+  author    = {Frank Hutter and Lars Kotthoff and Joaquin Vanschoren},
+  title     = {Automated Machine Learning: Methods, Systems, Challenges},
+  publisher = {Springer},
+  year      = {2019},
+  doi       = {10.1007/978-3-030-05318-5},
+}
+
+@inproceedings{feurer2015initializing,
+  author    = {Matthias Feurer and Jost Tobias Springenberg and Frank Hutter},
+  title     = {Initializing Bayesian Hyperparameter Optimization via
+               Meta-Learning},
+  booktitle = {Proceedings of the 29th {AAAI} Conference on Artificial
+               Intelligence},
+  year      = {2015},
+  url       = {https://arxiv.org/abs/1507.02348},
+}
+
+%% ─── Méta-learning ──────────────────────────────────────────
+
+@article{finn2017model,
+  author  = {Chelsea Finn and Pieter Abbeel and Sergey Levine},
+  title   = {Model-Agnostic Meta-Learning for Fast Adaptation of Deep Networks},
+  journal = {International Conference on Machine Learning ({ICML})},
+  year    = {2017},
+  url     = {https://arxiv.org/abs/1703.03400},
+}
+
+@inproceedings{snell2017prototypical,
+  author    = {Jake Snell and Kevin Swersky and Richard Zemel},
+  title     = {Prototypical Networks for Few-shot Learning},
+  booktitle = {Advances in Neural Information Processing Systems ({NeurIPS})},
+  volume    = {30},
+  year      = {2017},
+  url       = {https://arxiv.org/abs/1703.05175},
+}
+
+@article{vanschoren2018meta,
+  author  = {Joaquin Vanschoren},
+  title   = {Meta-Learning: A Survey},
+  journal = {arXiv preprint arXiv:1810.03548},
+  year    = {2018},
+  url     = {https://arxiv.org/abs/1810.03548},
+}
+
+@book{brazdil2022metalearning,
+  author    = {Pavel Brazdil and Jan N. van Rijn and Carlos Soares
+               and Joaquin Vanschoren},
+  title     = {Metalearning: Applications to Automated Machine Learning
+               and Data Mining},
+  edition   = {2nd},
+  publisher = {Springer},
+  year      = {2022},
+  doi       = {10.1007/978-3-030-67024-5},
+}
+
+@article{rice1976algorithm,
+  author  = {John R. Rice},
+  title   = {The Algorithm Selection Problem},
+  journal = {Advances in Computers},
+  volume  = {15},
+  pages   = {65--118},
+  year    = {1976},
+  doi     = {10.1016/S0065-2458(08)60520-3},
+}
+
+%% ─── Agrégation de rangs ─────────────────────────────────────
+
+@article{borda1784memoire,
+  author  = {Jean-Charles de Borda},
+  title   = {Mémoire sur les élections au scrutin},
+  journal = {Mémoires de l'Académie Royale des Sciences},
+  year    = {1784},
+}
+
+@inproceedings{cormack2009reciprocal,
+  author    = {Gordon V. Cormack and Charles L. A. Clarke and Stefan Buettcher},
+  title     = {Reciprocal Rank Fusion Outperforms {Condorcet} and Individual
+               Rank Learning Methods},
+  booktitle = {Proceedings of the 32nd Annual International {ACM SIGIR}
+               Conference on Research and Development in Information Retrieval},
+  pages     = {758--759},
+  year      = {2009},
+  doi       = {10.1145/1571941.1572114},
+}
+
+@article{dwork2001rank,
+  author  = {Cynthia Dwork and Ravi Kumar and Moni Naor and Dandapani
+             Sivakumar},
+  title   = {Rank Aggregation Methods for the Web},
+  journal = {Proceedings of the 10th International Conference on World Wide
+             Web ({WWW})},
+  pages   = {613--622},
+  year    = {2001},
+  doi     = {10.1145/371920.372165},
+}
+
+%% ─── Métriques d'évaluation ─────────────────────────────────
+
+@article{jarvelin2002cumulated,
+  author  = {Kalervo Järvelin and Jaana Kekäläinen},
+  title   = {Cumulated Gain-Based Evaluation of {IR} Techniques},
+  journal = {{ACM} Transactions on Information Systems ({TOIS})},
+  volume  = {20},
+  number  = {4},
+  pages   = {422--446},
+  year    = {2002},
+  doi     = {10.1145/582415.582418},
+}
+
+@article{wilcoxon1945individual,
+  author  = {Frank Wilcoxon},
+  title   = {Individual Comparisons by Ranking Methods},
+  journal = {Biometrics Bulletin},
+  volume  = {1},
+  number  = {6},
+  pages   = {80--83},
+  year    = {1945},
+  doi     = {10.2307/3001968},
+}
+
+@article{kerby2014rb,
+  author  = {Dave S. Kerby},
+  title   = {The Simple Difference Formula: An Approach to Teaching
+             Nonparametric Correlation},
+  journal = {Comprehensive Psychology},
+  volume  = {3},
+  year    = {2014},
+  doi     = {10.2466/11.IT.3.1},
+}
+
+@inproceedings{lin2004rouge,
+  author    = {Chin-Yew Lin},
+  title     = {{ROUGE}: A Package for Automatic Evaluation of Summaries},
+  booktitle = {Text Summarization Branches Out: Proceedings of the {ACL-04}
+               Workshop},
+  pages     = {74--81},
+  year      = {2004},
+}
+
+@inproceedings{zhang2020bertscore,
+  author    = {Tianyi Zhang and Varsha Kishore and Felix Wu and Kilian Q.
+               Weinberger and Yoav Artzi},
+  title     = {{BERTScore}: Evaluating Text Generation with {BERT}},
+  booktitle = {International Conference on Learning Representations ({ICLR})},
+  year      = {2020},
+  url       = {https://arxiv.org/abs/1904.09675},
+}
+
+%% ─── Sources de données ──────────────────────────────────────
+
+@article{priem2022openalex,
+  author  = {Jason Priem and Heather Piwowar and Richard Orr},
+  title   = {{OpenAlex}: A fully-open index of the world's research works},
+  journal = {arXiv preprint arXiv:2205.01833},
+  year    = {2022},
+  url     = {https://arxiv.org/abs/2205.01833},
+}
+
+@article{lo2020s2orc,
+  author  = {Kyle Lo and Lucy Lu Wang and Mark Neumann and Rodney Kinney
+             and Dan Weld},
+  title   = {{S2ORC}: The Semantic Scholar Open Research Corpus},
+  journal = {Proceedings of the 58th Annual Meeting of the Association
+             for Computational Linguistics ({ACL})},
+  pages   = {4969--4983},
+  year    = {2020},
+  doi     = {10.18653/v1/2020.acl-main.447},
+}
+
+%% ─── Outils et frameworks ───────────────────────────────────
+
+@software{pydantic2024,
+  author  = {{Pydantic}},
+  title   = {Pydantic v2: Data Validation using Python Type Hints},
+  year    = {2024},
+  url     = {https://docs.pydantic.dev/},
+}
+
+%% ─── Veille scientifique et revues de littérature ───────────
+
+@article{kitchenham2007guidelines,
+  author  = {Barbara Kitchenham and Stuart Charters},
+  title   = {Guidelines for Performing Systematic Literature Reviews in
+             Software Engineering},
+  journal = {Technical Report, Keele University and Durham University Joint
+             Report EBSE-2007-01},
+  year    = {2007},
+  url     = {https://www.elsevier.com/__data/promis_misc/525444systematicreviewsguide.pdf},
+}
+
+@article{beel2016papersrecommender,
+  author  = {Joeran Beel and Bela Gipp and Stefan Langer and Corinna Breitinger},
+  title   = {Paper recommender systems: a literature survey},
+  journal = {International Journal on Digital Libraries},
+  volume  = {17},
+  number  = {4},
+  pages   = {305--338},
+  year    = {2016},
+  doi     = {10.1007/s00799-015-0156-0},
+}
+
+@inproceedings{liu2023survey,
+  author    = {Xiangru Tang and Anni Zou and Zhuosheng Zhang and Yilun Zhao
+               and Xingyao Zhang and Arman Cohan and Mark Gerstein},
+  title     = {ML-Bench: Large Language Models Leverage Open-source Libraries
+               for Machine Learning Tasks},
+  booktitle = {Proceedings of the 2023 Conference on Empirical Methods in
+               Natural Language Processing ({EMNLP})},
+  year      = {2023},
+  url       = {https://arxiv.org/abs/2311.09835},
+}

@@ -1,0 +1,38 @@
+{
+  "initial_composite": 0.6757,
+  "final_composite": 0.6757,
+  "improvement_pct": 0.0,
+  "n_iterations": 3,
+  "beam_size": 4,
+  "n_worst": 5,
+  "use_llm_judge": true,
+  "iterations": [
+    {
+      "iteration": 1,
+      "train_composite": 0.6586,
+      "best_candidate_composite": 0.6757,
+      "improved": false,
+      "gradient_preview": "The current prompt fails to produce accurate and faithful summaries, as evidenced by the examples provided. A recurring pattern is the omission of specific quantitative results and detailed methodology, which leads to vague and generalized summaries that do not capture the essence of the research. F",
+      "n_candidates": 4,
+      "best_candidate_preview": "You are a scientific paper summarizer for academic researchers.\n\nGiven an article (title + abstract), extract a structured summary with:\n    - problem: the research problem addressed (1-2 sentences)\n "
+    },
+    {
+      "iteration": 2,
+      "train_composite": 0.6597,
+      "best_candidate_composite": 0.6757,
+      "improved": false,
+      "gradient_preview": "The current prompt fails to produce accurate and faithful summaries due to several key issues. Firstly, the summaries often contain vague or overly generalized problem statements that do not capture the specific research focus, as seen in Example 1, where the generated summary lacks details about th",
+      "n_candidates": 4,
+      "best_candidate_preview": "You are a scientific paper summarizer for academic researchers.\n\nGiven an article (title + abstract), extract a structured summary with:\n    - problem: the research problem addressed (1-2 sentences)\n "
+    },
+    {
+      "iteration": 3,
+      "train_composite": 0.6551,
+      "best_candidate_composite": 0.6757,
+      "improved": false,
+      "gradient_preview": "The current prompt is failing to produce accurate and faithful summaries, primarily due to a lack of specificity in the instructions regarding the extraction of quantitative results and the explicit mention of participant details. For instance, in Example 1, the generated summary omits critical quan",
+      "n_candidates": 4,
+      "best_candidate_preview": "You are a scientific paper summarizer for academic researchers.\n\nGiven an article (title + abstract), extract a structured summary with:\n    - problem: the research problem addressed (1-2 sentences)\n "
+    }
+  ]
+}

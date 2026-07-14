@@ -1,0 +1,30 @@
+{
+  "run_name": "nebius-qwen3-v32-v32",
+  "initial_composite": 0.695,
+  "final_composite": 0.72,
+  "improvement_pct": 3.6,
+  "n_iterations": 2,
+  "beam_size": 4,
+  "n_worst": 5,
+  "use_llm_judge": true,
+  "iterations": [
+    {
+      "iteration": 1,
+      "train_composite": 0.6342,
+      "best_candidate_composite": 0.72,
+      "improved": true,
+      "gradient_preview": "The current prompt fails to produce summaries that accurately reflect the content of the provided article excerpts, as evidenced by the consistently low ROUGE-L and faithfulness scores across all failure examples. The primary error pattern is that the generated summaries introduce specific details, ",
+      "n_candidates": 4,
+      "best_candidate_preview": "Act as a precise scientific summarizer. Given an excerpt from a scientific article, extract and structure the information into the following six fields: problem, method, dataset, results, limitations,"
+    },
+    {
+      "iteration": 2,
+      "train_composite": 0.6316,
+      "best_candidate_composite": 0.72,
+      "improved": false,
+      "gradient_preview": "**Gradient:** The current prompt fails to enforce strict adherence to the six-field output structure, leading to summaries that are either unstructured or incorrectly populated, which directly causes low ROUGE-L scores. Across the failure examples, the model consistently generates free-form, paragra",
+      "n_candidates": 4,
+      "best_candidate_preview": "Act as a precise scientific summarizer. Given an excerpt from a scientific article, extract and structure the information into the following six fields: problem, method, dataset, results, limitations,"
+    }
+  ]
+}

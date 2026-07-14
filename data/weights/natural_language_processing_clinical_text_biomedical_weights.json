@@ -1,0 +1,11 @@
+{
+  "topic": "natural language processing clinical text biomedical",
+  "weights": {
+    "venue": 0.163247,
+    "authors": 0.311296,
+    "impact": 0.294889,
+    "velocity": 0.057709,
+    "recency": 0.10087,
+    "relevance": 0.071989
+  }
+}

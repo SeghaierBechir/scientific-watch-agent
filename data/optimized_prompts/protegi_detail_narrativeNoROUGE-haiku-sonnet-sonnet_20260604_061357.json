@@ -1,0 +1,124 @@
+{
+  "run_name": "narrativeNoROUGE-haiku-sonnet-sonnet",
+  "initial_composite": 0.909,
+  "final_composite": 0.927,
+  "improvement_pct": 1.98,
+  "n_iterations": 2,
+  "beam_size": 4,
+  "n_worst": 5,
+  "use_llm_judge": true,
+  "iterations": [
+    {
+      "iteration": 1,
+      "train_composite": 0.8901,
+      "best_candidate_composite": 0.927,
+      "improved": true,
+      "gradient": "## Gradient\n\nThe most striking and consistent failure across all five examples is that every generated summary receives a ROUGE-L score of exactly 0.0000, meaning there is essentially zero lexical overlap with the gold PubMed abstracts. This is not a minor wording mismatch — it indicates the model is systematically paraphrasing and restructuring content in ways that diverge entirely from the vocabulary, framing, and emphasis used in the actual abstracts. The current prompt instructs the model to \"write in past tense\" and \"style your output like a scientific abstract,\" but this guidance is too vague and inadvertently encourages the model to produce its own abstract-like prose rather than staying close to the source paper's own language, terminology, and organizational logic. For instance, in Example 1, the generated summary opens with a broad framing about \"IFN signaling pathways in antiviral defense\" that may not match the gold abstract's specific phrasing about particular viral mutants or mechanistic findings. In Example 3, the model produces a high-level interpretive gloss (\"warrants greater clinical attention\") rather than mirroring the specific claims and conclusions the authors themselves articulated. The prompt also lacks any instruction to preserve domain-specific terminology, gene/protein names, disease labels, and study-specific vocabulary as they appear in the source — terms that are critical for ROUGE-L overlap. Additionally, the prompt does not instruct the model to closely follow the structural and thematic ordering of the source paper's own conclusions section, which gold abstracts typically mirror. To fix this, the prompt should explicitly instruct the model to retain the paper's own key terms, named entities, and technical vocabulary verbatim where possible, to reflect the authors' own framing and conclusions rather than re-interpreting them, and to prioritize fidelity to the source language over stylistic originality.",
+      "candidates": [
+        {
+          "rank": 1,
+          "prompt": "You are a scientific paper summarizer. Write a concise narrative summary of the scientific article in 150-250 words as a single flowing paragraph — no bullet points, no headers, no markdown. Your primary goal is fidelity to the source paper's own language, terminology, and framing. Retain the paper's specific technical vocabulary, gene names, protein names, disease labels, statistical terms, and named entities exactly as they appear in the source. Do not paraphrase or substitute synonyms for domain-specific terms; preserve them verbatim wherever possible. Follow the thematic and structural ordering of the paper's own conclusions: present the research problem as the authors frame it, describe the methodology using the study's own terminology, report key quantitative results with the exact numbers, percentages, and statistics given, and state the authors' conclusions in language that mirrors their own phrasing. Reflect the authors' stated interpretations rather than offering your own reinterpretation or editorial gloss. Write in past tense throughout and aim to reproduce the emphasis, scope, and vocabulary of the paper's abstract or conclusions section as closely as possible.",
+          "composite": 0.927,
+          "rouge1": 0.0,
+          "rouge2": 0.0,
+          "rougeL": 0.0,
+          "faithfulness": 0.985,
+          "coverage": 0.84,
+          "is_best": true
+        },
+        {
+          "rank": 2,
+          "prompt": "You are a scientific paper summarizer. Your task is to write a 150-250 word narrative summary of a scientific article in a single prose paragraph — no bullet points, no headers, no markdown. Prioritize lexical fidelity to the source: use the paper's own terminology, technical vocabulary, named entities (genes, proteins, diseases, drugs, methods), and key phrases as they appear in the text rather than substituting paraphrases or lay synonyms. Structure your summary to mirror the paper's own organizational logic — introduce the problem using the authors' framing, describe methods with the study's specific terms, include exact quantitative findings (numbers, statistics, p-values, percentages) as reported, and convey the authors' conclusions in language closely drawn from their own wording. Do not editorialize, reinterpret findings, or add framing the authors do not themselves use. Write in past tense. The goal is a summary that closely reflects the vocabulary, emphasis, and conclusions of the original paper, as if condensing the authors' own abstract.",
+          "composite": 0.914,
+          "rouge1": 0.0,
+          "rouge2": 0.0,
+          "rougeL": 0.0,
+          "faithfulness": 0.98,
+          "coverage": 0.815,
+          "is_best": false
+        },
+        {
+          "rank": 3,
+          "prompt": "You are a scientific paper summarizer. Write a single narrative paragraph of 150-250 words summarizing the provided scientific article. Use no bullet points, headers, or markdown. Your most important obligation is to stay close to the source paper's own language: preserve domain-specific terminology, gene and protein names, disease and condition labels, method names, and study-specific vocabulary verbatim rather than paraphrasing them into generic alternatives. When reporting results, use the exact numerical values, percentages, confidence intervals, and statistical measures stated in the paper. When conveying conclusions, reflect the authors' own stated claims and interpretations — do not substitute your own higher-level gloss or add evaluative commentary they did not provide. Follow the structural emphasis of the paper's conclusions: cover the research question, approach, findings, and implications in the order and with the weight the authors themselves assign. Write in past tense throughout. The summary should read as a faithful condensation of the paper's own abstract or concluding section, not as an independently composed overview.",
+          "composite": 0.912,
+          "rouge1": 0.0,
+          "rouge2": 0.0,
+          "rougeL": 0.0,
+          "faithfulness": 0.99,
+          "coverage": 0.795,
+          "is_best": false
+        },
+        {
+          "rank": 4,
+          "prompt": "You are a scientific paper summarizer. Produce a 150-250 word narrative summary of the scientific article as one continuous prose paragraph — no bullet points, no headers, no markdown. Your core obligation is fidelity to the source text's language and framing. Concretely: (1) preserve technical terms, named entities, gene/protein/drug names, disease labels, and method-specific vocabulary exactly as the authors use them rather than replacing them with synonyms or lay equivalents; (2) report quantitative results — numbers, percentages, p-values, effect sizes — with the precision given in the paper; (3) convey the authors' conclusions using phrasing drawn directly from their own wording rather than reinterpreting or editorially recasting their claims; (4) follow the thematic order the paper itself uses when moving from problem statement to methods to results to conclusions. Do not introduce framing, interpretations, or evaluative language that the authors themselves do not use. Write in past tense throughout. The aim is a summary that maximizes overlap with the vocabulary, structure, and emphasis of the paper's own abstract and conclusions.",
+          "composite": 0.9168,
+          "rouge1": 0.0,
+          "rouge2": 0.0,
+          "rougeL": 0.0,
+          "faithfulness": 0.988,
+          "coverage": 0.81,
+          "is_best": false
+        }
+      ],
+      "gradient_preview": "## Gradient\n\nThe most striking and consistent failure across all five examples is that every generated summary receives a ROUGE-L score of exactly 0.0000, meaning there is essentially zero lexical overlap with the gold PubMed abstracts. This is not a minor wording mismatch — it indicates the model i",
+      "n_candidates": 4,
+      "best_candidate_preview": "You are a scientific paper summarizer. Write a concise narrative summary of the scientific article in 150-250 words as a single flowing paragraph — no bullet points, no headers, no markdown. Your prim"
+    },
+    {
+      "iteration": 2,
+      "train_composite": 0.8986,
+      "best_candidate_composite": 0.927,
+      "improved": false,
+      "gradient": "## Gradient\n\nThe dominant failure pattern across these examples is not one of faithfulness or vocabulary preservation — in fact, several examples score 1.00 on faithfulness — but rather a near-zero ROUGE-L score, indicating that the generated summaries are drawing almost exclusively from the **body/methods sections** of the article rather than from the **abstract or conclusions section**, which is what the gold reference represents. The current prompt instructs the model to \"follow the thematic and structural ordering of the paper's own conclusions\" and to \"reproduce the emphasis, scope, and vocabulary of the paper's abstract or conclusions section,\" but in practice the model is summarizing the full article text it receives (which appears to be body text, not the abstract), producing fluent and faithful paraphrases of the introduction or methods that simply do not overlap lexically with the gold abstract. For example, in train_12 and train_13, the generated text closely mirrors the article excerpt provided — which is body text — rather than synthesizing toward what the abstract would say. In train_9 and train_19, the model reproduces introductory epidemiological framing verbatim from the body, missing the abstract's likely focus on study findings and conclusions. The fix requires an explicit instruction telling the model to **prioritize and synthesize the paper's results, findings, and conclusions** — not the introduction or methods — and to write the summary as if it were the paper's abstract: leading with the study's purpose, then its key findings and quantitative outcomes, then its conclusions and implications. The prompt should explicitly state: \"Do not summarize the introduction or background sections; focus on what the study found and concluded. Structure the summary to mirror a typical abstract: background/objective, methods (briefly), results with specific numbers, and conclusions.\" This would redirect the model away from body-text paraphrase and toward the result-and-conclusion content that gold abstracts contain.",
+      "candidates": [
+        {
+          "rank": 1,
+          "prompt": "You are a scientific paper summarizer. Write a concise narrative summary of the scientific article in 150-250 words as a single flowing paragraph — no bullet points, no headers, no markdown. Structure your summary to mirror a typical abstract: open with the study's background and objective, briefly describe the methodology, then devote the majority of the summary to the key results and quantitative findings, and close with the authors' conclusions and implications. Do not summarize the introduction or background sections in isolation; focus primarily on what the study found and concluded. Retain the paper's specific technical vocabulary, gene names, protein names, disease labels, statistical terms, and named entities exactly as they appear in the source. Report key quantitative results with the exact numbers, percentages, and statistics given. Reflect the authors' stated interpretations rather than offering your own reinterpretation or editorial gloss. Write in past tense throughout and mirror the emphasis, scope, and vocabulary that would appear in the paper's abstract or conclusions section.",
+          "composite": 0.8892,
+          "rouge1": 0.0,
+          "rouge2": 0.0,
+          "rougeL": 0.0,
+          "faithfulness": 0.934,
+          "coverage": 0.822,
+          "is_best": false
+        },
+        {
+          "rank": 2,
+          "prompt": "You are a scientific paper summarizer. Write a concise narrative summary in 150-250 words as a single flowing paragraph — no bullet points, no headers, no markdown. Your summary must be structured like a scientific abstract: begin with the study's purpose or research question, briefly mention the methods using the paper's own terminology, then focus primarily on the key findings and quantitative results with exact numbers as reported, and end with the authors' conclusions and their implications. Critically, do not spend the summary paraphrasing the introduction, background, or methods sections — these should be touched on only briefly. The core of the summary must reflect what the study found and concluded. Preserve the paper's specific technical vocabulary, gene names, protein names, disease labels, and named entities verbatim. Do not substitute synonyms for domain-specific terms. Reflect the authors' own stated interpretations. Write in past tense throughout.",
+          "composite": 0.864,
+          "rouge1": 0.0,
+          "rouge2": 0.0,
+          "rougeL": 0.0,
+          "faithfulness": 0.92,
+          "coverage": 0.78,
+          "is_best": false
+        },
+        {
+          "rank": 3,
+          "prompt": "You are a scientific paper summarizer. Your task is to write a 150-250 word narrative summary as a single flowing paragraph — no bullet points, no headers, no markdown. Imagine you are writing the abstract for this paper. Lead with the study's objective, follow with a brief description of methods, then emphasize the principal results and quantitative outcomes (exact numbers, effect sizes, p-values, percentages as given in the paper), and conclude with the authors' main conclusions and implications. Do not summarize the introduction or background at length — focus on what the study discovered and concluded, not on what was already known. Use the paper's own technical vocabulary precisely: preserve gene names, protein names, disease labels, statistical terminology, and all named entities exactly as written. Do not paraphrase domain-specific terms. Reflect the authors' stated interpretations without adding editorial commentary. Write in past tense throughout.",
+          "composite": 0.857,
+          "rouge1": 0.0,
+          "rouge2": 0.0,
+          "rougeL": 0.0,
+          "faithfulness": 0.925,
+          "coverage": 0.755,
+          "is_best": false
+        },
+        {
+          "rank": 4,
+          "prompt": "You are a scientific paper summarizer. Write a narrative summary of the scientific article in 150-250 words as a single flowing paragraph — no bullet points, no headers, no markdown. Structure the summary as a scientific abstract would be structured: (1) briefly state the study's background and objective, (2) concisely describe the study design and methods using the paper's own terminology, (3) report the key results and findings in detail, including exact quantitative values such as numbers, percentages, odds ratios, p-values, and confidence intervals as they appear in the source, and (4) state the authors' conclusions and implications. The majority of your summary should cover results and conclusions — do not over-summarize the introduction or methods. Focus on what the study found and concluded, not on background context. Preserve all technical vocabulary verbatim: gene names, protein names, disease labels, drug names, statistical terms, and named entities must appear exactly as in the source text. Reflect the authors' own stated interpretations rather than offering independent analysis. Write in past tense throughout.",
+          "composite": 0.8892,
+          "rouge1": 0.0,
+          "rouge2": 0.0,
+          "rougeL": 0.0,
+          "faithfulness": 0.942,
+          "coverage": 0.81,
+          "is_best": false
+        }
+      ],
+      "gradient_preview": "## Gradient\n\nThe dominant failure pattern across these examples is not one of faithfulness or vocabulary preservation — in fact, several examples score 1.00 on faithfulness — but rather a near-zero ROUGE-L score, indicating that the generated summaries are drawing almost exclusively from the **body/",
+      "n_candidates": 4,
+      "best_candidate_preview": "You are a scientific paper summarizer. Write a concise narrative summary of the scientific article in 150-250 words as a single flowing paragraph — no bullet points, no headers, no markdown. Your prim"
+    }
+  ]
+}

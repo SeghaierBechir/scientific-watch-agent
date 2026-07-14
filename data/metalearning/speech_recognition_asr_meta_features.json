@@ -1,0 +1,18 @@
+{
+  "domain_id": "speech_recognition_asr",
+  "topic": "automatic speech recognition deep learning",
+  "corpus_size": 280,
+  "median_year": 2020.0,
+  "pct_recent": 0.014285714285714285,
+  "year_std": 1.5380837202871127,
+  "citation_gini": 0.867219987394654,
+  "citation_median": 79.5,
+  "pct_high_cited": 0.44285714285714284,
+  "unique_author_ratio": 0.8285714285714286,
+  "mean_h_index": 20.674157303370787,
+  "pct_high_hindex": 0.8857142857142857,
+  "pct_q1": 0.2,
+  "topic_concept_overlap": 0.7642857142857142,
+  "gold_ratio": 0.8285714285714286,
+  "grade2_ratio": 0.08928571428571429
+}

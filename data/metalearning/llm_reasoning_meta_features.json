@@ -1,0 +1,18 @@
+{
+  "domain_id": "llm_reasoning",
+  "topic": "large language model reasoning",
+  "corpus_size": 64,
+  "median_year": 2023.0,
+  "pct_recent": 0.484375,
+  "year_std": 0.951843400657377,
+  "citation_gini": 0.8424981635153064,
+  "citation_median": 345.5,
+  "pct_high_cited": 0.6875,
+  "unique_author_ratio": 0.953125,
+  "mean_h_index": 0.0,
+  "pct_high_hindex": 0.0,
+  "pct_q1": 0.0,
+  "topic_concept_overlap": 0.5625,
+  "gold_ratio": 0.546875,
+  "grade2_ratio": 0.15625
+}

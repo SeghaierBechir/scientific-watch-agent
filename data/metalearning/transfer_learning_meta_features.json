@@ -1,0 +1,18 @@
+{
+  "domain_id": "transfer_learning",
+  "topic": "transfer learning domain adaptation",
+  "corpus_size": 669,
+  "median_year": 2018.0,
+  "pct_recent": 0.0029895366218236174,
+  "year_std": 1.7310475479513434,
+  "citation_gini": 0.8853959582205855,
+  "citation_median": 133.0,
+  "pct_high_cited": 0.5799701046337817,
+  "unique_author_ratio": 0.8445440956651719,
+  "mean_h_index": 22.196923076923078,
+  "pct_high_hindex": 0.9237668161434978,
+  "pct_q1": 0.5201793721973094,
+  "topic_concept_overlap": 0.5724962630792227,
+  "gold_ratio": 0.9431988041853513,
+  "grade2_ratio": 0.04484304932735426
+}

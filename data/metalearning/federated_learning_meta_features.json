@@ -1,0 +1,18 @@
+{
+  "domain_id": "federated_learning",
+  "topic": "federated learning",
+  "corpus_size": 277,
+  "median_year": 2021.0,
+  "pct_recent": 0.0036101083032490976,
+  "year_std": 0.9228188192207349,
+  "citation_gini": 0.7098167791073955,
+  "citation_median": 98.0,
+  "pct_high_cited": 0.48736462093862815,
+  "unique_author_ratio": 0.8375451263537906,
+  "mean_h_index": 21.276515151515152,
+  "pct_high_hindex": 0.8447653429602888,
+  "pct_q1": 0.5451263537906137,
+  "topic_concept_overlap": 0.2996389891696751,
+  "gold_ratio": 0.8844765342960289,
+  "grade2_ratio": 0.04332129963898917
+}

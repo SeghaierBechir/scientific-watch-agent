@@ -1,0 +1,11 @@
+{
+  "topic": "graph neural networks",
+  "weights": {
+    "venue": 0.093197,
+    "authors": 0.209258,
+    "impact": 0.03446,
+    "velocity": 0.311751,
+    "recency": 0.308205,
+    "relevance": 0.043129
+  }
+}

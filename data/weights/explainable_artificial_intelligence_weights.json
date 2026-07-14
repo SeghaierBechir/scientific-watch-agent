@@ -1,0 +1,11 @@
+{
+  "topic": "explainable artificial intelligence",
+  "weights": {
+    "venue": 0.07626,
+    "authors": 0.483006,
+    "impact": 0.088642,
+    "velocity": 0.058608,
+    "recency": 0.043017,
+    "relevance": 0.250467
+  }
+}

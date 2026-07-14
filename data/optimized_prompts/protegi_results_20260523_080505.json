@@ -1,0 +1,38 @@
+{
+  "initial_composite": 0.1916,
+  "final_composite": 0.21,
+  "improvement_pct": 9.61,
+  "n_iterations": 3,
+  "beam_size": 4,
+  "n_worst": 5,
+  "use_llm_judge": false,
+  "iterations": [
+    {
+      "iteration": 1,
+      "train_composite": 0.1916,
+      "best_candidate_composite": 0.2086,
+      "improved": true,
+      "gradient_preview": "The current prompt fails to produce concise and accurate summaries, as evidenced by several recurring issues across the failure examples. Firstly, the generated summaries often lack specificity and do not adequately capture the core findings or contributions of the articles, leading to vague stateme",
+      "n_candidates": 4,
+      "best_candidate_preview": "Act as a scientific summarizer and create a structured summary from the provided abstract. Your summary should clearly delineate the following fields: problem, method, dataset, results, limitations, a"
+    },
+    {
+      "iteration": 2,
+      "train_composite": 0.2021,
+      "best_candidate_composite": 0.21,
+      "improved": true,
+      "gradient_preview": "The current prompt is failing to produce effective summaries due to several recurring issues. Firstly, the summaries often lack specificity in problem statements, methods, and results, leading to vague and uninformative outputs. For instance, in Example 1, the generated summary does not clearly arti",
+      "n_candidates": 4,
+      "best_candidate_preview": "Act as a scientific summarizer and generate a structured summary from the provided abstract. Your summary must include the fields: problem, method, dataset, results, limitations, and key contributions"
+    },
+    {
+      "iteration": 3,
+      "train_composite": 0.2002,
+      "best_candidate_composite": 0.21,
+      "improved": false,
+      "gradient_preview": "The current prompt is failing to produce clear and comprehensive summaries due to several recurring patterns of error. Firstly, the summaries often lack a well-defined research problem, as seen in Example 1 and Example 4, where the generated outputs do not specify the core issue being addressed. Add",
+      "n_candidates": 4,
+      "best_candidate_preview": "Act as a scientific summarizer and generate a structured summary from the provided abstract. Your summary must include the fields: problem, method, dataset, results, limitations, and key contributions"
+    }
+  ]
+}

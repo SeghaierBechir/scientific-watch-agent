@@ -1,0 +1,124 @@
+{
+  "run_name": "gpt4mini-gpt4-gpt4",
+  "initial_composite": 0.68,
+  "final_composite": 0.71,
+  "improvement_pct": 4.41,
+  "n_iterations": 2,
+  "beam_size": 4,
+  "n_worst": 5,
+  "use_llm_judge": true,
+  "iterations": [
+    {
+      "iteration": 1,
+      "train_composite": 0.644,
+      "best_candidate_composite": 0.68,
+      "improved": false,
+      "gradient": "The current prompt fails to produce accurate and faithful summaries due to a lack of specificity in its instructions. Across the failure examples, the generated summaries often introduce information not present in the article excerpts, such as specific contexts or study details that are not mentioned (e.g., \"particularly in the Indian context\" in Example 1 or \"among indigenous populations, particularly in Australia\" in Example 3). This indicates a tendency to fabricate or assume details, leading to low faithfulness scores. Additionally, the summaries lack alignment with the main focus of the articles, as seen in Example 2, where the generated summary emphasizes health effects and exposure risks, diverging from the article's focus on the chemical's industrial use. To address these issues, the prompt should explicitly instruct the summarization model to focus on accurately capturing the main topic and findings of the article without introducing unverified details. A concrete change would be to add instructions such as \"Ensure the summary reflects the main findings and topics discussed in the article without adding information not present in the text.\" This would help improve both the faithfulness and relevance of the generated summaries.",
+      "candidates": [
+        {
+          "rank": 1,
+          "prompt": "You are a scientific summarizer tasked with extracting structured information from a scientific abstract. Focus on accurately capturing the main findings and topics discussed in the text without introducing any information not present in the text. Provide a summary with the following fields: problem, method, dataset, results, limitations, and key_contributions.",
+          "composite": 0.68,
+          "rouge1": 0.0,
+          "rouge2": 0.0,
+          "rougeL": 0.0,
+          "faithfulness": 0.7,
+          "coverage": 0.65,
+          "is_best": false
+        },
+        {
+          "rank": 2,
+          "prompt": "You are an assistant for scientific summarization. Your goal is to extract an accurate and structured summary from the provided scientific abstract. Ensure that you reflect the main findings and topics of the article precisely, and avoid adding any unverified details. The summary should consist of the following fields: problem, method, dataset, results, limitations, key_contributions.",
+          "composite": 0.66,
+          "rouge1": 0.0,
+          "rouge2": 0.0,
+          "rougeL": 0.0,
+          "faithfulness": 0.7,
+          "coverage": 0.6,
+          "is_best": false
+        },
+        {
+          "rank": 3,
+          "prompt": "As a scientific summarization assistant, your task is to deliver a structured summary of a scientific abstract. Pay close attention to accurately representing the main topics and findings of the text, avoiding the inclusion of information not present. The output should include: problem, method, dataset, results, limitations, key_contributions.",
+          "composite": 0.66,
+          "rouge1": 0.0,
+          "rouge2": 0.0,
+          "rougeL": 0.0,
+          "faithfulness": 0.7,
+          "coverage": 0.6,
+          "is_best": false
+        },
+        {
+          "rank": 4,
+          "prompt": "Your role is to summarize scientific abstracts by extracting structured information. Ensure that your summary accurately reflects the main topics and findings without introducing any details not found in the text. The summary should include these fields: problem, method, dataset, results, limitations, key_contributions.",
+          "composite": 0.64,
+          "rouge1": 0.0,
+          "rouge2": 0.0,
+          "rougeL": 0.0,
+          "faithfulness": 0.7,
+          "coverage": 0.55,
+          "is_best": false
+        }
+      ],
+      "gradient_preview": "The current prompt fails to produce accurate and faithful summaries due to a lack of specificity in its instructions. Across the failure examples, the generated summaries often introduce information not present in the article excerpts, such as specific contexts or study details that are not mentione",
+      "n_candidates": 4,
+      "best_candidate_preview": "You are a helpful assistant. Summarize the scientific article."
+    },
+    {
+      "iteration": 2,
+      "train_composite": 0.674,
+      "best_candidate_composite": 0.71,
+      "improved": true,
+      "gradient": "The current prompt fails to guide the AI in producing summaries that accurately reflect the content and focus of the scientific articles. Across the failure examples, the generated summaries often introduce topics or contexts not present in the article excerpts, leading to low faithfulness scores. For instance, Example 1 inaccurately emphasizes the Indian context, which is not mentioned in the excerpt. Similarly, Example 2 incorrectly focuses on tumor-associated macrophages, while the excerpt discusses macrophages more broadly. This suggests that the prompt lacks specificity in instructing the AI to closely adhere to the provided text. Additionally, the prompt does not explicitly instruct the AI to capture key details or specific findings from the article, resulting in vague or generalized summaries. To address these issues, the prompt should include instructions to \"focus on the specific details and findings presented in the article excerpt\" and \"avoid introducing information not present in the text.\" This would help ensure that the summaries are both accurate and faithful to the original content.",
+      "candidates": [
+        {
+          "rank": 1,
+          "prompt": "You are a specialized scientific summarizer. Your task is to generate a structured summary from a given scientific abstract. Focus on the specific details and findings presented in the abstract and avoid introducing any information not present in the text. Ensure that your summary accurately reflects the content and focus of the abstract. Specifically, extract and report on the following fields: problem, method, dataset, results, limitations, and key_contributions. Your goal is to provide a concise and precise summary that is faithful to the original content.",
+          "composite": 0.71,
+          "rouge1": 0.0,
+          "rouge2": 0.0,
+          "rougeL": 0.0,
+          "faithfulness": 0.75,
+          "coverage": 0.65,
+          "is_best": true
+        },
+        {
+          "rank": 2,
+          "prompt": "You are tasked with summarizing scientific abstracts into structured summaries. Pay close attention to the specific details and findings in the abstract provided and avoid introducing any external information. Your summary should precisely capture the essence and focus of the abstract. Extract information for the following fields: problem, method, dataset, results, limitations, and key_contributions. Ensure your summary is accurate and faithful to the text provided, reflecting the original content without deviation.",
+          "composite": 0.67,
+          "rouge1": 0.0,
+          "rouge2": 0.0,
+          "rougeL": 0.0,
+          "faithfulness": 0.75,
+          "coverage": 0.55,
+          "is_best": false
+        },
+        {
+          "rank": 3,
+          "prompt": "As a scientific summarizer, your role is to extract structured summaries from provided scientific abstracts. Focus strictly on the details and findings presented in the abstract, avoiding the introduction of information not contained in the text. Your summary should be accurate and faithful, capturing the essence of the abstract. Extract information for these fields: problem, method, dataset, results, limitations, and key_contributions. The goal is to produce summaries that accurately reflect the original content and focus.",
+          "composite": 0.71,
+          "rouge1": 0.0,
+          "rouge2": 0.0,
+          "rougeL": 0.0,
+          "faithfulness": 0.75,
+          "coverage": 0.65,
+          "is_best": false
+        },
+        {
+          "rank": 4,
+          "prompt": "You are a scientific summarization assistant. Your task is to create structured summaries from the given scientific abstracts. Focus solely on the specific details and findings presented in the abstract, and ensure no additional information is introduced. Your summary should maintain fidelity to the original content and accurately capture its focus. Extract and summarize the following fields: problem, method, dataset, results, limitations, and key_contributions. Aim for a concise, precise, and faithful representation of the abstract.",
+          "composite": 0.67,
+          "rouge1": 0.0,
+          "rouge2": 0.0,
+          "rougeL": 0.0,
+          "faithfulness": 0.75,
+          "coverage": 0.55,
+          "is_best": false
+        }
+      ],
+      "gradient_preview": "The current prompt fails to guide the AI in producing summaries that accurately reflect the content and focus of the scientific articles. Across the failure examples, the generated summaries often introduce topics or contexts not present in the article excerpts, leading to low faithfulness scores. F",
+      "n_candidates": 4,
+      "best_candidate_preview": "You are a specialized scientific summarizer. Your task is to generate a structured summary from a given scientific abstract. Focus on the specific details and findings presented in the abstract and av"
+    }
+  ]
+}

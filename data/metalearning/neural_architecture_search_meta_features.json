@@ -1,0 +1,18 @@
+{
+  "domain_id": "neural_architecture_search",
+  "topic": "neural architecture search",
+  "corpus_size": 94,
+  "median_year": 2019.0,
+  "pct_recent": 0.0,
+  "year_std": 1.0439092353385757,
+  "citation_gini": 0.5501012646024863,
+  "citation_median": 152.0,
+  "pct_high_cited": 0.648936170212766,
+  "unique_author_ratio": 0.7127659574468085,
+  "mean_h_index": 21.0,
+  "pct_high_hindex": 0.9361702127659575,
+  "pct_q1": 0.19148936170212766,
+  "topic_concept_overlap": 0.7446808510638298,
+  "gold_ratio": 0.5957446808510638,
+  "grade2_ratio": 0.10638297872340426
+}
