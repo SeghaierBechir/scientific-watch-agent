@@ -1,7 +1,7 @@
 # Scientific Watch Agent
 
 > **Automated scientific literature monitoring with cross-domain meta-learning**
-> Powered by **Nebius Serverless AI Endpoints** (DeepSeek-V3, Qwen3-30B)
+> Powered by **Nebius Serverless AI Endpoints** (DeepSeek-V4, Qwen3-30B)
 
 A 7-agent LangGraph pipeline that turns any research topic into a complete literature review in under 2 minutes — with a meta-learner that adapts scoring to new domains without retraining.
 
@@ -27,7 +27,7 @@ python run_pipeline.py "graph neural networks"
 [Searcher]                     →  213 papers from OpenAlex
 [QualityCritic]                →  top 15 selected (6-feature scoring)
 [Summarizer]     15 papers     →  structured summaries via Nebius Qwen3
-[Synthesizer]    Reflexion ×2  →  full domain synthesis via Nebius DeepSeek-V3
+[Synthesizer]    Reflexion ×2  →  full domain synthesis via Nebius DeepSeek-V4
 [TrendAnalyst]                 →  3 trends · 4 gaps · 5 future directions
 
 Runtime: 91s   Cost: $0.048
@@ -44,8 +44,8 @@ All LLM inference runs exclusively on **Nebius Serverless AI Endpoints**.
 | Task | Model | Cost |
 |---|---|---|
 | Summarization (×15 papers) | `Qwen/Qwen3-30B-A3B-Instruct` | $0.14/M tokens |
-| Synthesis + Reflexion critic | `deepseek-ai/DeepSeek-V3` | $0.27/M tokens |
-| Trend analysis | `deepseek-ai/DeepSeek-V3` | $0.27/M tokens |
+| Synthesis + Reflexion critic | `deepseek-ai/DeepSeek-V4` | $0.27/M tokens |
+| Trend analysis | `deepseek-ai/DeepSeek-V4` | $0.27/M tokens |
 | Query expansion | `Qwen/Qwen3-30B-A3B-Instruct` | $0.14/M tokens |
 
 **Total per pipeline run: ~$0.05** (vs ~$0.42 with Claude/GPT-4 equivalent)
@@ -104,13 +104,13 @@ Topic (string)
                      ▼
 ┌─────────────────────────────────────────────────────┐
 │ Synthesizer  ◄──────────────── Critic (Reflexion)    │
-│ Nebius DeepSeek-V3               4 evaluation axes   │
+│ Nebius DeepSeek-V4               4 evaluation axes   │
 │ Revises if quality < "good"      max 3 iterations    │
 └────────────────────┬────────────────────────────────┘
                      │
                      ▼
 ┌─────────────────────────────────────────────────────┐
-│ TrendAnalyst — Nebius DeepSeek-V3                    │
+│ TrendAnalyst — Nebius DeepSeek-V4                    │
 │ Emerging trends · Research gaps · Future directions  │
 └─────────────────────────────────────────────────────┘
 ```
@@ -176,7 +176,7 @@ at α = 0.05 (p = 0.014, large effect size r_rb = +0.57).
 ### Install
 
 ```bash
-git clone https://github.com/<your-username>/scientific-watch-agent
+git clone https://github.com/SeghaierBechir/scientific-watch-agent
 cd scientific-watch-agent
 
 python -m venv venv
@@ -233,7 +233,7 @@ Running pipeline...
 [Searcher]                     →  187 papers from OpenAlex
 [QualityCritic]                →  top 10 selected
 [Summarizer]     ×10 papers    →  structured summaries  (Nebius Qwen3)
-[Synthesizer]    Reflexion ×2  →  global synthesis      (Nebius DeepSeek-V3)
+[Synthesizer]    Reflexion ×2  →  global synthesis      (Nebius DeepSeek-V4)
 [TrendAnalyst]                 →  3 trends · 4 gaps · 5 directions
 
 Runtime: 87s   Cost: $0.042
@@ -367,7 +367,7 @@ scientific-watch-agent/
 | **Cost** | 10–20× cheaper than Claude/GPT for identical tasks |
 | **Compatibility** | OpenAI-compatible API — one-line swap in factory.py |
 | **Scale** | 285 LOO-CV evaluation runs feasible within budget |
-| **Models** | DeepSeek-V3 + Qwen3 match GPT-4-class quality on structured output |
+| **Models** | DeepSeek-V4 + Qwen3 match GPT-4-class quality on structured output |
 
 ---
 
