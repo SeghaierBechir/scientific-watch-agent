@@ -148,10 +148,10 @@ The report a PhD student would spend 3 weeks writing manually: generated in 90 s
 
 The full code is open source. You only need a **Nebius API key** (free tier available) and an email for OpenAlex.
 
-🔗 **Repository**: [github.com/your-username/scientific-watch-agent](https://github.com/your-username/scientific-watch-agent)
+🔗 **Repository**: (https://github.com/SeghaierBechir/scientific-watch-agent)
 
 ```bash
-git clone https://github.com/your-username/scientific-watch-agent
+git clone https://github.com/SeghaierBechir/scientific-watch-agent
 cd scientific-watch-agent
 pip install -r requirements.txt
 cp .env.example .env
